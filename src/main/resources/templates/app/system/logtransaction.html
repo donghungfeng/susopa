@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hệ thống | Log transaction</title>
+    <script type="text/javascript" th:src="@{/public/libs/excel/table2excel.js}"></script>
+    <script type="text/javascript" th:src="@{/public/libs/excel/jquery.table2excel.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Transaction.js?ver=20200319.003}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/system/TransactionView.js?ver=20200319.002}"></script>
+	<script type="text/javascript">
+		var oTransactionView = new TransactionView();
+    </script>
+    <style>
+    
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">Main</a> > <a href="#">Hệ thống</a> > <a href="">Log transaction</a>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box-form box">
+                        <div class="box-body">
+                            <h4 class="form-title" id="AppTitle"></h4>
+                            <div class="box-form FORM">
+                                <div class="row">
+                                    <div class="form-group col-sm-1" style="padding-top: 8px; text-align: right;">
+                                        <label for="" class="text-label">Tự động làm mới:</label>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <input type="number" id="time" class="form-control" value="3" min="3" max="10">
+                                    </div>
+                                    <div class="form-group col-sm-1 text-center ACTIONS">
+                                        <button class="btn btn-success" id="btnRefresh"><i class="fa fa-refresh"></i> Làm mới</button>
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label for="" class="text-label" id="lastrefresh"></label>
+                                    </div>
+
+                                    <div class="form-group col-sm-1" style="padding-top: 8px; text-align: right;">
+                                        <label for="" class="text-label">Từ ngày:</label>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <input type="date" id="fromDate" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-sm-1" style="padding-top: 8px; text-align: right;">
+                                        <label for="" class="text-label">Đến ngày:</label>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <input type="date" id="toDate" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-1 ACTIONS">
+                                        <button class="btn btn-success" id="btnSearch"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                    </div>
+                                    <div class="form-group col-sm-1 ACTIONS">
+                                        <button class="btn btn-success" id="btnExport"><i class="fa fa-file-excel-o"></i> Xuất</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box" style="min-height:calc(100vh - 170px);">
+                        <div class="box-body">
+                            <div class="table-content" style="padding: 10px;">
+                                <table class="table table-bordered" id="Grid01"`>
+                                    <thead>
+										<tr>
+											<th style="width: 50px; text-align: center;">STT</th>
+											<th style="width: 300px; text-align: center;">Requestid</th>
+											<th style="text-align: center;">Return code</th>
+                                            <th style="width: 200; text-align: center;">Transtatus</th>
+                                            <th style="text-align: center;">Clientid</th>
+                                            <th style="width: 200px; text-align: center;">Amount</th>
+											<th style="width: 200px; text-align: center;">Time</th>
+											<th style="width: 200px; text-align: center;">Cardtype</th>
+                                            <th style="width: 200px; text-align: center;">Cardno</th>
+                                            <th style="width: 200px; text-align: center;">Refno</th>
+                                            <th style="width: 200px; text-align: center;">Tác vụ</th>
+										</tr>
+									</thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-bordered" style="visibility:hidden;">
+                                    <thead>
+										<tr style="background-color: green; color: white;">
+											<th style="width: 50px; text-align: center;">STT</th>
+											<th style="width: 300px; text-align: center;">Requestid</th>
+											<th style="text-align: center;">Return code</th>
+                                            <th style="width: 200; text-align: center;">Transtatus</th>
+                                            <th style="text-align: center;">Clientid</th>
+                                            <th style="width: 200px; text-align: center;">Amount</th>
+											<th style="width: 200px; text-align: center;">Time</th>
+											<th style="width: 200px; text-align: center;">Cardtype</th>
+                                            <th style="width: 200px; text-align: center;">Cardno</th>
+                                            <th style="width: 200px; text-align: center;">Refno</th>
+										</tr>
+									</thead>
+                                    <tbody id="excelData">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

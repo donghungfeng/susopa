@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/popup">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/public/js/model/Cashier.js?ver=20200319.003}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Posterminal.js?ver=20200319.003}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/system/ConnectionAddView.js}"></script>
+    <script type="text/javascript">
+		var oConnectionAddView = new ConnectionAddView();
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="FORM box-form">
+            <div class="panel">
+                <div class="panel panel-heading"><label for="" class="label-text">Thông tin quầy</label></div>
+                <div class="panel-body">
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="label-text">Chọn quầy <span class="required">(*)</span></div>
+                            <select class="form-control" id="selCashierid">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="label-text">Tên quầy</div>
+                            <input type="text" class="form-control" id="txtcashiername" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="label-text">Địa chỉ IP</div>
+                            <input type="text" class="form-control" id="txtcashieripaddress" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel panel-heading"><label for="" class="label-text">Thông tin POS</label></div>
+                <div class="panel-body">
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="label-text">Chọn POS Terminal <span class="required">(*)</span></div>
+                            <select name="" class="form-control" id="selPosterminalid">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div class="label-text">Địa chỉ IP</div>
+                            <input type="text" class="form-control" id="txtposterminalipaddress" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ACTIONS box-action text-center">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSave" >
+                <i class="fa fa-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnClose">
+                <i class="fa fa-remove"></i> Đóng
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

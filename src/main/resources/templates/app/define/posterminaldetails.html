@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/popup">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/public/js/model/Posterminal.js?ver=20200319.003}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Posprofile.js?ver=20200319.003}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/define/PosterminalDetailsView.js?ver=20200319.002}"></script>
+	<script type="text/javascript">
+		var oPosterminalDetailsView = new PosterminalDetailsView();
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="FORM box-form">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Mã máy <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="code" disabled> 
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Tên máy <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="name" disabled>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Địa chỉ ip <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="ipaddress" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Port <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="port" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Cấu hình máy POS</div>
+                        <div class="select-custom">
+                            <select id="posprofileid" class="form-control" disabled>
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Trạng thái</div>
+                        <div class="select-custom">
+                            <select id="status" class="form-control" disabled>
+                                <option value="1">Hoạt động</option>
+                            	<option value="0">Khóa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="labelCheckConnect" style="display:none">
+                <div class="col-xs-2">
+                    <div class="label-text">Kết quả:</div>
+                </div>
+
+                <div class="col-xs-3" id="result">
+                   
+                </div>
+
+                <div class="col-xs-4">
+                    <div class="label-text">Thời gian phản hồi:</div>
+                </div>
+
+                <div class="col-xs-3" id="timeresponse">
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="ACTIONS box-action text-center">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSave" disabled>
+                <i class="fa fa-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnTestConnect" disabled>
+                <i class="fa fa-plug"></i> Test Connect
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnClose" disabled>
+                <i class="fa fa-remove"></i> Đóng
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/popup">
+
+<head>
+    <meta charset="utf-8" />
+	<script type="text/javascript" th:src="@{/public/js/model/Cashier.js?ver=20200319.003}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/define/CashierDetailsView.js?ver=20200319.002}"></script>
+	<script type="text/javascript">
+//		var oCashierDetailsView = new CashierDetailsView();
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="FORM box-form">
+            <div class="row">
+                <div class="col-xs-1">
+                    <input type="checkbox">                  
+                </div>
+                <div class="col-xs-3">
+                    <div class="text-label">Print receipt?</div>                 
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-success">Run</button>                   
+                </div>
+               
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="label-text" style="font-size: large;">Result</h2>                   
+                </div>
+                <div class="col-xs-12">
+                    <textarea name="" id="" cols="70" rows="5"></textarea>                   
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

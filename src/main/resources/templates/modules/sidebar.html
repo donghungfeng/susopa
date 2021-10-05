@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Header</title>
+	<meta charset="utf-8" />
+	
+</head>
+
+<body>
+	<div th:fragment="sidebar">
+		<script type="text/javascript" th:src="@{/public/templates/medic247/vendor/highchart/highcharts.js}"></script>
+		<script type="text/javascript" th:src="@{/public/js/modules/sidebar.js}"></script>
+		<script type="text/javascript">
+			var oSidebar = new Sidebar();
+		</script>
+		<div class="sidebar-menu">
+			<div class="top">
+				<a class="logo">
+					<img th:src="@{/public/templates/medic247/img/vnpt-logo-white.png}" alt="Logo">
+				</a>
+			</div>
+			<div class="navbar mscrollable">
+				<div class="menus">
+					<div class="item active">
+						<a th:href="@{/app/common/dashboard}" class="url">
+							<span class="icon icon-uniF1272 -ap"></span>
+							<span class="text">
+								Bảng điều khiển
+							</span>
+						</a>
+					</div>
+					<div class="item" id="menu_hethong">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-sliders"></i></span>
+							<span class="text">Khai báo</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/define/cashier}"> Quầy thu ngân</a></li>
+							<li class=""><a th:href="@{/app/define/posterminal}"> Enpoint POS Terminal</a></li>
+							<li class=""><a th:href="@{/app/define/histerminal}"> Enpoint Vnpt HIS</a></li>
+							<li class=""><a th:href="@{/app/define/postprofile}"> Nạp cấu hình POS</a></li>
+						</ul>
+					</div>
+					<div class="item" id="menu_sanxuat">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-gears"></i></span>
+							<span class="text">Hệ thống</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/system/connection}"> Quản lý kết nối</a></li>
+<!--							<li class=""><a th:href="@{/app/system/monitor}"> Monitor</a></li>-->
+							<li class=""><a th:href="@{/app/system/logsystem}"> Log hệ thống</a></li>
+							<li class=""><a th:href="@{/app/system/logtransaction}"> Log giao dịch</a></li>
+							<li class=""><a th:href="@{/app/system/logconnection}"> Log kết nối</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

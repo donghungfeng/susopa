@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Khai báo | Điểm kết nối VNPTHIS (VNPT HIS Endpoint)</title>
+    <script type="text/javascript" th:src="@{/public/js/app/define/HisterminalView.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Histerminal.js}"></script>
+	<script type="text/javascript">
+		var oHisterminalView = new HisterminalView();
+    </script>
+    <style>
+      
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">Main</a> > <a href="#">Khai báo</a> > <a href="">Điểm kết nối VNPTHIS (VNPT HIS Enpoint)</a>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box-form box">
+                        <div class="box-body">
+                            <h4 class="form-title">VNPT HIS Endpoint</h4>
+                            <div class="box-form FORM">
+                                <div class="row">
+                                    <div class="form-group col-sm-3 ACTIONS" style="padding-top: 18px;">
+                                        <button class="btn btn-success" id="btnSave"><i class="fa fa-save"></i> Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box" style="min-height:calc(100vh - 170px); margin-top: 10px;">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-1 col-xs-12">
+                                    <div class="label-text">Địa chỉ URL <span class="required">(*)</span></div>
+                                </div>
+                                <div class="col-sm-5 col-xs-12">
+                                    <input type="text" class="form-control" id="url">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-1 col-xs-12">
+                                    <div class="label-text">Tài khoản <span class="required">(*)</span></div>
+                                </div>
+                                <div class="col-sm-5 col-xs-12">
+                                    <input type="text" class="form-control" id="account">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-1 col-xs-12">
+                                    <div class="label-text">Token <span class="required">(*)</span></div>
+                                </div>
+                                <div class="col-sm-5 col-xs-12">
+                                    <input type="text" class="form-control" id="token">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
