@@ -1,10 +1,10 @@
-var PosProfileView = function () {
+var CustomerView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Cấu hình POS (POS Profile)';
+	this.AppTitle = 'Thông tin khách hàng';
 	this.oTable = null;
 	this.oDialog = null;
-	this.oPosprofile = new Posprofile();
+	this.oCustomer = new Customer();
 
 	// Phương thức
 	this.initPage = function () {
@@ -14,25 +14,46 @@ var PosProfileView = function () {
 	}
 
 	this.bindGrid = function(){
-		var rs = that.oPosprofile.search('');
-		if (rs.CODE !='00') {}
-	
+		that.oCustomer.getAll();
+
 		that.oTable.clear().draw();
 		var aRows = [];
-		for (var i = 0; i < rs.RESULT.length; i++) {
-			var item = rs.RESULT[i];
+		for (var i = 0; i < that.oCustomer.LIST.length; i++) {
+			var item = that.oCustomer.LIST[i];
 			var act = '<div class="row-actions">';
-			act += '<button class="btn btn-success btnCheck" data-id="'+ item.posprofileid +'"><i class="fa fa-plug"></i></button>';
-			act += '<button class="btn btn-info btnEdit" data-id="'+ item.posprofileid +'"><i class="fa fa-edit"></i></button>';
-			act += '<button class="btn btn-danger btnDel" data-id="'+ item.posprofileid +'"><i class="fa fa-trash"></i></button>';
+			act += '<button class="btn btn-info btnEdit" data-id="'+ item.id +'"><i class="fa fa-edit"></i></button>';
+			act += '<button class="btn btn-danger btnDel" data-id="'+ item.id +'"><i class="fa fa-trash"></i></button>';
 			act += '</div>';
+			var _rank = "";
+			switch (item.ranking) {
+				case 0:
+					_rank = "Thường";
+					break;
+				case 1:
+					_rank = "Bạc";
+					break;
+				case 2:
+					_rank = "Vàng";
+					break;
+				case 3:
+					_rank = "Bạch kim";
+					break;
+				case 4:
+					_rank = "Kim cương";
+					break;
+				default:
+					_rank = "Vô hạng";
+					break;
+			}
 			aRows.push([
 				(i + 1),
-				item.code,
 				item.name,
-				item.bankname,
-				item.bankendpoint,
-				item.port,
+				item.phone,
+				item.address,
+				item.email,
+				item.order,
+				item.amount,
+				_rank,
 				act
             ]);
 		}
@@ -54,29 +75,22 @@ var PosProfileView = function () {
 
 		$('#Grid01').on('click', '.btnEdit', function () {
 			var id = $(this).data('id');
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/posprofiledetails?id=' + id;
+			var url = CONFIG_APP.URL.CONTEXT + '/app/define/customerdetails?id=' + id;
 			that.oDialog.show('Sửa POS profile', url, '30%', '500px');
-			return false;
-		});
-		
-		$('#Grid01').on('click', '.btnCheck', function () {
-			var id = $(this).data('id');
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/posprofiledetails?id=' + id +"&type=testconnect";
-			that.oDialog.show('Kiểm tra kết nối', url, '30%', '550px');
 			return false;
 		});
 
 		$('#Grid01').on('click', '.btnDel', function () {
 			var id = $(this).data('id');
-			if (confirm('Bạn có chắc chắn xóa POS profile này không?')) {
-				var rs = that.oPosprofile.del(id);
+			if (confirm('Bạn có chắc chắn xóa khách hàng này không?')) {
+				var rs = that.oCustomer.del(id);
 			}
 			that.bindGrid();
 			return false;
 		});
 
 		$('.ACTIONS').on('click', '#btnAddNew', function () {
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/posprofiledetails?id=0';
+			var url = CONFIG_APP.URL.CONTEXT + '/app/define/customerdetails?id=0';
 			that.oDialog.show('Thêm mới POS profile', url, '30%', '500px');
 		});
 

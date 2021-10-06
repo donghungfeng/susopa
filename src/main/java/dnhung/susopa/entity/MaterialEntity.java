@@ -5,18 +5,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "material", schema = "main", catalog = "")
 public class MaterialEntity {
-    private short id;
+    private Long id;
     private String name;
     private String note;
     private short status;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public short getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -63,14 +64,5 @@ public class MaterialEntity {
         if (note != null ? !note.equals(that.note) : that.note != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (note != null ? note.hashCode() : 0);
-        result = 31 * result + (int) status;
-        return result;
     }
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Khai báo | Cấu hình POS (POS profile)</title>
+    <script type="text/javascript" th:src="@{/public/js/model/Customer.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/customer/CustomerView.js}"></script>
+    <script type="text/javascript">
+        var oCustomerView = new CustomerView();
+    </script>
+    <style>
+        tr > td > .row-actions {
+           display:none;
+        }
+
+        tr.selected > td >  .row-actions {
+            display:block !important;
+        }
+        .row-actions button{margin: 0 4px !important;}
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Khách hàng</a> > <a
+                        href="">Danh sách khách hàng</a>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box-form box">
+                        <div class="box-body">
+                            <h4 class="form-title" id="AppTitle"></h4>
+                            <div class="box-form FORM">
+                                <div class="row">
+                                    <div class="form-group col-sm-3 ACTIONS" style="padding-top: 18px;">
+                                        <button class="btn btn-success" id="btnAddNew"><i class="fa fa-plus"></i> Tạo
+                                            mới</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box" style="min-height:calc(100vh - 170px);">
+                        <div class="box-body">
+                            <div class="table-content" style="padding: 10px;">
+                                <table class="table table-bordered" id="Grid01">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:50px;text-align: center;">STT</th>
+                                            <th style="width:300px;text-align: center;">Tên khách hàng</th>
+                                            <th style="text-align: center;">Điện thoại</th>
+                                            <th style="width:200px;text-align: center;">Địa chỉ</th>
+                                            <th style="width:150px;text-align: center;">Email</th>
+                                            <th style="width:100px;text-align: center;">Số đơn</th>
+                                            <th style="width:100px;text-align: center;">Tổng tiền</th>
+                                            <th style="width:100px;text-align: center;">Hạng</th>
+                                            <th style="width:150px;text-align: center;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

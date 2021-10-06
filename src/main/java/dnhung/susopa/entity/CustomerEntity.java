@@ -11,13 +11,14 @@ public class CustomerEntity {
     private String phone;
     private String address;
     private String email;
-    private Short order;
+    private Short orders;
     private Double amount;
     private Double discount;
     private Short ranking;
     private String note;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public short getId() {
         return id;
@@ -68,13 +69,13 @@ public class CustomerEntity {
     }
 
     @Basic
-    @Column(name = "order")
+    @Column(name = "orders")
     public Short getOrder() {
-        return order;
+        return orders;
     }
 
     public void setOrder(Short order) {
-        this.order = order;
+        this.orders = orders;
     }
 
     @Basic
@@ -127,7 +128,7 @@ public class CustomerEntity {
                 Objects.equals(phone, that.phone) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(email, that.email) &&
-                Objects.equals(order, that.order) &&
+                Objects.equals(orders, that.orders) &&
                 Objects.equals(amount, that.amount) &&
                 Objects.equals(discount, that.discount) &&
                 Objects.equals(ranking, that.ranking) &&
@@ -136,6 +137,6 @@ public class CustomerEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, address, email, order, amount, discount, ranking, note);
+        return Objects.hash(id, name, phone, address, email, orders, amount, discount, ranking, note);
     }
 }
