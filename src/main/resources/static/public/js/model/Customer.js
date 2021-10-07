@@ -92,7 +92,7 @@ var Customer = function(){
 		var html = '<option  value="0"> -Chọn khách hàng- </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
-			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
+			html +='<option  value="'+ item.id +'">' + item.phone + ' (' + item.name + ') ' +'</option>';
 		}
 		$(sControlId).html(html);
 		$(sControlId).select2();

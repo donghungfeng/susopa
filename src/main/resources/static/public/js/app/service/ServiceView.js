@@ -54,23 +54,24 @@ var ServiceView = function () {
 
 		$('#Grid01').on('click', '.btnEdit', function () {
 			var id = $(this).data('id');
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/servicedetails?id=' + id;
-			that.oDialog.show('Sửa POS profile', url, '30%', '500px');
+			var url = CONFIG_APP.URL.CONTEXT + '/app/service/servicedetails?id=' + id;
+			that.oDialog.show('Sửa dịch vụ', url, '50%', '600px');
 			return false;
 		});
 
 		$('#Grid01').on('click', '.btnDel', function () {
 			var id = $(this).data('id');
 			if (confirm('Bạn có chắc chắn xóa dịch vụ này không?')) {
-				var rs = that.oService.del(id);
+				that.oService.id = id;
+				var rs = that.oService.del();
 			}
 			that.bindGrid();
 			return false;
 		});
 
 		$('.ACTIONS').on('click', '#btnAddNew', function () {
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/servicedetails?id=0';
-			that.oDialog.show('Thêm mới sản phẩm', url, '30%', '500px');
+			var url = CONFIG_APP.URL.CONTEXT + '/app/service/servicedetails?id=0';
+			that.oDialog.show('Thêm mới dịch vụ', url, '50%', '600px');
 		});
 
 		$('#Grid01 tbody').on('click', 'tr', function () {

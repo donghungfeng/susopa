@@ -53,23 +53,24 @@ var ProductView = function () {
 
 		$('#Grid01').on('click', '.btnEdit', function () {
 			var id = $(this).data('id');
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/productdetails?id=' + id;
-			that.oDialog.show('Sửa POS profile', url, '30%', '500px');
+			var url = CONFIG_APP.URL.CONTEXT + '/app/service/productdetails?id=' + id;
+			that.oDialog.show('Sửa sản phẩm', url, '50%', '600px');
 			return false;
 		});
 
 		$('#Grid01').on('click', '.btnDel', function () {
 			var id = $(this).data('id');
 			if (confirm('Bạn có chắc chắn xóa sản phẩm này không?')) {
-				var rs = that.oProduct.del(id);
+				that.oProduct.id = id;
+				var rs = that.oProduct.del();
 			}
 			that.bindGrid();
 			return false;
 		});
 
 		$('.ACTIONS').on('click', '#btnAddNew', function () {
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/productdetails?id=0';
-			that.oDialog.show('Thêm mới sản phẩm', url, '30%', '500px');
+			var url = CONFIG_APP.URL.CONTEXT + '/app/service/productdetails?id=0';
+			that.oDialog.show('Thêm mới sản phẩm', url, '50%', '600px');
 		});
 
 		$('#Grid01 tbody').on('click', 'tr', function () {

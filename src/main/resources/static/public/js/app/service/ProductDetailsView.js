@@ -9,27 +9,17 @@ var ProductDetailsView = function(){
 
     // Phương thức
 	this.initPage = function () {
-		that.oProduct.Productid = Util.Url.getParameterByName('id');
+		that.oProduct.id = Util.Url.getParameterByName('id');
 		that.bindPopup();
     }
 
     this.bindPopup = function(){
-		if(Util.Url.getParameterByName('type') == null){
-			that.AppTitle = that.oProduct.Productid == 0? 'Thêm mới POS profile':'Cập nhật thông tin POS profile';
-			$(".ACTIONS #btnTestConnect").css("display", "none");
-			that.lockForm(false);
-		}
-		else{
-			that.AppTitle = "Kiểm tra kết nối";
-			
-			$(".ACTIONS #btnSave").css("display", "none");
-			$(".FORM :input").attr("disabled", true);
-			$(".ACTIONS :button").attr("disabled", false);
-		}
+		that.AppTitle = that.oProduct.id == 0? 'Thêm mới sản phẩm':'Cập nhật thông tin sản phẩm';
+		that.lockForm(false);
 		
 		$('.bootstrap-dialog-title', window.parent.document).html(that.AppTitle);
-		if (that.oProduct.Productid != 0) {
-			that.oProduct.getDetails();
+		if (that.oProduct.id != 0) {
+			that.oProduct.getById();
 			$('#code').val(that.oProduct.code);
 			$('#name').val(that.oProduct.name);
 			$('#price').val(that.oProduct.price);
@@ -56,6 +46,7 @@ var ProductDetailsView = function(){
 			that.oProduct.discount = $('.FORM #discount').val();
 			that.oProduct.note = $('.FORM #note').val();
 			var rs = that.oProduct.save();
+			alert(rs.MESSAGE);
 			that.lockForm(true);
 		});
 

@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" th:src="@{/static/public/js/model/Customer}"></script>
-	<script type="text/javascript" th:src="@{/static/public/js/app/customer/CustomerDetailsView.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Customer.js}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/customer/CustomerDetailsView.js}"></script>
 	<script type="text/javascript">
 		var oCustomerDetailsView = new CustomerDetailsView();
     </script>
@@ -53,8 +53,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">Giảm giá <span class="required">(*)</span></div>
-                        <input type="number" class="form-control" id="discount" disabled>
+                        <div class="label-text">Giảm giá (%)</div>
+                        <input type="number" min="0" max="100" step="1" class="form-control" id="discount" disabled>
                     </div>
                 </div>
             </div>

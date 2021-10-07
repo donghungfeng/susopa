@@ -1,10 +1,10 @@
-var Product = function(){
+var Order = function(){
 	var that = this;
 	const URL = {
-		GETALL:'product/search',
-		GETBYID:'product/getbyid',
-		SAVE:'product/create',
-		DEL:'product/delete',
+		GETALL:'size/search',
+		GETBYID:'size/getbyid',
+		SAVE:'size/create',
+		DEL:'size/delete',
 	}
 	
 	const LABEL={
@@ -13,13 +13,9 @@ var Product = function(){
 
 	// Thuộc tính
 	this.id=0;
-	this.code='';
 	this.name='';
-	this.price=0;
-	this.discount=0;
 	this.note='';
-
-	this.entity = null;
+	this.status='';
 
 	this.validSave = function(){
 		var alert = '';
@@ -41,24 +37,18 @@ var Product = function(){
 		var rs = DATA.get(URL.GETBYID+"/"+that.id);
 		var item = rs.RESULT;
 		this.id=item.id;
-		this.code=item.code;
 		this.name=item.name;
-		this.price=item.price;
-		this.discount=item.discount;
 		this.note=item.note;
-
-		this.entity = item;
+		this.status=item.status;
 	}
 
 	//save data
 	this.save = function(){
 		var data= {
 			id:that.id,
-			code:that.code,
 			name:that.name,
-			price:that.price,
-			discount:that.discount,
 			note:that.note,
+			status:that.status,
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);
@@ -71,7 +61,7 @@ var Product = function(){
 	
 	this.bindSelect = function(sControlId){
 		that.getAll();
-		var html = '<option  value="0"> - Chọn sản phẩm - </option>';
+		var html = '<option  value="0"> - Chọn size - </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
 			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
@@ -81,10 +71,10 @@ var Product = function(){
 	}
 	this.bindSelect2 = function(sControlId){
 		that.getAll();
-		var html = '<option  value="0"> -Chọn sản phẩm- </option>';
+		var html = '<option  value="0"> -Chọn size- </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
-			html +='<option  value="'+ item.id +'">' + item.name + ' (' + item.code + ') ' +'</option>';
+			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
 		}
 		$(sControlId).html(html);
 		$(sControlId).select2();

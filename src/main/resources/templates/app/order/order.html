@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hóa đơn | Tạo hóa đơn</title>
+    <script type="text/javascript" th:src="@{/public/js/model/Order.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Customer.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Product.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/order/OrderView.js}"></script>
+    <script type="text/javascript">
+        var oOrderView = new OrderView();
+    </script>
+    <style>
+        tr > td > .row-actions {
+           display:none;
+        }
+
+        tr.selected > td >  .row-actions {
+            display:block !important;
+        }
+        .row-actions button{margin: 0 4px !important;}
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Hóa đơn</a> > <a
+                        href="">Tạo hóa đơn</a>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="box-form box">
+                        <div class="box-body">
+                            <h4 class="form-title" id="AppTitle"></h4>
+                            <div class="box-form FORM">
+                                <div class="row">
+                                    <div class="col-sm-11 col-xs-11">
+                                        <div class="form-group">
+                                            <div class="label-text">Khách hàng: </div>
+                                            <select name="" id="customer"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1" style="padding-top: 20px">
+                                        <div class="form-group">
+                                            <button class="btn btn-success" id="btnAddCustomer"><i class="fa fa-plus"></i> Tạo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-11 col-xs-11">
+                                        <div class="form-group">
+                                            <div class="label-text">Sản phẩm: </div>
+                                            <select name="" id="product"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1" style="padding-top: 20px">
+                                        <div class="form-group ACTIONS">
+                                            <button class="btn btn-primary" id="btnAddProduct"><i class="fa fa-plus"></i>Thêm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-11 col-xs-11">
+                                        <div class="form-group">
+                                            <div class="label-text">Dịch vụ: </div>
+                                            <select name="" id="product"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1" style="padding-top: 20px">
+                                        <div class="form-group ACTIONS">
+                                            <button class="btn btn-primary" id="btnAddProduct"><i class="fa fa-plus"></i>Thêm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="box-form box">
+                        <div class="box-body">
+                            <h4 class="form-title" id="AppTitle"></h4>
+                            <div class="box-form FORM">
+                                <div class="row">
+                                    <b>Khách hàng</b>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <b>Danh sách sản phẩm</b>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="table-content" style="padding: 10px;">
+                                        <table class="table table-bordered" id="GridProduct">
+                                            <thead>
+                                                <tr>
+                                                    <td>Sản phẩm</td>
+                                                    <td>Giá</td>
+                                                    <td style="width: 50px">SL</td>
+                                                    <td>Thành tiền</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <b>Danh sách dịch vụ</b>
+                                </div>
+                                <div class="row">
+                                    <div class="table-content" style="padding: 10px;">
+                                        <table class="table table-bordered" id="GridService">
+                                            <thead>
+                                            <tr>
+                                                <td>Dịch vụ</td>
+                                                <td>Giá</td>
+                                                <td style="width: 50px">SL</td>
+                                                <td>Thành tiền</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <b>Tổng tiền dịch vụ</b>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    khách trả
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

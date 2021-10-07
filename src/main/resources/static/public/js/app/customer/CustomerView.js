@@ -75,7 +75,7 @@ var CustomerView = function () {
 
 		$('#Grid01').on('click', '.btnEdit', function () {
 			var id = $(this).data('id');
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/customerdetails?id=' + id;
+			var url = CONFIG_APP.URL.CONTEXT + '/app/customer/customerdetails?id=' + id;
 			that.oDialog.show('Sửa POS profile', url, '30%', '500px');
 			return false;
 		});
@@ -83,14 +83,15 @@ var CustomerView = function () {
 		$('#Grid01').on('click', '.btnDel', function () {
 			var id = $(this).data('id');
 			if (confirm('Bạn có chắc chắn xóa khách hàng này không?')) {
-				var rs = that.oCustomer.del(id);
+				that.oCustomer.id = id;
+				var rs = that.oCustomer.del();
 			}
 			that.bindGrid();
 			return false;
 		});
 
 		$('.ACTIONS').on('click', '#btnAddNew', function () {
-			var url = CONFIG_APP.URL.CONTEXT + '/app/define/customerdetails?id=0';
+			var url = CONFIG_APP.URL.CONTEXT + '/app/customer/customerdetails?id=0';
 			that.oDialog.show('Thêm mới POS profile', url, '30%', '500px');
 		});
 

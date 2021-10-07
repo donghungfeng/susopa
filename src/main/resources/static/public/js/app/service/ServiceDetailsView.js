@@ -9,27 +9,17 @@ var ServiceDetailsView = function(){
 
     // Phương thức
 	this.initPage = function () {
-		that.oService.Serviceid = Util.Url.getParameterByName('id');
+		that.oService.id = Util.Url.getParameterByName('id');
 		that.bindPopup();
     }
 
     this.bindPopup = function(){
-		if(Util.Url.getParameterByName('type') == null){
-			that.AppTitle = that.oService.Serviceid == 0? 'Thêm mới POS profile':'Cập nhật thông tin POS profile';
-			$(".ACTIONS #btnTestConnect").css("display", "none");
-			that.lockForm(false);
-		}
-		else{
-			that.AppTitle = "Kiểm tra kết nối";
-			
-			$(".ACTIONS #btnSave").css("display", "none");
-			$(".FORM :input").attr("disabled", true);
-			$(".ACTIONS :button").attr("disabled", false);
-		}
-		
+		that.AppTitle = that.oService.id == 0? 'Thêm mới dịch vụ':'Cập nhật thông tin dịch vụ';
+		that.lockForm(false);
+
 		$('.bootstrap-dialog-title', window.parent.document).html(that.AppTitle);
-		if (that.oService.Serviceid != 0) {
-			that.oService.getDetails();
+		if (that.oService.id != 0) {
+			that.oService.getById();
 			$('#code').val(that.oService.code);
 			$('#name').val(that.oService.name);
 			$('#price').val(that.oService.price);
@@ -58,6 +48,8 @@ var ServiceDetailsView = function(){
 			that.oService.description = $('.FORM #description').val();
 			that.oService.note = $('.FORM #note').val();
 			var rs = that.oService.save();
+
+			alert(rs.MESSAGE);
 			that.lockForm(true);
 		});
 

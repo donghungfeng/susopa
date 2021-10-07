@@ -9,35 +9,24 @@ var CustomerDetailsView = function(){
 
     // Phương thức
 	this.initPage = function () {
-		that.oCustomer.Customerid = Util.Url.getParameterByName('id');
+		that.oCustomer.id = Util.Url.getParameterByName('id');
 		that.bindPopup();
     }
 
     this.bindPopup = function(){
-		if(Util.Url.getParameterByName('type') == null){
-			that.AppTitle = that.oCustomer.Customerid == 0? 'Thêm mới POS profile':'Cập nhật thông tin POS profile';
-			$(".ACTIONS #btnTestConnect").css("display", "none");
-			that.lockForm(false);
-		}
-		else{
-			that.AppTitle = "Kiểm tra kết nối";
-			
-			$(".ACTIONS #btnSave").css("display", "none");
-			$(".FORM :input").attr("disabled", true);
-			$(".ACTIONS :button").attr("disabled", false);
-		}
+		that.AppTitle = that.oCustomer.id == 0? 'Thêm mới khách hàng':'Cập nhật thông tin khách hàng';
+		that.lockForm(false);
 		
 		$('.bootstrap-dialog-title', window.parent.document).html(that.AppTitle);
-		if (that.oCustomer.Customerid != 0) {
-			that.oCustomer.getDetails();
+		if (that.oCustomer.id != 0) {
+			that.oCustomer.getById();
 			$('#name').val(that.oCustomer.name);
 			$('#phone').val(that.oCustomer.phone);
-            $('#address').val(that.oCustomer.address);
-            $('#email').val(that.oCustomer.email);
-            $('#discount').val(that.oCustomer.discount);
+			$('#address').val(that.oCustomer.address);
+			$('#email').val(that.oCustomer.email);
+			$('#discount').val(that.oCustomer.discount);
 			$('#note').val(that.oCustomer.note);
 		}
-		
     }
     
     this.lockForm = function(type){
@@ -59,6 +48,7 @@ var CustomerDetailsView = function(){
 			that.oCustomer.discount = $('.FORM #discount').val();
 			that.oCustomer.note = $('.FORM #note').val();
 			var rs = that.oCustomer.save();
+			alert(rs.MESSAGE);
 			that.lockForm(true);
 		});
 
