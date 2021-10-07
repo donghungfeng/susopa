@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" th:src="@{/static/public/js/model/Posprofile.js?ver=20200319.003}"></script>
-	<script type="text/javascript" th:src="@{/static/public/js/app/define/PosProfileDetailsView.js?ver=20200319.002}"></script>
+    <script type="text/javascript" th:src="@{/static/public/js/model/Customer}"></script>
+	<script type="text/javascript" th:src="@{/static/public/js/app/customer/CustomerDetailsView.js}"></script>
 	<script type="text/javascript">
-		var oPosProfileDetailsView = new PosProfileDetailsView();
+		var oCustomerDetailsView = new CustomerDetailsView();
     </script>
 </head>
 
@@ -17,8 +17,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">Mã thiết bị <span class="required">(*)</span></div>
-                        <input type="text" class="form-control" id="code" disabled>
+                        <div class="label-text">Tên khách hàng <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="name" disabled>
                     </div>
                 </div>
                
@@ -26,8 +26,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">Tên thiết bị <span class="required">(*)</span></div>
-                        <input type="text" class="form-control" id="name" disabled>
+                        <div class="label-text">Điện thoại <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="phone" disabled>
                     </div>
                 </div>
                 
@@ -35,8 +35,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">Bank name <span class="required">(*)</span></div>
-                        <input type="text" class="form-control" id="bankname" disabled>
+                        <div class="label-text">Địa chỉ</div>
+                        <input type="text" class="form-control" id="address" disabled>
                     </div>
                 </div>
                
@@ -44,8 +44,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">BankEndpoint <span class="required">(*)</span></div>
-                        <input type="text" class="form-control" id="bankendpoint" disabled>
+                        <div class="label-text">Email</div>
+                        <input type="text" class="form-control" id="email" disabled>
                     </div>
                 </div>
                
@@ -53,38 +53,21 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">PORT <span class="required">(*)</span></div>
-                        <input type="text" class="form-control" id="port" disabled>
+                        <div class="label-text">Giảm giá <span class="required">(*)</span></div>
+                        <input type="number" class="form-control" id="discount" disabled>
                     </div>
                 </div>
-               
             </div>
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
-                        <div class="label-text">Metadata</div>
-                        <textarea name="" class="form-control" id="metadata" cols="30" rows="5" disabled></textarea>
+                        <div class="label-text">Ghi chú</div>
+                        <textarea name="" class="form-control" id="note" cols="30" rows="5" disabled></textarea>
                     </div>
                 </div>
                
             </div>
-            <div class="row" id="labelCheckConnect" style="display:none">
-                <div class="col-xs-2">
-                    <div class="label-text">Kết quả:</div>
-                </div>
 
-                <div class="col-xs-3" id="result">
-                   
-                </div>
-
-                <div class="col-xs-4">
-                    <div class="label-text">Thời gian phản hồi:</div>
-                </div>
-
-                <div class="col-xs-3" id="timeresponse">
-                   
-                </div>
-            </div>
         </div>
 
         <div class="ACTIONS box-action text-center">
