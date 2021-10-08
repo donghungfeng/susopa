@@ -92,7 +92,7 @@ var CustomerView = function () {
 
 		$('.ACTIONS').on('click', '#btnAddNew', function () {
 			var url = CONFIG_APP.URL.CONTEXT + '/app/customer/customerdetails?id=0';
-			that.oDialog.show('Thêm mới POS profile', url, '30%', '500px');
+			that.oDialog.show('Thêm mới khách hàng', url, '30%', '500px');
 		});
 
 		$('#Grid01 tbody').on('click', 'tr', function () {

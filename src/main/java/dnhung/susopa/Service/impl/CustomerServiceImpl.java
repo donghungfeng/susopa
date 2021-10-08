@@ -18,4 +18,9 @@ public class CustomerServiceImpl extends BaseServiceImpl<CustomerEntity> impleme
     protected BaseRepository<CustomerEntity> getBaseRepository() {
         return customerRepository;
     }
+
+    @Override
+    public CustomerEntity findbyphone(String phone) {
+        return this.customerRepository.findByPhone(phone);
+    }
 }
