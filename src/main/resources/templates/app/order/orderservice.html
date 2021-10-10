@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hóa đơn | Dịch vụ cần thực hiện</title>
+    <script type="text/javascript" th:src="@{/public/js/model/OrderService.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/order/OrderServiceView.js}"></script>
+    <script type="text/javascript">
+        var oOrderServiceView = new OrderServiceView();
+    </script>
+    <style>
+        tr > td > .row-actions {
+           display:none;
+        }
+
+        tr.selected > td >  .row-actions {
+            display:block !important;
+        }
+        .row-actions button{margin: 0 4px !important;}
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Hóa đơn</a> > <a
+                        href="">Dịch vụ cần thực hiện</a>
+                </div>
+
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box" style="min-height:calc(100vh - 170px);">
+                        <div class="box-head text-center">
+                            <h2><b>DỊCH VỤ CẦN THỰC HIỆN</b></h2>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-content" style="padding: 10px;">
+                                <table class="table table-bordered" id="Grid01">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%;text-align: center;">STT</th>
+                                            <th style="text-align: center;">Tên dịch vụ</th>
+                                            <th style="width:15%;text-align: center;">Tên khách hàng</th>
+                                            <th style="text-align: center;">Mô tả</th>
+                                            <th style="width:15%;text-align: center;">Ngày tiếp nhận</th>
+                                            <th style="width:10%;text-align: center;">Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

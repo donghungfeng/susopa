@@ -70,11 +70,11 @@ public class CustomerEntity {
 
     @Basic
     @Column(name = "orders")
-    public Short getOrder() {
+    public Short getOrders() {
         return orders;
     }
 
-    public void setOrder(Short order) {
+    public void setOrders(Short orders) {
         this.orders = orders;
     }
 

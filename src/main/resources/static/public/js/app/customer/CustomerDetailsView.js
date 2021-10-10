@@ -10,6 +10,7 @@ var CustomerDetailsView = function(){
     // Phương thức
 	this.initPage = function () {
 		that.oCustomer.id = Util.Url.getParameterByName('id');
+		$('#phone').val(Util.Url.getParameterByName('phone'))
 		that.bindPopup();
     }
 
@@ -26,6 +27,7 @@ var CustomerDetailsView = function(){
 			$('#email').val(that.oCustomer.email);
 			$('#discount').val(that.oCustomer.discount);
 			$('#note').val(that.oCustomer.note);
+			$('#ranking').val(that.oCustomer.ranking);
 		}
     }
     
@@ -47,13 +49,31 @@ var CustomerDetailsView = function(){
 			that.oCustomer.email = $('.FORM #email').val();
 			that.oCustomer.discount = $('.FORM #discount').val();
 			that.oCustomer.note = $('.FORM #note').val();
+			that.oCustomer.ranking = $('.FORM #ranking').val();
 			var rs = that.oCustomer.save();
 			alert(rs.MESSAGE);
+			that.oCustomer = rs.RESULT;
+			if(Util.Url.getParameterByName('ref')=="order")
+				window.parent.oOrderView.oCustomer.id = that.oCustomer.id;
 			that.lockForm(true);
 		});
 
+		$('#ranking').on('change', function () {
+			let rank = $('#ranking').val();
+			let discount = 0;
+			if(rank == 0) discount = 3;
+			else if(rank == 1) discount = 5;
+			else if (rank == 2) discount = 7;
+			else if (rank == 3) discount = 10;
+
+			$('#discount').val(discount);
+		});
+
+
 		$('.ACTIONS').on('click', '#btnClose', function () {
-			window.parent.oCustomerView.oDialog.close(); 
+			// window.parent.oCustomerView.oDialog.close();
+
+			window.parent.oOrderView.oDialog.close();
 		});
 
 	});

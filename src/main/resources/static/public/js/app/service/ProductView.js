@@ -24,13 +24,15 @@ var ProductView = function () {
 			act += '<button class="btn btn-info btnEdit" data-id="'+ item.id +'"><i class="fa fa-edit"></i></button>';
 			act += '<button class="btn btn-danger btnDel" data-id="'+ item.id +'"><i class="fa fa-trash"></i></button>';
 			act += '</div>';
+			let _price = parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'});
+			_price = '<span class="label label-success">'+_price+'</span>';
 			
 			aRows.push([
 				(i + 1),
 				item.code,
 				item.name,
-				item.price,
-				item.discount,
+				_price,
+				item.discount+"%",
 				item.note,
 				act
             ]);

@@ -5,6 +5,7 @@ var Vourcher = function(){
 		GETBYID:'vourcher/getbyid',
 		SAVE:'vourcher/create',
 		DEL:'vourcher/delete',
+		GETBYCODE:'vourcher/getbycode'
 	}
 	
 	const LABEL={
@@ -20,6 +21,8 @@ var Vourcher = function(){
 	this.usage=0;
 	this.outdate=0;
 	this.note='';
+
+	this.entity = null;
 
 	this.validSave = function(){
 		var alert = '';
@@ -48,6 +51,12 @@ var Vourcher = function(){
 		this.usage=item.usage;
 		this.outdate=item.outdate;
 		this.note=item.note;
+	}
+
+	this.getByCode = function(){
+		var rs = DATA.get(URL.GETBYCODE+"/"+that.code);
+		var item = rs.RESULT;
+		this.entity = item;
 	}
 
 	//save data

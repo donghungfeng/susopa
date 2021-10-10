@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/public/orderserivce")
+@RequestMapping("/public/orderservice")
 public class OrderServiceApi extends BaseApi<OrderServiceEntity> {
     private final OrderServiceService orderServiceService;
 

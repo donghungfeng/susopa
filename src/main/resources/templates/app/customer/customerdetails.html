@@ -53,8 +53,21 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     <div class="form-group">
+                        <div class="label-text">Hạng</div>
+                        <select name="" id="ranking" class="form-control">
+                            <option value="0">Thường</option>
+                            <option value="1">Bạc</option>
+                            <option value="2">Vàng</option>
+                            <option value="3">Kim cương</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
                         <div class="label-text">Giảm giá (%)</div>
-                        <input type="number" min="0" max="100" step="1" class="form-control" id="discount" disabled>
+                        <input type="number" min="0" value="3" max="100" step="1" class="form-control" id="discount" disabled>
                     </div>
                 </div>
             </div>
@@ -73,9 +86,6 @@
         <div class="ACTIONS box-action text-center">
             <button type="button" class="btn btn-primary btn-sm" id="btnSave" disabled>
                 <i class="fa fa-save"></i> Lưu
-            </button>
-            <button type="button" class="btn btn-primary btn-sm" id="btnTestConnect" disabled>
-                <i class="fa fa-plug"></i> Test Connect
             </button>
             <button type="button" class="btn btn-primary btn-sm" id="btnClose" disabled>
                 <i class="fa fa-remove"></i> Đóng

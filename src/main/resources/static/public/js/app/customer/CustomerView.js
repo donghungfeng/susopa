@@ -1,7 +1,7 @@
 var CustomerView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Thông tin khách hàng';
+	this.AppTitle = 'Danh sách khách hàng';
 	this.oTable = null;
 	this.oDialog = null;
 	this.oCustomer = new Customer();
@@ -24,22 +24,21 @@ var CustomerView = function () {
 			act += '<button class="btn btn-info btnEdit" data-id="'+ item.id +'"><i class="fa fa-edit"></i></button>';
 			act += '<button class="btn btn-danger btnDel" data-id="'+ item.id +'"><i class="fa fa-trash"></i></button>';
 			act += '</div>';
+			let _amount = parseFloat(item.amount).toLocaleString('vi', {style : 'currency', currency : 'VND'});
+			_amount = '<span class="label label-success">'+_amount+'</span>';
 			var _rank = "";
 			switch (item.ranking) {
 				case 0:
-					_rank = "Thường";
+					_rank = '<span class="label" style="background-color: black"><i class="fa fa-user"></i> Thường&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 					break;
 				case 1:
-					_rank = "Bạc";
+					_rank = '<span class="label" style="background-color: #a6a6a6"><i class="fa fa-angle-up"></i> Bạc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 					break;
 				case 2:
-					_rank = "Vàng";
+					_rank = '<span class="label" style="background-color: gold"><i class="fa fa-angle-double-up"></i> Vàng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</span>';
 					break;
 				case 3:
-					_rank = "Bạch kim";
-					break;
-				case 4:
-					_rank = "Kim cương";
+					_rank = '<span class="label" style="background-color: dodgerblue"><i class="fa fa-diamond"></i> Kim cương</span>';
 					break;
 				default:
 					_rank = "Vô hạng";
@@ -51,8 +50,8 @@ var CustomerView = function () {
 				item.phone,
 				item.address,
 				item.email,
-				item.order,
-				item.amount,
+				item.orders,
+				_amount,
 				_rank,
 				act
             ]);

@@ -12,6 +12,7 @@
     <script type="text/javascript" th:src="@{/public/js/model/Color.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/Size.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/Material.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Vourcher.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/app/order/OrderView.js}"></script>
     <script type="text/javascript">
         var oOrderView = new OrderView();
@@ -78,7 +79,7 @@
                                     </div>
                                     <div class="col-sm-2 col-xs-2" style="padding-top: 20px">
                                         <div class="form-group ACTIONS">
-                                            <button class="btn btn-primary" id="btnAddProduct"><i class="fa fa-plus"></i>Thêm</button>
+                                            <button class="btn btn-primary" id="btnAddService"><i class="fa fa-plus"></i>Thêm</button>
                                         </div>
                                     </div>
 
@@ -112,7 +113,7 @@
                                         <div class="col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <div class="label-text">Mô tả: </div>
-                                                <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                <textarea name="" class="form-control" id="description" cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-xs-12">
+                <div class="col-sm-6 col-xs-12" id="print">
                     <div class="box-form box">
                         <div class="box-body">
                             <h4 class="form-title" id="AppTitle"></h4>
@@ -142,14 +143,14 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="table-content" style="padding: 10px;">
+                                    <div class="table-content" style="padding: 5px;">
                                         <table class="table table-bordered" id="GridProduct">
                                             <thead>
                                                 <tr>
-                                                    <td>Sản phẩm</td>
-                                                    <td>Giá</td>
-                                                    <td style="width: 50px">SL</td>
-                                                    <td>Thành tiền</td>
+                                                    <td style="width: 50%">Sản phẩm</td>
+                                                    <td style="width: 15%">Giá</td>
+                                                    <td style="width: 10%">SL</td>
+                                                    <td style="width: 25%">Thành tiền</td>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -163,27 +164,98 @@
                                     <b>Danh sách dịch vụ</b>
                                 </div>
                                 <div class="row">
-                                    <div class="table-content" style="padding: 10px;">
+                                    <div class="table-content" style="padding: 5px;">
                                         <table class="table table-bordered" id="GridService">
                                             <thead>
                                             <tr>
-                                                <td>Dịch vụ</td>
-                                                <td>Giá</td>
-                                                <td style="width: 50px">SL</td>
-                                                <td>Thành tiền</td>
+                                                <td style="width: 50%">Dịch vụ</td>
+                                                <td style="width: 15%">Giá</td>
+                                                <td style="width: 10%">SL</td>
+                                                <td style="width: 25%">Thành tiền</td>
                                             </tr>
                                             </thead>
                                             <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <hr>
+
                                 <div class="row">
                                     <b>Tổng tiền dịch vụ</b>
+                                </div>
+                                <div class="row">
+                                    <div class="table-content" style="padding: 5px;">
+                                        <table class="table table-bordered" id="">
+                                            <thead>
+                                            <tr>
+                                                <td style="width: 75%">Tổng tiền</td>
+                                                <td style="text-align: right;width: 25%" id="total">0đ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Chiết khấu (<span id="discountText"></span>)</td>
+                                                <td style="text-align: right" id="discountCustomer">0đ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="vourcher" class="form-control" placeholder="Nhập mã giảm giá">
+                                                    </div>
+                                                    <div class="col-sm-4 ACTIONS text-left">
+                                                        <button class="btn btn-default" style="padding:6px" id="addVourcher"><i class="fa fa-ticket"></i></button>
+                                                        <span class="label label-primary" style="padding: 6px" id="vourcherText"></span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: right" id="discountVourcher">0đ</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 <hr>
                                 <div class="row">
-                                    khách trả
+                                    <b>Thanh toán</b>
+                                </div>
+                                <div class="row">
+                                    <div class="table-content" style="padding: 5px;">
+                                        <table class="table table-bordered" id="">
+                                            <thead>
+                                            <tr>
+                                                <td style="width: 75%">Tổng tiền phải thanh toán</td>
+                                                <td style="text-align: right;width: 25%" id="totalAfterDiscount">0đ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="col-sm-8 ACTIONS">
+                                                        <input type="number" min="0" value="0" id="customerPay" class="form-control" placeholder="Khách trả">
+                                                    </div>
+                                                    <div class="col-sm-4 ACTIONS text-left">
+                                                        <button class="btn btn-default" style="padding:6px" id="customerPayAll"><i class="fa fa-check"></i></button>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: right" id="customerPayText">0đ</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 75%">Trả lại</td>
+                                                <td style="text-align: right;width: 25%" id="return">0đ</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <button id="exportBill">EXPORT</button>
+
+                                    <table class="table table-bordered" id="exportBillTable">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -192,8 +264,11 @@
 
 
             </div>
+
+
         </div>
     </div>
+
 </body>
 
 </html>

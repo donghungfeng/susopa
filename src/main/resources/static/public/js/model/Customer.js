@@ -17,7 +17,7 @@ var Customer = function(){
 	this.phone='';
 	this.address='';
 	this.email="";
-	this.order=0;
+	this.orders=0;
 	this.amount=0;
 	this.ranking=0;
 	this.discount=0;
@@ -47,7 +47,7 @@ var Customer = function(){
 		this.phone=item.phone;
 		this.address=item.address;
 		this.email=item.email;
-		this.order=item.order;
+		this.orders=item.orders;
 		this.amount=item.amount;
 		this.ranking=item.ranking;
 		this.discount=item.discount;
@@ -62,7 +62,7 @@ var Customer = function(){
 			phone:that.phone,
 			address:that.address,
 			email:that.email,
-			order:that.order,
+			orders:that.orders,
 			amount:that.amount,
 			ranking:that.ranking,
 			discount:that.discount,

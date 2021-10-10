@@ -1,6 +1,7 @@
 package dnhung.susopa.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "material", schema = "main", catalog = "")
@@ -55,14 +56,15 @@ public class MaterialEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         MaterialEntity that = (MaterialEntity) o;
+        return id == that.id &&
+                status == that.status &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(note, that.note);
+    }
 
-        if (id != that.id) return false;
-        if (status != that.status) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (note != null ? !note.equals(that.note) : that.note != null) return false;
-
-        return true;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, note, status);
     }
 }

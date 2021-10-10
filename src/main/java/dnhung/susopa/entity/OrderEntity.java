@@ -4,14 +4,15 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order", schema = "main", catalog = "")
+@Table(name = "orderrr", schema = "main", catalog = "")
 public class OrderEntity {
     private Long id;
+    private String code;
     private double amount;
     private double received;
     private String status;
     private double time;
-    private CustomerEntity customerByCustomerId;
+    private CustomerEntity customer;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +23,16 @@ public class OrderEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Basic
@@ -73,21 +84,22 @@ public class OrderEntity {
                 Double.compare(that.amount, amount) == 0 &&
                 Double.compare(that.received, received) == 0 &&
                 Double.compare(that.time, time) == 0 &&
+                Objects.equals(code, that.code) &&
                 Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, received, status, time);
+        return Objects.hash(id, code, amount, received, status, time);
     }
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    public CustomerEntity getCustomerByCustomerId() {
-        return customerByCustomerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setCustomerByCustomerId(CustomerEntity customerByCustomerId) {
-        this.customerByCustomerId = customerByCustomerId;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 }
