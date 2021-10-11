@@ -1,7 +1,6 @@
 package dnhung.susopa.Service.impl;
 
 import dnhung.susopa.Service.OrderServiceService;
-import dnhung.susopa.entity.OrderServiceEntity;
 import dnhung.susopa.repository.BaseRepository;
 import dnhung.susopa.repository.OrderServiceRepository;
 import org.springframework.stereotype.Service;
