@@ -6,22 +6,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "orderrr", schema = "main", catalog = "")
 public class OrderEntity {
-    private Long id;
+    private short id;
     private String code;
     private double amount;
     private double received;
     private String status;
     private double time;
-    private CustomerEntity customer;
+    private String customerPhone;
+    private String customerName;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public Long getId() {
+    public short getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(short id) {
         this.id = id;
     }
 
@@ -75,6 +75,26 @@ public class OrderEntity {
         this.time = time;
     }
 
+    @Basic
+    @Column(name = "customer_phone")
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    @Basic
+    @Column(name = "customer_name")
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,21 +105,13 @@ public class OrderEntity {
                 Double.compare(that.received, received) == 0 &&
                 Double.compare(that.time, time) == 0 &&
                 Objects.equals(code, that.code) &&
-                Objects.equals(status, that.status);
+                Objects.equals(status, that.status) &&
+                Objects.equals(customerPhone, that.customerPhone) &&
+                Objects.equals(customerName, that.customerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, amount, received, status, time);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
-    public CustomerEntity getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
+        return Objects.hash(id, code, amount, received, status, time, customerPhone, customerName);
     }
 }
