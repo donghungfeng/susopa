@@ -10,6 +10,7 @@ public class ShipEntity {
     private Double oneWay;
     private Double twoWay;
     private String note;
+    private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +67,15 @@ public class ShipEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, oneWay, twoWay, note);
+    }
+
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

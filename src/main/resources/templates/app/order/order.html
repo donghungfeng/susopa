@@ -13,6 +13,7 @@
     <script type="text/javascript" th:src="@{/public/js/model/Size.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/Material.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/Vourcher.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Ship.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/app/order/OrderView.js}"></script>
     <script type="text/javascript">
         var oOrderView = new OrderView();
@@ -118,6 +119,25 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-10 col-xs-10">
+                                        <div class="form-group">
+                                            <div class="label-text">Ship: </div>
+                                            <select name="" id="ship" class="form-control"></select>
+                                        </div>
+                                        <div class="btn-group btn-toggle">
+                                            <button class="btn btn-xs btn-primary active" id="shipOneWay">Một chiều</button>
+                                            <button class="btn btn-xs btn-default" id="shipTwoWay">Hai chiều</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-2" style="padding-top: 20px">
+                                        <div class="form-group ACTIONS">
+                                            <button class="btn btn-primary" id="btnAddShip"><i class="fa fa-plus"></i>Thêm</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -192,7 +212,7 @@
                                                 <td style="text-align: right;width: 25%" id="total">0đ</td>
                                             </tr>
                                             <tr>
-                                                <td>Chiết khấu (<span id="discountText"></span>)</td>
+                                                <td>Chiết khấu (<span id="discountText"></span>) - <span id="customerRank"></span></td>
                                                 <td style="text-align: right" id="discountCustomer">0đ</td>
                                             </tr>
                                             <tr>
@@ -214,6 +234,25 @@
                                 </div>
 
                                 <hr>
+
+                                <div class="row">
+                                    <b>Phí ship</b>
+                                </div>
+                                <div class="row">
+                                    <div class="table-content" style="padding: 5px;">
+                                        <table class="table table-bordered" id="">
+                                            <thead>
+                                            <tr>
+                                                <td style="width: 75%" id="shipName"></td>
+                                                <td style="text-align: right;width: 25%" id="totalShip">0đ</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+
                                 <div class="row">
                                     <b>Thanh toán</b>
                                 </div>

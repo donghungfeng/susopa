@@ -11,6 +11,7 @@ var OrderView = function () {
 	this.oSerivce = new Service();
 	this.oColor = new Color();
 	this.oSize = new Size();
+	this.oShip = new Ship();
 	this.oMaterial = new Material();
 	this.oManufac = new Manufac();
 	this.oVourcher = new Vourcher();
@@ -27,10 +28,13 @@ var OrderView = function () {
 	this.moneyDiscountVoucher = 0;
 	this.moneyDiscountCustomer = 0;
 	this.totalAfterDiscount = 0;
+	this.totalShip = 0;
 	this.customerPhone = "";
 
 	this.htmlBillProductTable = "";
 	this.htmlBillServiceTable = "";
+
+	this.typeShip = 1;
 
 
 	// Phương thức
@@ -42,6 +46,7 @@ var OrderView = function () {
 		that.oSerivce.bindSelect2('#service');
 		that.oColor.bindSelect('#color');
 		that.oSize.bindSelect('#size');
+		that.oShip.bindSelect('#ship');
 		that.oMaterial.bindSelect('#material');
 		that.oManufac.bindSelect2('#manufac');
 	}
@@ -67,13 +72,20 @@ var OrderView = function () {
 	this.bindGridService = function(){
 		let html = "";
 		this.totalService = 0;
+		let des = "";
 		for (var i = 0; i < that.listService.length; i++) {
+			if(des !== that.listService[i].description){
+				html += '<tr><td colspan="4" style="font-style: italic;font-weight: bold">'+that.listService[i].description+'</td></tr>';
+				des = that.listService[i].description;
+			}
 			html += '<tr>';
 			var item = that.listService[i];
 			html += '<td>' +item.item.name +' (' + item.item.code + ') ' + '</td>';
 			html += '<td>' +parseFloat(item.item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			html += '<td><input style="width: 100%" type="number" class="btnServiceSpin" value="'+item.count+'" step="1" min="0" data-id="'+i+'" /></td>';
 			html += '<td>' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+
+
 			html += '</tr>';
 			this.totalService = this.totalService + item.item.price * item.count;
 		}
@@ -90,8 +102,10 @@ var OrderView = function () {
 		that.moneyDiscountVoucher = that.discountVourcher*(-0.01)*that.total;
 		$('#discountCustomer').html(that.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		$('#discountVourcher').html(that.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
-		this.totalAfterDiscount = this.total - that.discountCustomer*0.01*that.total - that.discountVourcher*0.01*that.total;
+		this.totalAfterDiscount = this.total - that.discountCustomer*0.01*that.total - that.discountVourcher*0.01*that.total + that.totalShip;
 		$('#totalAfterDiscount').html(parseFloat(this.totalAfterDiscount).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+
+
 
 		let returnMoney  = parseInt($('#customerPay').val()) - this.totalAfterDiscount;
 		if(returnMoney < 0)
@@ -100,8 +114,32 @@ var OrderView = function () {
 	}
 	this.reloadCustomer = function(){
 		that.oCustomer.getById();
+
+		let _rank = "";
+		switch (that.oCustomer.ranking) {
+			case 0:
+				_rank = '<span><i class="fa fa-user"></i> Thường&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+				break;
+			case 1:
+				_rank = '<span class="label" style="background-color: black"><i class="fa fa-user"></i> Member &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+				break;
+			case 2:
+				_rank = '<span class="label" style="background-color: #a6a6a6"><i class="fa fa-angle-up"></i> Bạc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+				break;
+			case 3:
+				_rank = '<span class="label" style="background-color: gold"><i class="fa fa-angle-double-up"></i> Vàng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</span>';
+				break;
+			case 4:
+				_rank = '<span class="label" style="background-color: dodgerblue"><i class="fa fa-diamond"></i> Kim cương</span>';
+				break;
+			default:
+				_rank = "Vô hạng";
+				break;
+		}
 		$('#customerName').html(that.oCustomer.name);
 		$('#customerPhone').html(that.oCustomer.phone);
+
+		$('#customerRank').html(_rank);
 		$('#discountText').html("-" + that.oCustomer.discount + "%");
 		$('#discount').html(that.oCustomer.discount*(-0.01)*that.total);
 		that.discountCustomer = that.oCustomer.discount;
@@ -148,6 +186,7 @@ var OrderView = function () {
 		}
 
 		$('.ACTIONS').on('click', '#btnAddProduct', function () {
+			if($('#product').val() === "0") return;
 			that.oProduct.id = $('#product').val();
 			that.oProduct.getById();
 			let check = that.listProduct.findIndex(e => e.item.id === that.oProduct.entity.id);
@@ -164,20 +203,36 @@ var OrderView = function () {
 			that.bindGridProduct();
 		});
 		$('.ACTIONS').on('click', '#btnAddService', function () {
+			if($('#service').val() === "0") return;
 			that.oSerivce.id = $('#service').val();
 			that.oSerivce.getById();
-			let check = that.listService.findIndex(e => e.item.id === that.oSerivce.entity.id);
-			if(check === -1){
-				let entity = {
-					item: that.oSerivce.entity,
-					count: 1
-				}
-				that.listService.push(entity);
+			let entity = {
+				item: that.oSerivce.entity,
+				description: $('#description').val(),
+				count: 1
 			}
-			else
-				that.listService[check].count++;
+			that.listService.push(entity);
 
+			console.log(that.listService);
 			that.bindGridService();
+		});
+		$('.ACTIONS').on('click', '#btnAddShip', function () {
+			if($('#ship').val() === "0") return;
+			that.oShip.id = $('#ship').val();
+			that.oShip.getById();
+
+			$('#shipName').html(that.oShip.name);
+
+			if(that.typeShip == 1){
+				$('#totalShip').html(that.oShip.oneWay.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+				that.totalShip = that.oShip.oneWay;
+			}
+			if(that.typeShip == 2){
+				$('#totalShip').html(that.oShip.twoWay.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+				that.totalShip = that.oShip.twoWay;
+			}
+
+			that.reloadTotal();
 		});
 
 		$('.ACTIONS').on('click', '#btnAddCustomer', function () {
@@ -286,6 +341,13 @@ var OrderView = function () {
 
 		});
 
+		$('#shipOneWay').on('click', function () {
+			that.typeShip = 1;
+		});
+		$('#shipTwoWay').on('click', function () {
+			that.typeShip = 2;
+		});
+
 		$('#customer').select2({
 			language: {
 				noResults: function(term) {
@@ -298,6 +360,16 @@ var OrderView = function () {
 				}
 			}
 		});
+
+		$('.btn-toggle').click(function() {
+			$(this).find('.btn').toggleClass('active');
+			if ($(this).find('.btn-primary').size()>0) {
+				$(this).find('.btn').toggleClass('btn-primary');
+			}
+			$(this).find('.btn').toggleClass('btn-default');
+
+		});
+
 
 
 	});

@@ -25,8 +25,8 @@ var CustomerDetailsView = function(){
 			$('#phone').val(that.oCustomer.phone);
 			$('#address').val(that.oCustomer.address);
 			$('#email').val(that.oCustomer.email);
-			$('#discount').val(that.oCustomer.discount);
 			$('#note').val(that.oCustomer.note);
+			$('#discount').val(that.oCustomer.discount);
 			$('#ranking').val(that.oCustomer.ranking);
 		}
     }
@@ -61,10 +61,13 @@ var CustomerDetailsView = function(){
 		$('#ranking').on('change', function () {
 			let rank = $('#ranking').val();
 			let discount = 0;
-			if(rank == 0) discount = 3;
-			else if(rank == 1) discount = 5;
-			else if (rank == 2) discount = 7;
-			else if (rank == 3) discount = 10;
+			if(rank == 1) discount = 3;
+			else if(rank == 3) discount = 5;
+			else if (rank == 3) discount = 7;
+			else if (rank == 4) discount = 10;
+			else{
+				discount = 0;
+			}
 
 			$('#discount').val(discount);
 		});

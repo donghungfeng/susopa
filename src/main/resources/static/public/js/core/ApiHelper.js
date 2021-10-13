@@ -88,11 +88,8 @@ const ApiHelper = {
                     _rs = _response;
                 });
                 request.fail(function (jqXHR, textStatus) {
-                    alert("ERR: " + textStatus);
-                    return false;
+                    return null;
                 });
-                // Response Null
-                if(!_rs){alert('ERR: Return NULL'); return false;}
 
                 // JWT expired
                 if(_rs.CODE==401){
@@ -109,8 +106,8 @@ const ApiHelper = {
             } catch (error) {
                 return {
                     CODE:3,
-                    MESSAGE: 'ERROR',
-                    RESULT:error
+                    MESSAGE: 'Dữ liệu đã tồn tại',
+                    RESULT: null
                 }
             }
         }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Danh mục | Ship</title>
+    <script type="text/javascript" th:src="@{/public/js/model/Ship.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/define/ShipController.js}"></script>
+    <script type="text/javascript">
+        var oShipController = new ShipController();
+    </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="box-form box" style="min-height:calc(100vh - 170px);">
+                    <div class="box-body">
+                        <h4 class="form-title">Thông tin Ship </h4>
+                        <div class="box-form">
+                            <div class="form-group">
+                                <div class="label-text">Địa chỉ: <span class="required">(*)</span></div>
+                                <input type="text" id="name" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">1 chiều: <span class="required">(*)</span></div>
+                                <input type="number" min="0" value="0" step="1000" id="oneWay" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">2 chiều: <span class="required">(*)</span></div>
+                                <input type="number" min="0" value="0" step="1000" id="twoWay" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Ghi chú:</div>
+                                <textarea name="" id="note" cols="30" rows="10" class="form-control"
+                                          style="resize: vertical;height:60px;"></textarea>
+                            </div>
+
+
+                        </div>
+                        <div class="center ACTIONS">
+                            <button class="btn btn-info" id="btnEdit">Sửa</button>
+                            <button class="btn btn-success" id="btnSave">Lưu</button>
+                            <button class="btn btn-danger" id="btnDelete">Xóa</button>
+                            <button class="btn btn-warning" id="btnCancel">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-xs-12">
+                <div class="box" style="min-height:calc(100vh - 170px);">
+                    <div class="box-body">
+                        <div class="table-connamet">
+                            <table class="table footablejs" id="Grid01">
+                                <thead>
+                                <th style="width:20px;text-align: center;">STT</th>
+                                <th>Địa chỉ</th>
+                                <th>Phí ship 1 chiều</th>
+                                <th>Phí ship 2 chiều</th>
+                                <th>Ghi chú</th>
+
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
