@@ -1,10 +1,10 @@
 var Order = function(){
 	var that = this;
 	const URL = {
-		GETALL:'size/search',
-		GETBYID:'size/getbyid',
-		SAVE:'size/create',
-		DEL:'size/delete',
+		GETALL:'order/search',
+		GETBYID:'order/getbyid',
+		SAVE:'order/create',
+		DEL:'order/delete',
 	}
 	
 	const LABEL={
@@ -13,8 +13,12 @@ var Order = function(){
 
 	// Thuộc tính
 	this.id=0;
-	this.name='';
-	this.note='';
+	this.code='';
+	this.amount=0;
+	this.received = 0;
+	this.time = 0;
+	this.customerPhone = '';
+	this.customerName = '';
 	this.status='';
 
 	this.validSave = function(){
@@ -37,8 +41,12 @@ var Order = function(){
 		var rs = DATA.get(URL.GETBYID+"/"+that.id);
 		var item = rs.RESULT;
 		this.id=item.id;
-		this.name=item.name;
-		this.note=item.note;
+		this.code=item.code;
+		this.amount=item.amount;
+		this.received=item.received;
+		this.time=item.time;
+		this.customerName=item.customerName;
+		this.customerPhone=item.customerPhone;
 		this.status=item.status;
 	}
 
@@ -46,8 +54,12 @@ var Order = function(){
 	this.save = function(){
 		var data= {
 			id:that.id,
-			name:that.name,
-			note:that.note,
+			code:that.code,
+			amount:that.amount,
+			received:that.received,
+			time:that.time,
+			customerName:that.customerName,
+			customerPhone:that.customerPhone,
 			status:that.status,
 		}
 		console.log(data);

@@ -334,13 +334,6 @@ var OrderView = function () {
 			that.reloadTotal();
 		});
 
-		$('#exportBill').on('click', function () {
-			that.renderBillTable();
-			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
-			that.oBillDialog.show('Hóa đơn', url, '52%', '700px');
-
-		});
-
 		$('#shipOneWay').on('click', function () {
 			that.typeShip = 1;
 		});
@@ -367,6 +360,37 @@ var OrderView = function () {
 				$(this).find('.btn').toggleClass('btn-primary');
 			}
 			$(this).find('.btn').toggleClass('btn-default');
+
+		});
+
+
+		$('#exportBill').on('click', function () {
+			// if(that.oCustomer.id === 0){
+			// 	alert("Chưa chọn khách hàng!");
+			// 	return;
+			// }
+
+			let date = new Date();
+
+			let code = "SU" + date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
+			that.oOrder.code = code;
+			that.oOrder.amount = that.totalAfterDiscount;
+			that.oOrder.received = that.totalAfterDiscount;
+			that.oOrder.time = date.getTime();
+			that.oOrder.customerName = that.oCustomer.name;
+			that.oOrder.customerPhone = that.oCustomer.phone;
+			that.oOrder.status = "CREATED";
+
+			that.oOrder.save();
+
+			that.oCustomer.amount += that.totalAfterDiscount;
+			that.oCustomer.orders ++;
+
+			that.oCustomer.save();
+
+			// that.renderBillTable();
+			// var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
+			// that.oBillDialog.show('Hóa đơn', url, '52%', '700px');
 
 		});
 

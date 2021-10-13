@@ -41,11 +41,12 @@ var OrderServiceView = function () {
 			act += '</div>';
 			aRows.push([
 				(i + 1),
-				item.service.name,
-				item.order.customer.name,
 				item.description,
+				item.order.customerPhone,
+				// item.description,
 				"10/10/2021 15:30:21",
-				act
+				act,
+				item.note
             ]);
 		}
 		that.oTable.rows.add(aRows).draw();

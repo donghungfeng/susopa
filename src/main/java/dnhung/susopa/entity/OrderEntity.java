@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "orderrr", schema = "main", catalog = "")
 public class OrderEntity {
-    private short id;
+    private Long id;
     private String code;
     private double amount;
     private double received;
@@ -16,12 +16,13 @@ public class OrderEntity {
     private String customerName;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public short getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
