@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "order_product", schema = "main", catalog = "")
 public class OrderProductEntity {
-    private Short id;
+    private Long id;
     private OrderEntity order;
     private String note;
     private short status;
@@ -14,14 +14,15 @@ public class OrderProductEntity {
     private short count;
     private String productName;
     private String productCode;
+    private double time;
 
     @Id
     @Column(name = "id")
-    public Short getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -112,5 +113,15 @@ public class OrderProductEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, note, status, price, count, productName, productCode);
+    }
+
+    @Basic
+    @Column(name = "time")
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 }

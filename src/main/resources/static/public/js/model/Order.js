@@ -20,6 +20,8 @@ var Order = function(){
 	this.customerPhone = '';
 	this.customerName = '';
 	this.status='';
+	this.countProduct = 0;
+	this.countService = 0;
 
 	this.validSave = function(){
 		var alert = '';
@@ -48,6 +50,8 @@ var Order = function(){
 		this.customerName=item.customerName;
 		this.customerPhone=item.customerPhone;
 		this.status=item.status;
+		this.countProduct=item.countProduct;
+		this.countService=item.countService;
 	}
 
 	//save data
@@ -61,6 +65,8 @@ var Order = function(){
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
 			status:that.status,
+			countProduct:that.countProduct,
+			countService:that.countService
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);

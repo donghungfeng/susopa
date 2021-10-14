@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hóa đơn | Dịch vụ cần thực hiện</title>
+    <script type="text/javascript" th:src="@{/public/js/model/Order.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/report/ReportView.js}"></script>
+    <script type="text/javascript">
+        var oReportView = new ReportView();
+    </script>
+    <style>
+        tr > td > .row-actions {
+           display:none;
+        }
+
+        tr.selected > td >  .row-actions {
+            display:block !important;
+        }
+        .row-actions button{margin: 0 4px !important;}
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Hóa đơn</a> > <a
+                        href="">Tổng hợp đơn hàng</a>
+                </div>
+
+                <div class="col-sm-12 col-xs-12">
+                    <div class="box" style="min-height:calc(100vh - 170px);">
+                        <div class="box-head text-center">
+                            <h2><b>TỔNG HỢP ĐƠN HÀNG</b></h2>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#order" data-toggle="tab">ĐƠN HÀNG</a></li>
+                                    <li><a href="#product" data-toggle="tab">SẢN PHẨM</a></li>
+                                    <li><a href="#service" data-toggle="tab">DỊCH VỤ</a></li>
+                                </ul>
+
+                                <div class="tab-content" style="overflow: auto">
+                                    <div class="tab-pane" id="order">
+                                        <div class="row">
+                                            <div class="col-sm-2 col-xs-2">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng doanh thu: <span class="text-danger">100000</span></div>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng sản phẩm: <span class="text-danger"></span></div>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng dịch vụ: <span class="text-danger"></span></div>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <label for="">Từ ngày</label>
+                                                <input type="date" class="form-control">
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <label for="">Đến ngày</label>
+                                                <input type="date" class="form-control">
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <button class="btn btn-primary">Lọc</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-content" style="padding: 10px; padding-top: 30px">
+                                            <table class="table table-bordered" id="GridOrder">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:5%;text-align: center;">STT</th>
+                                                    <th>Mã đơn hàng</th>
+                                                    <th style="width:15%;text-align: center;">Khách hàng</th>
+                                                    <th style="width:15%;text-align: center;">Số sản phẩm</th>
+                                                    <th style="width:10%;text-align: center;">Số dịch vụ</th>
+                                                    <th>Tổng tiền</th>
+                                                    <th>Thời gian</th>
+                                                    <th style="width:10%;text-align: center;">Ghi chú</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane" id="product">
+                                        Sản phẩm
+                                    </div>
+                                    <div class="tab-pane" id="service">Dịch vụ</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

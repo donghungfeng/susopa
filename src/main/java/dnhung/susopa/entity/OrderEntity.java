@@ -14,6 +14,8 @@ public class OrderEntity {
     private double time;
     private String customerPhone;
     private String customerName;
+    private Long countProduct;
+    private Long countService;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,26 @@ public class OrderEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Basic
+    @Column(name = "count_product")
+    public Long getCountProduct() {
+        return countProduct;
+    }
+
+    public void setCountProduct(Long countProduct) {
+        this.countProduct = countProduct;
+    }
+
+    @Basic
+    @Column(name = "count_service")
+    public Long getCountService() {
+        return countService;
+    }
+
+    public void setCountService(Long countService) {
+        this.countService = countService;
     }
 
     @Basic
