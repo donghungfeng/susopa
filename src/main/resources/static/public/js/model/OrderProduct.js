@@ -1,11 +1,11 @@
-var Order = function(){
+var OrderProduct = function(){
 	var that = this;
 	const URL = {
-		GETALL:'order/search',
-		GETBYID:'order/getbyid',
-		GETBYTIME:'order/time',
-		SAVE:'order/create',
-		DEL:'order/delete',
+		GETALL:'orderproduct/search',
+		GETBYID:'orderproduct/getbyid',
+		SAVE:'orderproduct/create',
+		DEL:'orderproduct/delete',
+		GETBYTIME: 'orderproduct/time'
 	}
 	
 	const LABEL={
@@ -14,15 +14,14 @@ var Order = function(){
 
 	// Thuộc tính
 	this.id=0;
-	this.code='';
-	this.amount=0;
-	this.received = 0;
-	this.time = 0;
-	this.customerPhone = '';
-	this.customerName = '';
-	this.status='';
-	this.countProduct = 0;
-	this.countService = 0;
+	this.order=null;
+	this.note='';
+	this.status=0;
+	this.price=0;
+	this.count=0;
+	this.time=0;
+	this.productName='';
+	this.productCode='';
 
 	this.validSave = function(){
 		var alert = '';
@@ -38,15 +37,14 @@ var Order = function(){
 		that.LIST = rs.RESULT;
 		console.log(rs);
 	}
+
 	this.getAllByTime = function(from,to){
 		var data= {
 			from:from,
 			to:to
 		}
-		console.log(data);
 		var rs = DATA.set(URL.GETBYTIME,data);
 		that.LIST = rs.RESULT;
-		console.log(rs);
 	}
 	
 	// get data by id
@@ -54,43 +52,41 @@ var Order = function(){
 		var rs = DATA.get(URL.GETBYID+"/"+that.id);
 		var item = rs.RESULT;
 		this.id=item.id;
-		this.code=item.code;
-		this.amount=item.amount;
-		this.received=item.received;
-		this.time=item.time;
-		this.customerName=item.customerName;
-		this.customerPhone=item.customerPhone;
+		this.note=item.note;
 		this.status=item.status;
-		this.countProduct=item.countProduct;
-		this.countService=item.countService;
+		this.order=item.order;
+		this.price=item.price;
+		this.count=item.count;
+		this.time=item.time;
+		this.productCode=item.productCode;
+		this.productName=item.productName;
 	}
 
 	//save data
 	this.save = function(){
 		var data= {
 			id:that.id,
-			code:that.code,
-			amount:that.amount,
-			received:that.received,
-			time:that.time,
-			customerName:that.customerName,
-			customerPhone:that.customerPhone,
+			note:that.note,
 			status:that.status,
-			countProduct:that.countProduct,
-			countService:that.countService
+			order:that.order,
+			price:that.price,
+			count:that.count,
+			time:that.time,
+			productName:that.productName,
+			productCode:that.productCode
 		}
 		console.log(data);
-		return DATA.set(URL.SAVE,data);
+		return  DATA.set(URL.SAVE,data);
 	}
 	
 	//delete data
 	this.del = function(){
 		return DATA.get(URL.DEL+"/"+that.id);
 	}
-	
+
 	this.bindSelect = function(sControlId){
 		that.getAll();
-		var html = '<option  value="0"> - Chọn size - </option>';
+		var html = '<option  value="0"> - Chọn màu - </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
 			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
@@ -100,7 +96,7 @@ var Order = function(){
 	}
 	this.bindSelect2 = function(sControlId){
 		that.getAll();
-		var html = '<option  value="0"> -Chọn size- </option>';
+		var html = '<option  value="0"> -Chọn màu- </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
 			html +='<option  value="'+ item.id +'">' + item.name +'</option>';

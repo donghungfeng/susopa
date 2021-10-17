@@ -1,7 +1,7 @@
-var OrderServiceView = function () {
+var ReportProductView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Danh sách dịch vụ cần thực hiện';
+	this.AppTitle = 'Thống kê sản phẩm bán ra';
 	this.oTable = null;
 	this.oDialog = null;
 	this.oOrderService = new OrderService();
@@ -82,29 +82,6 @@ var OrderServiceView = function () {
 			}
 			return true;
 		});
-
-		$('#Grid01').on('click', '.btnStatus', function () {
-			var id = $(this).data('id');
-			if(!id){
-				return ;
-			}
-			if (confirm('Xác nhận chuyển trạng thái?')) {
-				that.oOrderService.id = id;
-				that.oOrderService.changeStatus();
-				that.bindGrid();
-			}
-			return false;
-		});
-
-		$('#Grid01').on('click', '.btnNote', function () {
-			var id = $(this).data('id');
-			that.oOrderService.id = id;
-			let note = prompt("Vị trí để giày:",$(this).html() );
-			that.oOrderService.changeNote(note);
-			that.bindGrid();
-		});
-
-
 
 	});
 }

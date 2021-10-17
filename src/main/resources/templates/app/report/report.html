@@ -3,8 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Hóa đơn | Dịch vụ cần thực hiện</title>
+    <title>Báo cáo | Tổng hợp hóa đơn</title>
     <script type="text/javascript" th:src="@{/public/js/model/Order.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/OrderProduct.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/OrderService.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/app/report/ReportView.js}"></script>
     <script type="text/javascript">
         var oReportView = new ReportView();
@@ -26,7 +28,7 @@
         <div class="main-content">
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
-                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Hóa đơn</a> > <a
+                    <a th:href="@{/app/common/dashboard}" class="url">SUSOPA</a> > <a href="#">Báo cáo</a> > <a
                         href="">Tổng hợp đơn hàng</a>
                 </div>
 
@@ -34,6 +36,31 @@
                     <div class="box" style="min-height:calc(100vh - 170px);">
                         <div class="box-head text-center">
                             <h2><b>TỔNG HỢP ĐƠN HÀNG</b></h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-xs-2">
+                                <label for="">Từ ngày</label>
+                                <input type="date" class="form-control" id="fromDate">
+                            </div>
+                            <div class="col-sm-2 col-xs-2">
+                                <label for="">Đến ngày</label>
+                                <input type="date" class="form-control" id="toDate">
+                            </div>
+                            <div class="col-sm-2 col-xs-2" style="padding-top: 20px">
+                                <button class="btn btn-primary" id="btnFilter">Lọc</button>
+                                <button class="btn btn-primary" id="btnRefresh">Làm mới</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-4"></div>
+                            <div class="col-sm-2 col-xs-2">
+                                <label for="">Lọc nhanh</label>
+                                <select name="" id="filterFast" class="form-control">
+                                    <option value="">-- Lọc nhanh --</option>
+                                    <option value="day">Hôm nay</option>
+                                    <option value="week">Tuần này</option>
+                                    <option value="month">Tháng này</option>
+                                    <option value="year">Năm nay</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -46,38 +73,28 @@
                                 <div class="tab-content" style="overflow: auto">
                                     <div class="tab-pane" id="order">
                                         <div class="row">
-                                            <div class="col-sm-2 col-xs-2">
-                                                <div style="font-size: 20px;font-weight: bold">Tổng doanh thu: <span class="text-danger">100000</span></div>
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng doanh thu: <span class="text-danger" id="totalAmount"></span></div>
                                             </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <div style="font-size: 20px;font-weight: bold">Tổng sản phẩm: <span class="text-danger"></span></div>
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng sản phẩm: <span class="text-danger" id="totalOrderProduct"></span></div>
                                             </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <div style="font-size: 20px;font-weight: bold">Tổng dịch vụ: <span class="text-danger"></span></div>
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng dịch vụ: <span class="text-danger" id="totalOrderService"></span></div>
                                             </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <label for="">Từ ngày</label>
-                                                <input type="date" class="form-control">
-                                            </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <label for="">Đến ngày</label>
-                                                <input type="date" class="form-control">
-                                            </div>
-                                            <div class="col-sm-2 col-xs-2">
-                                                <button class="btn btn-primary">Lọc</button>
-                                            </div>
+
                                         </div>
                                         <div class="table-content" style="padding: 10px; padding-top: 30px">
                                             <table class="table table-bordered" id="GridOrder">
                                                 <thead>
                                                 <tr>
                                                     <th style="width:5%;text-align: center;">STT</th>
-                                                    <th>Mã đơn hàng</th>
-                                                    <th style="width:15%;text-align: center;">Khách hàng</th>
-                                                    <th style="width:15%;text-align: center;">Số sản phẩm</th>
+                                                    <th style="width:15%;text-align: center;">Mã đơn hàng</th>
+                                                    <th >Khách hàng</th>
+                                                    <th style="width:10%;text-align: center;">Số sản phẩm</th>
                                                     <th style="width:10%;text-align: center;">Số dịch vụ</th>
-                                                    <th>Tổng tiền</th>
-                                                    <th>Thời gian</th>
+                                                    <th style="width:10%;text-align: center;">Tổng tiền</th>
+                                                    <th style="width:10%;text-align: center;">Thời gian</th>
                                                     <th style="width:10%;text-align: center;">Ghi chú</th>
                                                 </tr>
                                                 </thead>
@@ -86,12 +103,60 @@
                                                 </tbody>
                                             </table>
                                         </div>
-
                                     </div>
                                     <div class="tab-pane" id="product">
-                                        Sản phẩm
+                                        <div class="row">
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng doanh thu sản phẩm: <span class="text-danger" id="totalAmountProduct"></span></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="table-content" style="padding: 10px; padding-top: 30px">
+                                            <table class="table table-bordered" id="GridProduct">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:5%;text-align: center;">STT</th>
+                                                    <th style="width:15%;text-align: center;">Mã đơn hàng</th>
+                                                    <th style="width:15%;text-align: center;">Mã sản phẩm</th>
+                                                    <th >Tên sản phẩm</th>
+                                                    <th style="width:10%;text-align: center;">Giá tiền</th>
+                                                    <th style="width:10%;text-align: center;">Số lượng</th>
+                                                    <th style="width:10%;text-align: center;">Thời gian</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="tab-pane" id="service">Dịch vụ</div>
+                                    <div class="tab-pane" id="service">
+                                        <div class="row">
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng doanh thu dịch vụ: <span class="text-danger" id="totalAmountService"></span></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="table-content" style="padding: 10px; padding-top: 30px">
+                                            <table class="table table-bordered" id="GridService">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width:5%;text-align: center;">STT</th>
+                                                    <th style="width:15%;text-align: center;">Mã đơn hàng</th>
+                                                    <th style="width:15%;text-align: center;">Mã dịch vụ</th>
+                                                    <th style="width:15%;text-align: center;">Tên dịch vụ</th>
+                                                    <th style="width:10%;text-align: center;">Giá tiền</th>
+                                                    <th style="width:10%;text-align: center;">Số lượng</th>
+                                                    <th style="width:10%;text-align: center;">Thời gian</th>
+                                                    <th>Mô tả</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

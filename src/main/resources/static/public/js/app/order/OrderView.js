@@ -28,8 +28,10 @@ var OrderView = function () {
 	this.moneyDiscountVoucher = 0;
 	this.moneyDiscountCustomer = 0;
 	this.totalAfterDiscount = 0;
+	this.totalAfterDiscountShip = 0;
 	this.totalShip = 0;
 	this.customerPhone = "";
+	this.totalDiscount = 0;
 
 	this.htmlBillProductTable = "";
 	this.htmlBillServiceTable = "";
@@ -96,18 +98,21 @@ var OrderView = function () {
 	}
 
 	this.reloadTotal = function(){
-		this.total = this.totalProduct + this.totalService;
+		that.total = that.totalProduct + that.totalService;
 		$('#total').html(parseFloat(this.total).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		that.moneyDiscountCustomer = that.discountCustomer*(-0.01)*that.total;
 		that.moneyDiscountVoucher = that.discountVourcher*(-0.01)*that.total;
+		that.totalDiscount = that.discountVourcher + that.discountCustomer;
 		$('#discountCustomer').html(that.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		$('#discountVourcher').html(that.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
-		this.totalAfterDiscount = this.total - that.discountCustomer*0.01*that.total - that.discountVourcher*0.01*that.total + that.totalShip;
-		$('#totalAfterDiscount').html(parseFloat(this.totalAfterDiscount).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
+		that.totalAfterDiscount = that.total + that.moneyDiscountCustomer + that.moneyDiscountVoucher;
+		that.totalAfterDiscountShip = that.totalAfterDiscount + that.totalShip
+
+		$('#totalAfterDiscount').html(parseFloat(this.totalAfterDiscountShip).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 
 
 
-		let returnMoney  = parseInt($('#customerPay').val()) - this.totalAfterDiscount;
+		let returnMoney  = parseInt($('#customerPay').val()) - this.totalAfterDiscountShip;
 		if(returnMoney < 0)
 			returnMoney = 0
 		$('#return').html(returnMoney.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
@@ -365,10 +370,10 @@ var OrderView = function () {
 
 
 		$('#exportBill').on('click', function () {
-			// if(that.oCustomer.id === 0){
-			// 	alert("Chưa chọn khách hàng!");
-			// 	return;
-			// }
+			if(that.oCustomer.id === 0){
+				alert("Chưa chọn khách hàng!");
+				return;
+			}
 
 			let date = new Date();
 
@@ -379,14 +384,49 @@ var OrderView = function () {
 			that.oOrder.time = date.getTime();
 			that.oOrder.customerName = that.oCustomer.name;
 			that.oOrder.customerPhone = that.oCustomer.phone;
+			that.oOrder.countService = that.listService.length;
+			that.oOrder.countProduct = that.listProduct.length;
 			that.oOrder.status = "CREATED";
 
-			that.oOrder.save();
+			let oOrderEntity = that.oOrder.save().RESULT;
+			console.log(that.oOrder);
 
 			that.oCustomer.amount += that.totalAfterDiscount;
 			that.oCustomer.orders ++;
 
 			that.oCustomer.save();
+
+			for (let i = 0;i<that.listProduct.length;i++){
+				let item = that.listProduct[i];
+				let oOderProduct = new OrderProduct();
+				oOderProduct.time = date.getTime();
+				oOderProduct.order = oOrderEntity;
+				oOderProduct.status = 0;
+				oOderProduct.note = '';
+				oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOderProduct.count = item.count;
+				oOderProduct.productCode = item.item.code;
+				oOderProduct.productName = item.item.name;
+
+				oOderProduct.save();
+			}
+
+			for (let i = 0;i<that.listService.length;i++){
+				let item = that.listService[i];
+				let oOrderService = new OrderService();
+				oOrderService.time = date.getTime();
+				oOrderService.order = oOrderEntity;
+				oOrderService.status = 0;
+				oOrderService.note = '';
+				oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOrderService.count = item.count;
+				oOrderService.description = item.description;
+				oOrderService.serviceCode = item.item.code;
+				oOrderService.serviceName = item.item.name;
+				oOrderService.note = '';
+
+				oOrderService.save();
+			}
 
 			// that.renderBillTable();
 			// var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';

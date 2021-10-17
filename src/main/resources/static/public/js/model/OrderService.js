@@ -5,6 +5,7 @@ var OrderService = function(){
 		GETBYID:'orderservice/getbyid',
 		SAVE:'orderservice/create',
 		DEL:'orderservice/delete',
+		GETBYTIME: 'orderservice/time'
 	}
 	
 	const LABEL={
@@ -15,9 +16,13 @@ var OrderService = function(){
 	this.id=0;
 	this.description='';
 	this.order=null;
-	this.service=null;
 	this.note='';
 	this.status=0;
+	this.price=0;
+	this.count=0;
+	this.time=0;
+	this.serviceName='';
+	this.serviceCode='';
 
 	this.validSave = function(){
 		var alert = '';
@@ -33,6 +38,15 @@ var OrderService = function(){
 		that.LIST = rs.RESULT;
 		console.log(rs);
 	}
+
+	this.getAllByTime = function(from,to){
+		var data= {
+			from:from,
+			to:to
+		}
+		var rs = DATA.set(URL.GETBYTIME,data);
+		that.LIST = rs.RESULT;
+	}
 	
 	// get data by id
 	this.getById = function(){
@@ -43,7 +57,11 @@ var OrderService = function(){
 		this.note=item.note;
 		this.status=item.status;
 		this.order=item.order;
-		this.service=item.service;
+		this.price=item.price;
+		this.count=item.count;
+		this.time=item.time;
+		this.serviceCode=item.serviceCode;
+		this.serviceName=item.serviceName;
 	}
 
 	//save data
@@ -54,7 +72,11 @@ var OrderService = function(){
 			note:that.note,
 			status:that.status,
 			order:that.order,
-			service:that.service
+			price:that.price,
+			count:that.count,
+			time:that.time,
+			serviceName:that.serviceName,
+			serviceCode:that.serviceCode
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);
@@ -73,7 +95,29 @@ var OrderService = function(){
 			note:that.note,
 			status:that.status+1,
 			order:that.order,
-			service:that.service
+			price:that.price,
+			count:that.count,
+			time:that.time,
+			serviceName:that.serviceName,
+			serviceCode:that.serviceCode
+		}
+		console.log(data);
+		return  DATA.set(URL.SAVE,data);
+	}
+
+	this.changeNote = function(note){
+		that.getById();
+		var data= {
+			id:that.id,
+			description:that.description,
+			note:note,
+			status:that.status,
+			order:that.order,
+			price:that.price,
+			count:that.count,
+			time:that.time,
+			serviceName:that.serviceName,
+			serviceCode:that.serviceCode
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);

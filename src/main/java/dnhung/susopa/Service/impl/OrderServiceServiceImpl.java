@@ -6,6 +6,8 @@ import dnhung.susopa.repository.BaseRepository;
 import dnhung.susopa.repository.OrderServiceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderServiceServiceImpl extends BaseServiceImpl<OrderServiceEntity> implements OrderServiceService {
     private final OrderServiceRepository orderServiceRepository;
@@ -17,5 +19,10 @@ public class OrderServiceServiceImpl extends BaseServiceImpl<OrderServiceEntity>
     @Override
     protected BaseRepository<OrderServiceEntity> getBaseRepository() {
         return orderServiceRepository;
+    }
+
+    @Override
+    public List<OrderServiceEntity> findAllFromTime(double from, double to) {
+        return this.orderServiceRepository.findAllFromTime(from,to);
     }
 }
