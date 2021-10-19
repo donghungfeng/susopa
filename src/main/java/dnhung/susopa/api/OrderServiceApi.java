@@ -25,7 +25,11 @@ public class OrderServiceApi extends BaseApi<OrderServiceEntity> {
     }
 
     @PostMapping("/time")
-    public BaseResponse create(@RequestBody Time t){
+    public BaseResponse findAllByTime(@RequestBody Time t){
         return new BaseResponse("00","Lấy thành công", this.orderServiceService.findAllFromTime(t.getFrom(),t.getTo()));
+    }
+    @PostMapping("/grouptime")
+    public BaseResponse findAllGroupByTime(@RequestBody Time t){
+        return new BaseResponse("00","Lấy thành công", this.orderServiceService.findAllGroupFromTime(t.getFrom(),t.getTo()));
     }
 }

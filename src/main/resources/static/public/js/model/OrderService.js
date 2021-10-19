@@ -5,7 +5,8 @@ var OrderService = function(){
 		GETBYID:'orderservice/getbyid',
 		SAVE:'orderservice/create',
 		DEL:'orderservice/delete',
-		GETBYTIME: 'orderservice/time'
+		GETBYTIME: 'orderservice/time',
+		GETGROUPBYTIME: 'orderservice/grouptime'
 	}
 	
 	const LABEL={
@@ -45,6 +46,14 @@ var OrderService = function(){
 			to:to
 		}
 		var rs = DATA.set(URL.GETBYTIME,data);
+		that.LIST = rs.RESULT;
+	}
+	this.getAllGroupByTime = function(from,to){
+		var data= {
+			from:from,
+			to:to
+		}
+		var rs = DATA.set(URL.GETGROUPBYTIME,data);
 		that.LIST = rs.RESULT;
 	}
 	

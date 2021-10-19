@@ -25,4 +25,9 @@ public class OrderProductServiceImpl extends BaseServiceImpl<OrderProductEntity>
     public List<OrderProductEntity> findAllFromTime(double from, double to) {
         return this.orderProductRepository.findAllFromTime(from,to);
     }
+
+    @Override
+    public List<Object> findAllGroupFromTime(double from, double to) {
+        return this.orderProductRepository.findAllGroupFromTime(from,to);
+    }
 }

@@ -5,7 +5,8 @@ var OrderProduct = function(){
 		GETBYID:'orderproduct/getbyid',
 		SAVE:'orderproduct/create',
 		DEL:'orderproduct/delete',
-		GETBYTIME: 'orderproduct/time'
+		GETBYTIME: 'orderproduct/time',
+		GETGROUPBYTIME: 'orderproduct/grouptime'
 	}
 	
 	const LABEL={
@@ -44,6 +45,15 @@ var OrderProduct = function(){
 			to:to
 		}
 		var rs = DATA.set(URL.GETBYTIME,data);
+		that.LIST = rs.RESULT;
+	}
+
+	this.getAllGroupByTime = function(from,to){
+		var data= {
+			from:from,
+			to:to
+		}
+		var rs = DATA.set(URL.GETGROUPBYTIME,data);
 		that.LIST = rs.RESULT;
 	}
 	
