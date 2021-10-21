@@ -1,7 +1,7 @@
 var ReportView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Báo cáo';
+	this.AppTitle = 'Báo cáo đơn hàng';
 	this.oTableOrder = null;
 	this.oTableProduct = null;
 	this.oTableService = null;
@@ -142,7 +142,7 @@ var ReportView = function () {
 				return;
 			}
 			let from = new Date($('#fromDate').val()+ " 00:00").getTime();
-			let to = new Date($('#fromDate').val()+ " 23:59").getTime();
+			let to = new Date($('#toDate').val()+ " 23:59").getTime();
 
 			that.oOrder.getAllByTime(from,to);
 			that.oOrderProduct.getAllByTime(from,to);

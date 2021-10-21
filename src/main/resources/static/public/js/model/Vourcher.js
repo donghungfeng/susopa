@@ -56,7 +56,14 @@ var Vourcher = function(){
 	this.getByCode = function(){
 		var rs = DATA.get(URL.GETBYCODE+"/"+that.code);
 		var item = rs.RESULT;
-		this.entity = item;
+		this.id=item.id;
+		this.code=item.code;
+		this.type=item.type;
+		this.percent=item.percent;
+		this.money=item.money;
+		this.usage=item.usage;
+		this.outdate=item.outdate;
+		this.note=item.note;
 	}
 
 	//save data

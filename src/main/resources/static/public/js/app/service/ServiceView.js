@@ -1,7 +1,7 @@
 var ServiceView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Thông tin dịch vụ'
+	this.AppTitle = 'Quản lý dịch vụ'
 	this.oTable = null;
 	this.oDialog = null;
 	this.oService = new Service();

@@ -1,7 +1,7 @@
 var ReportProductView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Báo cáo';
+	this.AppTitle = 'Báo cáo sản phẩm';
 	this.oTableProduct = null;
 	this.oTableService = null;
 	this.oDialog = null;
@@ -97,7 +97,7 @@ var ReportProductView = function () {
 				return;
 			}
 			let from = new Date($('#fromDate').val()+ " 00:00").getTime();
-			let to = new Date($('#fromDate').val()+ " 23:59").getTime();
+			let to = new Date($('#toDate').val()+ " 23:59").getTime();
 
 			that.oOrderProduct.getAllGroupByTime(from,to);
 			that.oOrderService.getAllGroupByTime(from,to);

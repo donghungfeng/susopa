@@ -88,7 +88,7 @@ var OrderService = function(){
 			serviceCode:that.serviceCode
 		}
 		console.log(data);
-		return  DATA.set(URL.SAVE,data);
+		return DATA.set(URL.SAVE,data);
 	}
 	
 	//delete data

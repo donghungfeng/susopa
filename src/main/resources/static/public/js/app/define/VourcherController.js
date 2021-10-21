@@ -20,7 +20,7 @@ var VourcherController = function(){
 		$('#percent').val(that.oVourcher.percent);
 		$('#money').val(that.oVourcher.money);
 		$('#usage').val(that.oVourcher.usage);
-		$('#outdate').val(that.oVourcher.outdate);
+		$('#outdate').val(that.convertTimestampToInput(that.oVourcher.outdate));
 		$('#note').val(that.oVourcher.note);
 
 		that.onView();
@@ -79,7 +79,7 @@ var VourcherController = function(){
 				item.percent,
 				item.money,
 				item.usage,
-				item.outdate,
+				this.convertTimestamp(item.outdate),
 				item.note,
             ]);
         }
@@ -96,6 +96,20 @@ var VourcherController = function(){
 			return false;
 		}
 		return true;
+	}
+
+	this.convertTimestamp = function(time){
+		let d = new Date(time);
+		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+	}
+	this.convertTimestampToInput = function(time){
+		let d = new Date(time);
+		let year = d.getFullYear();
+		let month = d.getMonth() + 1;
+		if(month < 10) month="0"+month;
+		let date = d.getDate();
+		if(date < 10) date ="0"+date;
+		return year + "-" + month + "-" + date ;
 	}
 
     // Sự kiện
@@ -118,7 +132,7 @@ var VourcherController = function(){
 			 that.oVourcher.percent =  $('#percent').val();
 			 that.oVourcher.money =  $('#money').val();
 			 that.oVourcher.usage =  $('#usage').val();
-			 that.oVourcher.outdate =  $('#outdate').val();
+			 that.oVourcher.outdate =  new Date($('#outdate').val() + " 00:00").getTime();
 			that.oVourcher.note =  $('#note').val();
 			var rs = that.oVourcher.save();
 			 if(rs.CODE == "00"){

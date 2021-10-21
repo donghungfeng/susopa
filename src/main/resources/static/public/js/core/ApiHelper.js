@@ -106,7 +106,7 @@ const ApiHelper = {
             } catch (error) {
                 return {
                     CODE:3,
-                    MESSAGE: 'Dữ liệu đã tồn tại',
+                    MESSAGE: 'Cập nhật dữ liệu thất bại, kiểm tra lại mã',
                     RESULT: null
                 }
             }

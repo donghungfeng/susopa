@@ -1,7 +1,7 @@
 var ProductView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Thông tin sản phẩm';
+	this.AppTitle = 'Quản lý sản phẩm';
 	this.oTable = null;
 	this.oDialog = null;
 	this.oProduct = new Product();

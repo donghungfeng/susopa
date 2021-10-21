@@ -18,7 +18,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 //    }
 
     public List<T> search(){
-        return this.getBaseRepository().findAll();
+        return this.getBaseRepository().findByOrderByIdDesc();
     }
 
     public T create(T t) {

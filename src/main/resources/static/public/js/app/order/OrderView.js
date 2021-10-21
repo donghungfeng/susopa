@@ -1,7 +1,7 @@
 var OrderView = function () {
 	// Thuộc tính
 	var that = this;
-	this.AppTitle = 'Thông tin dịch vụ'
+	this.AppTitle = 'Thông tin hóa đơn'
 	this.oTable = null;
 	this.oDialog = null;
 	this.oBillDialog = null;
@@ -27,6 +27,7 @@ var OrderView = function () {
 	this.total = 0;
 	this.discountCustomer = 0;
 	this.discountVourcher = 0;
+	this.discountVourcherM = 0;
 	this.moneyDiscountVoucher = 0;
 	this.moneyDiscountCustomer = 0;
 	this.totalAfterDiscount = 0;
@@ -48,10 +49,10 @@ var OrderView = function () {
 		that.oCustomer.bindSelect2('#customer');
 		that.oProduct.bindSelect2('#product');
 		that.oSerivce.bindSelect2('#service');
-		that.oColor.bindSelect('#color');
-		that.oSize.bindSelect('#size');
-		that.oShip.bindSelect('#ship');
-		that.oMaterial.bindSelect('#material');
+		that.oColor.bindSelect2('#color');
+		that.oSize.bindSelect2('#size');
+		that.oShip.bindSelect2('#ship');
+		that.oMaterial.bindSelect2('#material');
 		that.oManufac.bindSelect2('#manufac');
 	}
 
@@ -103,11 +104,12 @@ var OrderView = function () {
 		that.total = that.totalProduct + that.totalService;
 		$('#total').html(parseFloat(this.total).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		that.moneyDiscountCustomer = that.discountCustomer*(-0.01)*that.total;
-		that.moneyDiscountVoucher = that.discountVourcher*(-0.01)*that.total;
+		that.moneyDiscountVoucher = that.discountVourcher*(-0.01)*that.total - that.discountVourcherM;
 		that.totalDiscount = that.discountVourcher + that.discountCustomer;
 		$('#discountCustomer').html(that.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		$('#discountVourcher').html(that.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'}));
 		that.totalAfterDiscount = that.total + that.moneyDiscountCustomer + that.moneyDiscountVoucher;
+		if(that.totalAfterDiscount < 0) that.totalAfterDiscount = 0;
 		that.totalAfterDiscountShip = that.totalAfterDiscount + that.totalShip
 
 		$('#totalAfterDiscount').html(parseFloat(this.totalAfterDiscountShip).toLocaleString('vi', {style : 'currency', currency : 'VND'}));
@@ -221,7 +223,6 @@ var OrderView = function () {
 			}
 			that.listService.push(entity);
 
-			console.log(that.listService);
 			that.bindGridService();
 		});
 		$('.ACTIONS').on('click', '#btnAddShip', function () {
@@ -250,31 +251,48 @@ var OrderView = function () {
 
 		});
 		$('.ACTIONS').on('click', '#addVourcher', function () {
+			that.oVourcher = new Vourcher();
 			that.oVourcher.code = $('#vourcher').val();
 			if(that.oVourcher.code == ''){
 				$('#vourcherText').html('');
 				that.discountVourcher = 0;
+				that.discountVourcherM = 0;
 				that.reloadTotal();
 				return;
 			}
 			that.oVourcher.getByCode();
-
-			if(!that.oVourcher.entity){
+			if(!that.oVourcher){
 				alert("Không tìm thấy vourcher!");
+				return;
+			}
+			if(that.oVourcher.usage == 0 ){
+				alert("vourcher hết lượt sử dụng!");
+				that.discountVourcher = 0;
+				that.discountVourcherM = 0;
+				$('#vourcherText').html('<i><b>'+'-0'+'</b></i>');
+				return;
+			}
+			if(that.oVourcher.outdate < new Date().getTime()  ){
+				alert("vourcher hết hạn!");
+				that.discountVourcher = 0;
+				that.discountVourcherM = 0;
+				$('#vourcherText').html('<i><b>'+'-0'+'</b></i>');
+				return;
+			}
+
+			if(that.oVourcher.type === "PERCENT"){
+				that.discountVourcher = that.oVourcher.percent;
+				that.discountVourcherM = 0;
+				$('#vourcherText').html('<i><b>'+'-'+that.oVourcher.percent+'%'+'</b></i>');
 			}
 			else{
-				if(that.oVourcher.entity.usage == 0 ){
-					alert("vourcher hết hạn sử dụng!");
-					that.discountVourcher = 0;
-					$('#vourcherText').html('<i><b>'+'-0%'+'</b></i>');
-				}
-				else{
-					that.discountVourcher = that.oVourcher.entity.percent;
-					$('#vourcherText').html('<i><b>'+'-'+that.oVourcher.entity.percent+'%'+'</b></i>');
-
-				}
-				that.reloadTotal();
+				that.discountVourcherM = that.oVourcher.money;
+				that.discountVourcher = 0;
+				$('#vourcherText').html('<i><b>'+'-'+that.oVourcher.money.toLocaleString('vi', {style : 'currency', currency : 'VND'})+'</b></i>');
 			}
+
+
+			that.reloadTotal();
 
 
 
@@ -313,22 +331,30 @@ var OrderView = function () {
 			that.oMaterial.getById();
 			$('#description').val($('#description').val()+"Chất liệu: "+that.oMaterial.name+";  ");
 
+			$('#material').val('0');
+
 		});
 		$('#size').on('change', function () {
 			that.oSize.id = $('#size').val();
 			that.oSize.getById();
 			$('#description').val($('#description').val()+"Size: "+that.oSize.name+";  ");
 
+			$('#size').val('0');
+
 		});
 		$('#manufac').on('change', function () {
 			that.oManufac.id = $('#manufac').val();
 			that.oManufac.getById();
 			$('#description').val($('#description').val()+"Hãng: "+that.oManufac.name+";   ");
+
+			$('#manufac').val('0');
 		});
 		$('#color').on('change', function () {
 			that.oColor.id = $('#color').val();
 			that.oColor.getById();
 			$('#description').val($('#description').val()+"Màu: "+that.oColor.name+";   ");
+
+			$('#color').val('0');
 		});
 
 
@@ -352,7 +378,6 @@ var OrderView = function () {
 		$('#customer').select2({
 			language: {
 				noResults: function(term) {
-					console.log(event.target.value);
 					typed = event.target.value;
 					if (typed.length>0){
 						$("span.select2-container").addClass ('select2-container--focus');
@@ -372,63 +397,66 @@ var OrderView = function () {
 		});
 
 		$('#exportBill').on('click', function () {
-			// if(that.oCustomer.id === 0){
-			// 	alert("Chưa chọn khách hàng!");
-			// 	return;
-			// }
-			//
-			// let date = new Date();
-			//
-			// let code = "SU" + date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
-			// that.oOrder.code = code;
-			// that.oOrder.amount = that.totalAfterDiscount;
-			// that.oOrder.received = that.totalAfterDiscount;
-			// that.oOrder.time = date.getTime();
-			// that.oOrder.customerName = that.oCustomer.name;
-			// that.oOrder.customerPhone = that.oCustomer.phone;
-			// that.oOrder.countService = that.listService.length;
-			// that.oOrder.countProduct = that.listProduct.length;
-			// that.oOrder.status = "CREATED";
-			//
-			// let oOrderEntity = that.oOrder.save().RESULT;
-			// console.log(that.oOrder);
-			//
-			// that.oCustomer.amount += that.totalAfterDiscount;
-			// that.oCustomer.orders ++;
-			//
-			// that.oCustomer.save();
-			//
-			// for (let i = 0;i<that.listProduct.length;i++){
-			// 	let item = that.listProduct[i];
-			// 	let oOderProduct = new OrderProduct();
-			// 	oOderProduct.time = date.getTime();
-			// 	oOderProduct.order = oOrderEntity;
-			// 	oOderProduct.status = 0;
-			// 	oOderProduct.note = '';
-			// 	oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-			// 	oOderProduct.count = item.count;
-			// 	oOderProduct.productCode = item.item.code;
-			// 	oOderProduct.productName = item.item.name;
-			//
-			// 	oOderProduct.save();
-			// }
-			//
-			// for (let i = 0;i<that.listService.length;i++){
-			// 	let item = that.listService[i];
-			// 	let oOrderService = new OrderService();
-			// 	oOrderService.time = date.getTime();
-			// 	oOrderService.order = oOrderEntity;
-			// 	oOrderService.status = 0;
-			// 	oOrderService.note = '';
-			// 	oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-			// 	oOrderService.count = item.count;
-			// 	oOrderService.description = item.description;
-			// 	oOrderService.serviceCode = item.item.code;
-			// 	oOrderService.serviceName = item.item.name;
-			// 	oOrderService.note = '';
-			//
-			// 	oOrderService.save();
-			// }
+			if(that.oCustomer.id === 0){
+				alert("Chưa chọn khách hàng!");
+				return;
+			}
+
+			let date = new Date();
+
+			let code = "SU" + date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
+			that.oOrder.code = code;
+			that.oOrder.amount = that.totalAfterDiscount;
+			that.oOrder.received = that.totalAfterDiscount;
+			that.oOrder.time = date.getTime();
+			that.oOrder.customerName = that.oCustomer.name;
+			that.oOrder.customerPhone = that.oCustomer.phone;
+			that.oOrder.countService = that.listService.length;
+			that.oOrder.countProduct = that.listProduct.length;
+			that.oOrder.status = "CREATED";
+
+			that.orderEntity = that.oOrder.save().RESULT;
+
+			that.oCustomer.amount += that.totalAfterDiscount;
+			that.oCustomer.orders ++;
+			that.oCustomer.save();
+
+			if(that.oVourcher.id != 0){
+				that.oVourcher.usage --;
+				that.oVourcher.save();
+			}
+
+			for (let i = 0;i<that.listProduct.length;i++){
+				let item = that.listProduct[i];
+				let oOderProduct = new OrderProduct();
+				oOderProduct.time = date.getTime();
+				oOderProduct.order = that.orderEntity;
+				oOderProduct.status = 0;
+				oOderProduct.note = '';
+				oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOderProduct.count = item.count;
+				oOderProduct.productCode = item.item.code;
+				oOderProduct.productName = item.item.name;
+
+				oOderProduct.save();
+			}
+
+			for (let i = 0;i<that.listService.length;i++){
+				let item = that.listService[i];
+				let oOrderService = new OrderService();
+				oOrderService.time = date.getTime();
+				oOrderService.order = that.orderEntity;
+				oOrderService.status = 0;
+				oOrderService.note = '';
+				oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOrderService.count = item.count;
+				oOrderService.description = item.description;
+				oOrderService.serviceCode = item.item.code;
+				oOrderService.serviceName = item.item.name;
+				oOrderService.note = '';
+
+				oOrderService.save();
+			}
 
 			that.renderBillTable();
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
