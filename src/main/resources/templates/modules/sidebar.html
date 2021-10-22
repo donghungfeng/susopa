@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Header</title>
+	<meta charset="utf-8" />
+	
+</head>
+
+<body>
+	<div th:fragment="sidebar">
+		<script type="text/javascript" th:src="@{/public/templates/medic247/vendor/highchart/highcharts.js}"></script>
+		<script type="text/javascript" th:src="@{/public/js/modules/sidebar.js}"></script>
+		<script type="text/javascript">
+			var oSidebar = new Sidebar();
+		</script>
+		<div class="sidebar-menu">
+			<div class="top">
+				<a class="logo">
+					<img th:src="@{/public/templates/medic247/img/vnpt-logo-white.png}" alt="Logo">
+				</a>
+			</div>
+			<div class="navbar mscrollable">
+				<div class="menus">
+					<div class="item active">
+						<a th:href="@{/app/common/dashboard}" class="url">
+							<span class="icon icon-uniF1272 -ap"></span>
+							<span class="text">
+								Bảng điều khiển
+							</span>
+						</a>
+					</div>
+					<div class="item" id="menu_cauhinh">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-sliders"></i></span>
+							<span class="text">Cấu hình sản phẩm</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/define/size}"> Size</a></li>
+							<li class=""><a th:href="@{/app/define/color}"> Màu sắc</a></li>
+							<li class=""><a th:href="@{/app/define/manufac}"> Hãng</a></li>
+							<li class=""><a th:href="@{/app/define/material}"> Chất liệu</a></li>
+							<li class=""><a th:href="@{/app/define/vourcher}"> Vốt chơ</a></li>
+							<li class=""><a th:href="@{/app/define/ship}"> Ship</a></li>
+						</ul>
+					</div>
+					<div class="item" id="menu_khachhang">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-users"></i></span>
+							<span class="text">Khách hàng</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/customer/customer}"> Danh sách khách hàng</a></li>
+						</ul>
+					</div>
+					<div class="item" id="menu_dichvu">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-amazon"></i></span>
+							<span class="text">Dịch vụ</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/service/product}"> Quản lý sản phẩm</a></li>
+							<li class=""><a th:href="@{/app/service/service}"> Quản lý dịch vụ</a></li>
+						</ul>
+					</div>
+					<div class="item" id="menu_hoandon">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-file"></i></span>
+							<span class="text">Hóa đơn</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/order/order}"> Tạo hóa đơn</a></li>
+							<li class=""><a th:href="@{/app/order/orderservice}"> Dịch vụ cần thực hiện</a></li>
+						</ul>
+					</div>
+
+					<div class="item" id="menu_hoandon">
+						<a href="#" class="url">
+							<span class="icon -ap"><i class="fa fa-bank"></i></span>
+							<span class="text">Báo cáo</span>
+							<span class="down -ap  icon-chevron-right22"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class=""><a th:href="@{/app/report/report}"> Báo cáo doanh thu</a></li>
+							<li class=""><a th:href="@{/app/report/report_product}"> Báo cáo sản phẩm bán ra</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

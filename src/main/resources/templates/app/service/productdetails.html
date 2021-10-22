@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/popup">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/public/js/model/Product.js}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/service/ProductDetailsView.js}"></script>
+	<script type="text/javascript">
+		var oProductDetailsView = new ProductDetailsView();
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="FORM box-form">
+			<div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Mã sản phẩm <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="code" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Tên sản phẩm <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="name" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Giá <span class="required">(*)</span></div>
+                        <input type="number" min="0" step="1000" class="form-control" id="price" disabled>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Giảm giá (%)</div>
+                        <input type="number" step="1" value="0" min="0" max="100" class="form-control" id="discount" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Ghi chú</div>
+                        <textarea name="" class="form-control" id="note" cols="30" rows="5" disabled></textarea>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+
+        <div class="ACTIONS box-action text-center">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSave" disabled>
+                <i class="fa fa-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnClose" disabled>
+                <i class="fa fa-remove"></i> Đóng
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

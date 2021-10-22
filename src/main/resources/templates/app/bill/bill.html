@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html{
+            font-size: 6px;
+        }
+        #invoice-POS {
+            box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+            padding: 2mm;
+            margin: 0 auto;
+            width: 44mm;
+            background: #FFF;
+        }
+
+        .header{
+            width: 100%;
+            height: 55px;
+            display: flex;
+            align-content: space-around;
+        }
+        img{
+            width: 60px;
+            height: 40px;
+        }
+
+
+
+        .header-main{
+            width: 65%;
+            height: 100px;
+            flex-grow: 1;
+            text-align: center;
+            margin-top: -10px;
+        }
+
+        .content{
+            width: 100%;
+            min-height: 100px;
+            border-top: 0.5px solid black;
+        }
+
+        .bot{
+            width: 100%;
+            min-height: 5px;
+            text-align: center;
+            margin-top: 10px;
+
+
+        }
+
+        #customer {
+            border-bottom: 0.5px solid black;
+        }
+
+        #product {
+            border-bottom: 0.5px solid black;
+        }
+        #service {
+            border-bottom: 0.5px solid black;
+        }
+        #pay {
+            border-bottom: 0.5px solid black;
+        }
+        .border-dotted{
+            border-top: 0.5px dotted red !important;
+        }
+
+        table{
+            width: 44mm;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div id="invoice-POS">
+    <div class="header">
+
+        <img src="/public/templates/medic247/img/susopa.jpg" alt="" class="header-logo">
+        <div class="header-main">
+            <h2>SUSOPA</h2>
+            <span>Vệ sinh, chăm sóc giày</span>
+            </br>
+            <span>159 Đ.Vạn Xuân - Lai Xá - Kim </br>Trung - Hoài Đức - Hà Nội</span></br>
+            <span>Điện thoại: 383585383</span>
+        </div>
+    </div>
+    <h2 style="text-align: center;"><b>HÓA ĐƠN BÁN HÀNG</b></h2>
+
+    <div class="content">
+        <table id="customer">
+            <tr>
+                <td >Ngày:</td>
+                <td id="date"></td>
+                <td >Mã HĐ:</td>
+                <td colspan="2" id="orderCode"></td>
+            </tr>
+            <tr>
+                <td>K.hàng:</td>
+                <td colspan="5" id="customerName"></td>
+            </tr>
+
+            <tr>
+                <td>Sđt:</td>
+                <td colspan="5" id="customerPhone"></td>
+            </tr>
+
+            <tr>
+                <td>Địa chỉ:</td>
+                <td colspan="5" id="customerAddress">Cát huế, HĐ</td>
+            </tr>
+        </table>
+
+        <table id="product">
+
+            <thead>
+                <tr>
+                    <td style="width: 40%">Sản phẩm</td>
+                    <td style="width: 30%">Số lượng</td>
+                    <td style="width: 30%">Thành tiền</td>
+                </tr>
+            </thead>
+            <tbody id="exportBillProductTable">
+
+            </tbody>
+
+        </table>
+        <table id="service">
+            <thead>
+                <tr>
+                    <td style="width: 70%">Dịch vụ</td>
+                    <td style="width: 30%">Thành tiền</td>
+                </tr>
+            </thead>
+            <tbody id="exportBillServiceTable">
+
+            </tbody>
+
+        </table>
+
+        <table id="pay">
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Giảm giá khách hàng:
+                </td>
+                <td style="width: 30%" id="moneyDiscountCustomer" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Voucher:
+                </td>
+                <td style="width: 30%" id="moneyDiscountVourcher" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Tổng thanh toán:
+                </td>
+                <td style="width: 30%" id="totalAfterDiscount" class="text-right"></td>
+            </tr>
+
+        </table>
+
+        <table>
+
+            <tr style="text-align: center;">
+                <td style="width: 50%">Thu ngân</td>
+                <td style="width: 50%">Khách hàng</td>
+            </tr>
+            <tr style="height: 30px">
+            </tr>
+        </table>
+    </div>
+
+    <div class="bot">
+        <span>Cảm ơn quý khách đã ủng hộ!</span>
+    </div>
+
+
+
+</div>
+
+<script>
+    let customer = (window.parent.oOrderView.oCustomer);
+    let order = window.parent.oOrderView.orderEntity;
+    let date = new Date();
+    if(customer){
+        let _rank = "";
+        switch (customer.ranking) {
+            case 0:
+                _rank = '<span><i class="fa fa-user"></i> Thường</span>';
+                break;
+            case 1:
+                _rank = '<span><i class="fa fa-user"></i> Member</span>';
+                break;
+            case 2:
+                _rank = '<span><i class="fa fa-angle-up"></i> Bạc</span>';
+                break;
+            case 3:
+                _rank = '<span><i class="fa fa-angle-double-up"></i> Vàng</span>';
+                break;
+            case 4:
+                _rank = '<span><i class="fa fa-diamond"></i> Kim cương</span>';
+                break;
+            default:
+                _rank = "Vô hạng";
+                break;
+        }
+        document.getElementById('customerName').innerHTML = customer.name + " (" + _rank + ") ";
+        document.getElementById('customerPhone').innerHTML = customer.phone;
+        document.getElementById('customerAddress').innerHTML = customer.address;
+    }
+    if(order){
+        document.getElementById('orderCode').innerHTML = order.code;
+    }
+
+    document.getElementById('date').innerHTML = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+
+
+    document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderView.htmlBillProductTable;
+    document.getElementById('exportBillServiceTable').innerHTML = window.parent.oOrderView.htmlBillServiceTable;
+    document.getElementById('moneyDiscountCustomer').innerHTML = window.parent.oOrderView.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscount.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+
+    setTimeout(function(){window.print()},500)
+
+</script>
+
+
+</body>
+</html>

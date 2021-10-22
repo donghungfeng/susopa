@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Danh mục | Voucher</title>
+    <script type="text/javascript" th:src="@{/public/js/model/Vourcher.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/app/define/VourcherController.js}"></script>
+    <script type="text/javascript">
+        var oVourcherController = new VourcherController();
+    </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="box-form box" style="min-height:calc(100vh - 170px);">
+                    <div class="box-body">
+                        <h4 class="form-title">Thông tin voucher </h4>
+                        <div class="box-form">
+                            <div class="form-group">
+                                <div class="label-text">Mã: <span class="required">(*)</span></div>
+                                <input type="text" id="code" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Loại:</div>
+                                <select class="form-control" name="" id="type">
+                                    <option value="PERCENT">Phần trăm (%)</option>
+                                    <option value="MONEY">Tiền </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Phần trăm giảm (%): </div>
+                                <input type="number" id="percent" min="0" max="100" step="1" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Tiền giảm : </div>
+                                <input type="number" id="money" min="0" step="1000" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Số lượng: </div>
+                                <input type="number" id="usage" min="0" step="1" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Hết hạn (%): </div>
+                                <input type="date" id="outdate" min="0" max="100" step="1" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <div class="label-text">Ghi chú:</div>
+                                <textarea name="" id="note" cols="30" rows="10" class="form-control"
+                                          style="resize: vertical;height:60px;"></textarea>
+                            </div>
+
+
+                        </div>
+                        <div class="center ACTIONS">
+                            <button class="btn btn-info" id="btnEdit">Sửa</button>
+                            <button class="btn btn-success" id="btnSave">Lưu</button>
+                            <button class="btn btn-danger" id="btnDelete">Xóa</button>
+                            <button class="btn btn-warning" id="btnCancel">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 col-xs-12">
+                <div class="box" style="min-height:calc(100vh - 170px);">
+                    <div class="box-body">
+                        <div class="table-connamet">
+                            <table class="table footablejs" id="Grid01">
+                                <thead>
+                                <th style="width:20px;text-align: center;">STT</th>
+                                <th>Mã</th>
+                                <th>Loại</th>
+                                <th>Phần trăm giảm (%)</th>
+                                <th>Số tiền giảm</th>
+                                <th>Số lượng</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Ghi chú</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/popup">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/public/js/model/Customer.js}"></script>
+	<script type="text/javascript" th:src="@{/public/js/app/customer/CustomerDetailsView.js}"></script>
+	<script type="text/javascript">
+		var oCustomerDetailsView = new CustomerDetailsView();
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+
+        <div class="FORM box-form">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Tên khách hàng <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="name" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Điện thoại <span class="required">(*)</span></div>
+                        <input type="text" class="form-control" id="phone" disabled>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Địa chỉ</div>
+                        <input type="text" class="form-control" id="address" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Email</div>
+                        <input type="text" class="form-control" id="email" disabled>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row" style="display: none">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Hạng</div>
+                        <select name="" id="ranking" class="form-control" disabled>
+                            <option value="0">Thường</option>
+                            <option value="1">Member</option>
+                            <option value="2">Bạc</option>
+                            <option value="3">Vàng</option>
+                            <option value="4">Kim cương</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display: none">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Giảm giá (%)</div>
+                        <input type="number" min="0" value="3" max="100" step="1" class="form-control" id="discount" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="label-text">Ghi chú</div>
+                        <textarea name="" class="form-control" id="note" cols="30" rows="5" disabled></textarea>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+
+        <div class="ACTIONS box-action text-center">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSave" disabled>
+                <i class="fa fa-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" id="btnClose" disabled>
+                <i class="fa fa-remove"></i> Đóng
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

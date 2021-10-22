@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>notify</title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<div th:fragment="notify">
+		<script th:src="@{/public/libs/bootstrap-notify/bootstrap-notify.min.js}"></script>
+		<script>
+			var Notify = {
+				show: function (type,message,pos) {
+					var vitri = 'top';
+					if (pos !== undefined) {
+						vitri= pos;
+					}
+
+					$.notify({
+						// options
+						icon: 'glyphicon glyphicon-info-sign',
+						message: message
+					}, {
+						// settings
+						element: 'body',
+						position: null,
+						type: type,
+						allow_dismiss: true,
+						newest_on_top: false,
+						showProgressbar: false,
+						placement: {
+							from: vitri,
+							align: "right"
+						},
+						offset: 3,
+						spacing: 10,
+						z_index: 1031,
+						delay: 3000,
+						timer: 1000,
+						url_target: '_blank',
+						mouse_over: null,
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+						onShow: null,
+						onShown: null,
+						onClose: null,
+						onClosed: null,
+						icon_type: 'class'
+					});
+				},
+				info: function (message,pos) {
+					var vitri = 'bottom';
+					if (pos !== undefined) {
+						vitri= pos;
+					}
+
+					$.notify({
+						// options
+						icon: 'glyphicon glyphicon-info-sign',
+						message: message
+					}, {
+						// settings
+						element: 'body',
+						position: null,
+						type: "info",
+						allow_dismiss: true,
+						newest_on_top: false,
+						showProgressbar: false,
+						placement: {
+							from: vitri,
+							align: "right"
+						},
+						offset: 20,
+						spacing: 10,
+						z_index: 1031,
+						delay: 10000,
+						timer: 1000,
+						url_target: '_blank',
+						mouse_over: null,
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+						onShow: null,
+						onShown: null,
+						onClose: null,
+						onClosed: null,
+						icon_type: 'class'
+					});
+				},
+				warning: function (message,pos) {
+					var vitri = 'bottom';
+					if (pos !== undefined) {
+						vitri= pos;
+					}
+					$.notify({
+						// options
+						icon: 'glyphicon glyphicon-warning-sign',
+						message: message
+					}, {
+						// settings
+						element: 'body',
+						position: null,
+						type: "warning",
+						allow_dismiss: true,
+						newest_on_top: false,
+						showProgressbar: false,
+						placement: {
+							from: vitri,
+							align: "right"
+						},
+						offset: 20,
+						spacing: 10,
+						z_index: 1031,
+						delay: 7000,
+						timer: 1000,
+						url_target: '_blank',
+						mouse_over: null,
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+						onShow: null,
+						onShown: null,
+						onClose: null,
+						onClosed: null,
+						icon_type: 'class'
+					});
+				},
+				success: function (message,pos) {
+					var vitri = 'bottom';
+					if (pos !== undefined) {
+						vitri= pos;
+					}
+					$.notify({
+						// options
+						icon: 'glyphicon glyphicon-ok-circle',
+						message: message
+					}, {
+						// settings
+						element: 'body',
+						position: null,
+						type: "success",
+						allow_dismiss: true,
+						newest_on_top: false,
+						showProgressbar: false,
+						placement: {
+							from: vitri,
+							align: "right"
+						},
+						offset: 20,
+						spacing: 10,
+						z_index: 1031,
+						delay: 7000,
+						timer: 1000,
+						url_target: '_blank',
+						mouse_over: null,
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+						onShow: null,
+						onShown: null,
+						onClose: null,
+						onClosed: null,
+						icon_type: 'class'
+					});
+				},
+				danger: function (message,pos) {
+					var vitri = 'bottom';
+					if (pos !== undefined) {
+						vitri= pos;
+					}
+					$.notify({
+						// options
+						icon: 'glyphicon glyphicon-remove-sign',
+						message: message
+					}, {
+						// settings
+						element: 'body',
+						position: null,
+						type: "danger",
+						allow_dismiss: true,
+						newest_on_top: false,
+						showProgressbar: false,
+						placement: {
+							from: vitri,
+							align: "right"
+						},
+						offset: 20,
+						spacing: 10,
+						z_index: 1031,
+						delay: 7000,
+						timer: 1000,
+						url_target: '_blank',
+						mouse_over: null,
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+						onShow: null,
+						onShown: null,
+						onClose: null,
+						onClosed: null,
+						icon_type: 'class'
+					});
+				}
+
+			}
+		</script>
+
+	</div>
+</body>
+
+</html>
