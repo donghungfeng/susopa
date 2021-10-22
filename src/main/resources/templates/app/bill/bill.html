@@ -231,7 +231,7 @@
     document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
     document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscount.toLocaleString('vi', {style : 'currency', currency : 'VND'});
 
-
+    setTimeout(function(){window.print()},500)
 
 </script>
 

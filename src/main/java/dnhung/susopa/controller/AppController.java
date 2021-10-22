@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AppController {
-
-//	@Autowired
-//	private AppConfig appConfig;
 	
 	@Autowired
     ResourceLoader resourceLoader;
@@ -28,9 +25,6 @@ public class AppController {
     	String sView = "app/"+ sComponent +"/" + sScreen;
     	String sFilePath = "templates/"+sView+".html";
     	Resource resource = resourceLoader.getResource("classpath:" + sFilePath);
-//    	if (!resource.exists()) {
-//    		sView = appConfig.webUrlNotfound;
-//    	}
 
         return sView;
     }
@@ -38,6 +32,6 @@ public class AppController {
     @RequestMapping(value="/")
     public String main() {
 //        return appConfig.webUrlHome;
-		return "/app/common/login";
+		return "app/common/login";
     }
 }

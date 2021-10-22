@@ -187,12 +187,15 @@ var OrderView = function () {
 
 		that.oTable = ControlHelper.Datatable.Init('Grid01', 10, true);
 		that.oDialog = new PopupDialog(reload);
-		that.oBillDialog = new PopupDialog();
+		that.oBillDialog = new PopupDialog(reloadPage);
 
 		that.initPage();
 
 		function reload() {
 			that.reloadCustomer();
+		}
+		function reloadPage(){
+			window.location.reload();
 		}
 
 		$('.ACTIONS').on('click', '#btnAddProduct', function () {
