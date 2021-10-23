@@ -47,6 +47,17 @@ var ServiceDetailsView = function(){
 			that.oService.discount = $('.FORM #discount').val();
 			that.oService.description = $('.FORM #description').val();
 			that.oService.note = $('.FORM #note').val();
+
+			if(that.oService.code === ''){
+				alert("Mã dịch vụ không được để trống");
+				return;
+			}
+
+			if(that.oService.name === ''){
+				alert("Tên dịch vụ không được để trống");
+				return;
+			}
+
 			var rs = that.oService.save();
 
 			alert(rs.MESSAGE);

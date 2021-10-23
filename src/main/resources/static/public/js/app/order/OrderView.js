@@ -424,59 +424,59 @@ var OrderView = function () {
 
 			let date = new Date();
 
-			// let code = "SU" + date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
-			// that.oOrder.code = code;
-			// that.oOrder.amount = that.totalAfterDiscount;
-			// that.oOrder.received = that.totalAfterDiscount;
-			// that.oOrder.time = date.getTime();
-			// that.oOrder.customerName = that.oCustomer.name;
-			// that.oOrder.customerPhone = that.oCustomer.phone;
-			// that.oOrder.countService = that.listService.length;
-			// that.oOrder.countProduct = that.listProduct.length;
-			// that.oOrder.status = "CREATED";
-			//
-			// that.orderEntity = that.oOrder.save().RESULT;
-			//
-			// that.oCustomer.amount += that.totalAfterDiscount;
-			// that.oCustomer.orders ++;
-			// that.oCustomer.save();
-			//
-			// if(that.oVourcher.id != 0){
-			// 	that.oVourcher.usage --;
-			// 	that.oVourcher.save();
-			// }
-			//
-			// for (let i = 0;i<that.listProduct.length;i++){
-			// 	let item = that.listProduct[i];
-			// 	let oOderProduct = new OrderProduct();
-			// 	oOderProduct.time = date.getTime();
-			// 	oOderProduct.order = that.orderEntity;
-			// 	oOderProduct.status = 0;
-			// 	oOderProduct.note = '';
-			// 	oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-			// 	oOderProduct.count = item.count;
-			// 	oOderProduct.productCode = item.item.code;
-			// 	oOderProduct.productName = item.item.name;
-			//
-			// 	oOderProduct.save();
-			// }
-			//
-			// for (let i = 0;i<that.listService.length;i++){
-			// 	let item = that.listService[i];
-			// 	let oOrderService = new OrderService();
-			// 	oOrderService.time = date.getTime();
-			// 	oOrderService.order = that.orderEntity;
-			// 	oOrderService.status = 0;
-			// 	oOrderService.note = '';
-			// 	oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-			// 	oOrderService.count = item.count;
-			// 	oOrderService.description = item.description;
-			// 	oOrderService.serviceCode = item.item.code;
-			// 	oOrderService.serviceName = item.item.name;
-			// 	oOrderService.note = '';
-			//
-			// 	oOrderService.save();
-			// }
+			let code = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
+			that.oOrder.code = code;
+			that.oOrder.amount = that.totalAfterDiscount;
+			that.oOrder.received = that.totalAfterDiscount;
+			that.oOrder.time = date.getTime();
+			that.oOrder.customerName = that.oCustomer.name;
+			that.oOrder.customerPhone = that.oCustomer.phone;
+			that.oOrder.countService = that.listService.length;
+			that.oOrder.countProduct = that.listProduct.length;
+			that.oOrder.status = "CREATED";
+
+			that.orderEntity = that.oOrder.save().RESULT;
+
+			that.oCustomer.amount += that.totalAfterDiscount;
+			that.oCustomer.orders ++;
+			that.oCustomer.save();
+
+			if(that.oVourcher.id != 0){
+				that.oVourcher.usage --;
+				that.oVourcher.save();
+			}
+
+			for (let i = 0;i<that.listProduct.length;i++){
+				let item = that.listProduct[i];
+				let oOderProduct = new OrderProduct();
+				oOderProduct.time = date.getTime();
+				oOderProduct.order = that.orderEntity;
+				oOderProduct.status = 0;
+				oOderProduct.note = '';
+				oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOderProduct.count = item.count;
+				oOderProduct.productCode = item.item.code;
+				oOderProduct.productName = item.item.name;
+
+				oOderProduct.save();
+			}
+
+			for (let i = 0;i<that.listService.length;i++){
+				let item = that.listService[i];
+				let oOrderService = new OrderService();
+				oOrderService.time = date.getTime();
+				oOrderService.order = that.orderEntity;
+				oOrderService.status = 0;
+				oOrderService.note = '';
+				oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
+				oOrderService.count = item.count;
+				oOrderService.description = item.description;
+				oOrderService.serviceCode = item.item.code;
+				oOrderService.serviceName = item.item.name;
+				oOrderService.note = '';
+
+				oOrderService.save();
+			}
 
 			that.renderBillTable();
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';

@@ -180,7 +180,13 @@ var ReportView = function () {
 				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+d.getDate() + " "+"23:59").getTime();
 			}
 			else if(filter === 'week'){
-				from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - d.getDay() +1 ) + " "+"00:00").getTime();
+				if(d.getDay() === 0){
+					from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - 6) + " "+"00:00").getTime();
+				}
+				else {
+					from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - d.getDay() +1 ) + " "+"00:00").getTime();
+				}
+
 				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
 			}
 			else if(filter === 'month'){

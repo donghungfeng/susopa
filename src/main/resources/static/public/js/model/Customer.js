@@ -68,19 +68,19 @@ var Customer = function(){
 			discount:that.discount,
 			note:that.note,
 		}
-		if(data.amount > 2000000){
+		if(data.amount >= 2000000){
 			data.ranking = 1;
 			data.discount = 3;
 		}
-		if(data.amount > 4000000){
+		if(data.amount >= 4000000){
 			data.ranking = 2;
 			data.discount = 5;
 		}
-		if(data.amount > 8000000){
+		if(data.amount >= 8000000){
 			data.ranking = 3;
 			data.discount = 7;
 		}
-		if(data.amount > 12000000){
+		if(data.amount >= 12000000){
 			data.ranking = 4;
 			data.discount = 10;
 		}

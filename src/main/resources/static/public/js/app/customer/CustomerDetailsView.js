@@ -47,9 +47,19 @@ var CustomerDetailsView = function(){
 			that.oCustomer.phone = $('.FORM #phone').val();
 			that.oCustomer.address = $('.FORM #address').val();
 			that.oCustomer.email = $('.FORM #email').val();
-			that.oCustomer.discount = $('.FORM #discount').val();
 			that.oCustomer.note = $('.FORM #note').val();
-			that.oCustomer.ranking = $('.FORM #ranking').val();
+			// that.oCustomer.discount = $('.FORM #discount').val();
+			// that.oCustomer.ranking = $('.FORM #ranking').val();
+
+			if(that.oCustomer.name === ''){
+				alert("Tên khách hàng không được để trống");
+				return;
+			}
+			if(that.oCustomer.phone === ''){
+				alert("Số điện thoại khách hàng không được để trống");
+				return;
+			}
+
 			var rs = that.oCustomer.save();
 			alert(rs.MESSAGE);
 			that.oCustomer = rs.RESULT;

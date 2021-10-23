@@ -45,6 +45,15 @@ var ProductDetailsView = function(){
 			that.oProduct.price = $('.FORM #price').val();
 			that.oProduct.discount = $('.FORM #discount').val();
 			that.oProduct.note = $('.FORM #note').val();
+
+			if(that.oProduct.code === ''){
+				alert("Mã sản phẩm không được để trống");
+				return;
+			}
+			if(that.oProduct.name === ''){
+				alert("Tên sản phẩm không được để trống");
+				return;
+			}
 			var rs = that.oProduct.save();
 			alert(rs.MESSAGE);
 			that.lockForm(true);
