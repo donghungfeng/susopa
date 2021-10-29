@@ -98,7 +98,7 @@
             <span>Điện thoại: 383585383</span>
         </div>
     </div>
-    <h2 style="text-align: center;"><b>HÓA ĐƠN BÁN HÀNG</b></h2>
+    <h2 style="text-align: center;"><b>HÓA ĐƠN THANH TOÁN</b></h2>
 
     <div class="content">
         <table id="customer">
@@ -151,10 +151,26 @@
 
         </table>
 
+        <table id="ship">
+            <thead>
+            <tr>
+                <td style="width: 70%" id="shipName">Ship: </td>
+                <td style="width: 30%" id="totalShip" class="text-right"></td>
+            </tr>
+            </thead>
+
+        </table>
+
         <table id="pay">
             <tr>
                 <td colspan="3" style="width: 70%">
-                    Giảm giá khách hàng:
+                    Tổng cộng:
+                </td>
+                <td style="width: 30%" id="total" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Ưu đãi Su Club:
                 </td>
                 <td style="width: 30%" id="moneyDiscountCustomer" class="text-right"></td>
             </tr>
@@ -166,22 +182,13 @@
             </tr>
             <tr>
                 <td colspan="3" style="width: 70%">
-                    Tổng thanh toán:
+                    Thành tiền:
                 </td>
                 <td style="width: 30%" id="totalAfterDiscount" class="text-right"></td>
             </tr>
 
         </table>
 
-        <table>
-
-            <tr style="text-align: center;">
-                <td style="width: 50%">Thu ngân</td>
-                <td style="width: 50%">Khách hàng</td>
-            </tr>
-            <tr style="height: 30px">
-            </tr>
-        </table>
     </div>
 
     <div class="bot">
@@ -231,9 +238,12 @@
 
     document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderView.htmlBillProductTable;
     document.getElementById('exportBillServiceTable').innerHTML = window.parent.oOrderView.htmlBillServiceTable;
+    // document.getElementById('shipName').innerHTML = window.parent.oOrderView.oShip.name;
     document.getElementById('moneyDiscountCustomer').innerHTML = window.parent.oOrderView.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
     document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscount.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscountShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('total').innerHTML = (window.parent.oOrderView.totalShip + window.parent.oOrderView.total).toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('totalShip').innerHTML = window.parent.oOrderView.totalShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
 
     setTimeout(function(){window.print()},500)
 

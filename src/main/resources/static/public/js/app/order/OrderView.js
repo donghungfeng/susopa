@@ -63,11 +63,11 @@ var OrderView = function () {
 			html += '<tr>';
 			var item = that.listProduct[i];
 			html += '<td>' +item.item.name +' (' + item.item.code + ') ' + '</td>';
-			html += '<td>' +parseFloat(item.item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			html += '<td>' +parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			html += '<td><input style="width: 100%" type="number" class="btnProductSpin" value="'+item.count+'" step="1" min="0" data-id="'+i+'" /></td>';
-			html += '<td>' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			html += '<td>' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			html += '</tr>';
-			this.totalProduct = this.totalProduct + item.item.price * item.count;
+			this.totalProduct = this.totalProduct + item.price * item.count;
 		}
 		html += '<tr><th colspan="4" class="text-right">'+'Tổng tiền sản phẩm: '+parseFloat(this.totalProduct).toLocaleString('vi', {style : 'currency', currency : 'VND'})+'</th></tr>';
 		$('#GridProduct tbody').html(html);
@@ -86,13 +86,13 @@ var OrderView = function () {
 			html += '<tr>';
 			var item = that.listService[i];
 			html += '<td>' +item.item.name +' (' + item.item.code + ') ' + '</td>';
-			html += '<td>' +parseFloat(item.item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			html += '<td>' +parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			html += '<td><input style="width: 100%" type="number" class="btnServiceSpin" value="'+item.count+'" step="1" min="0" data-id="'+i+'" /></td>';
-			html += '<td>' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			html += '<td>' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 
 
 			html += '</tr>';
-			this.totalService = this.totalService + item.item.price * item.count;
+			this.totalService = this.totalService + item.price * item.count;
 		}
 		html += '<tr><th colspan="4" class="text-right">'+'Tổng tiền sản phẩm: '+parseFloat(this.totalService).toLocaleString('vi', {style : 'currency', currency : 'VND'})+'</th></tr>';
 		$('#GridService tbody').html(html);
@@ -164,9 +164,9 @@ var OrderView = function () {
 			that.htmlBillProductTable += '<tr>';
 			that.htmlBillProductTable += '<td colspan="3" class="border-dotted">' +item.item.name + '</td>';
 			that.htmlBillProductTable += '</tr><tr>';
-			that.htmlBillProductTable += '<td>' +parseFloat(item.item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			that.htmlBillProductTable += '<td>' +parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			that.htmlBillProductTable += '<td class="text-center">' +item.count+ '</td>';
-			that.htmlBillProductTable += '<td class="text-right">' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			that.htmlBillProductTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 			that.htmlBillProductTable += '</tr>';
 		}
 		let des = "";
@@ -180,7 +180,7 @@ var OrderView = function () {
 				that.htmlBillServiceTable += '<td colspan="2">' + item.description + '</td>';
 				that.htmlBillServiceTable += '</tr><tr>';
 				that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
-				that.htmlBillServiceTable += '<td class="text-right">' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+				that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 				that.htmlBillServiceTable += '</tr>';
 
 				des = item.description
@@ -189,11 +189,69 @@ var OrderView = function () {
 			else{
 				that.htmlBillServiceTable += '<tr>';
 				that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
-				that.htmlBillServiceTable += '<td class="text-right">' +(item.item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+				that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
 				that.htmlBillServiceTable += '</tr>';
 			}
 
 
+		}
+
+	}
+	this.saveOrderToDB = function(){
+		let date = new Date();
+
+		let code = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
+		that.oOrder.code = code;
+		that.oOrder.amount = that.totalAfterDiscountShip;
+		that.oOrder.received = that.totalAfterDiscount;
+		that.oOrder.time = date.getTime();
+		that.oOrder.customerName = that.oCustomer.name;
+		that.oOrder.customerPhone = that.oCustomer.phone;
+		that.oOrder.countService = that.listService.length;
+		that.oOrder.countProduct = that.listProduct.length;
+		that.oOrder.status = "CREATED";
+
+		that.orderEntity = that.oOrder.save().RESULT;
+
+		that.oCustomer.amount += that.totalAfterDiscountShip;
+		that.oCustomer.orders ++;
+		that.oCustomer.save();
+
+		if(that.oVourcher.id != 0){
+			that.oVourcher.usage --;
+			that.oVourcher.save();
+		}
+
+		for (let i = 0;i<that.listProduct.length;i++){
+			let item = that.listProduct[i];
+			let oOderProduct = new OrderProduct();
+			oOderProduct.time = date.getTime();
+			oOderProduct.order = that.orderEntity;
+			oOderProduct.status = 0;
+			oOderProduct.note = '';
+			oOderProduct.price = item.price - item.price*that.totalDiscount*0.01;
+			oOderProduct.count = item.count;
+			oOderProduct.productCode = item.item.code;
+			oOderProduct.productName = item.item.name;
+
+			oOderProduct.save();
+		}
+
+		for (let i = 0;i<that.listService.length;i++){
+			let item = that.listService[i];
+			let oOrderService = new OrderService();
+			oOrderService.time = date.getTime();
+			oOrderService.order = that.orderEntity;
+			oOrderService.status = 0;
+			oOrderService.note = '';
+			oOrderService.price = item.price - item.price*that.totalDiscount*0.01;
+			oOrderService.count = item.count;
+			oOrderService.description = item.description;
+			oOrderService.serviceCode = item.item.code;
+			oOrderService.serviceName = item.item.name;
+			oOrderService.note = '';
+
+			oOrderService.save();
 		}
 
 	}
@@ -212,17 +270,28 @@ var OrderView = function () {
 			that.reloadCustomer();
 		}
 		function reloadPage(){
-			window.location.reload();
+			var cf = confirm("Xác nhận thanh toán");
+			if (cf == true) {
+				alert("Lưu đơn hàng nè");
+				window.location.reload();
+			} else {
+				that.saveOrderToDB();
+				alert("Hủy nè");
+			}
 		}
 
-		$('.ACTIONS').on('click', '#btnAddProduct', function () {
+		$('#product').on('change', function () {
 			if($('#product').val() === "0") return;
 			that.oProduct.id = $('#product').val();
 			that.oProduct.getById();
+			$('#productPrice').val(that.oProduct.price);
+		})
+		$('.ACTIONS').on('click', '#btnAddProduct', function () {
 			let check = that.listProduct.findIndex(e => e.item.id === that.oProduct.entity.id);
 			if(check === -1){
 				let entity = {
 					item: that.oProduct.entity,
+					price:$('#productPrice').val(),
 					count: 1
 				}
 				that.listProduct.push(entity);
@@ -232,13 +301,18 @@ var OrderView = function () {
 
 			that.bindGridProduct();
 		});
-		$('.ACTIONS').on('click', '#btnAddService', function () {
-			if($('#service').val() === "0") return;
+		$('#service').on('change', function () {
 			that.oSerivce.id = $('#service').val();
 			that.oSerivce.getById();
+			$('#servicePrice').val(that.oSerivce.price);
+		})
+		$('.ACTIONS').on('click', '#btnAddService', function () {
+			if($('#service').val() === "0") return;
+
 			let entity = {
 				item: that.oSerivce.entity,
 				description: $('#description').val(),
+				price: $('#servicePrice').val(),
 				count: 1
 			}
 			that.listService.push(entity);
@@ -421,63 +495,6 @@ var OrderView = function () {
 				alert("Chưa chọn khách hàng!");
 				return;
 			}
-
-			let date = new Date();
-
-			let code = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
-			that.oOrder.code = code;
-			that.oOrder.amount = that.totalAfterDiscount;
-			that.oOrder.received = that.totalAfterDiscount;
-			that.oOrder.time = date.getTime();
-			that.oOrder.customerName = that.oCustomer.name;
-			that.oOrder.customerPhone = that.oCustomer.phone;
-			that.oOrder.countService = that.listService.length;
-			that.oOrder.countProduct = that.listProduct.length;
-			that.oOrder.status = "CREATED";
-
-			that.orderEntity = that.oOrder.save().RESULT;
-
-			that.oCustomer.amount += that.totalAfterDiscount;
-			that.oCustomer.orders ++;
-			that.oCustomer.save();
-
-			if(that.oVourcher.id != 0){
-				that.oVourcher.usage --;
-				that.oVourcher.save();
-			}
-
-			for (let i = 0;i<that.listProduct.length;i++){
-				let item = that.listProduct[i];
-				let oOderProduct = new OrderProduct();
-				oOderProduct.time = date.getTime();
-				oOderProduct.order = that.orderEntity;
-				oOderProduct.status = 0;
-				oOderProduct.note = '';
-				oOderProduct.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-				oOderProduct.count = item.count;
-				oOderProduct.productCode = item.item.code;
-				oOderProduct.productName = item.item.name;
-
-				oOderProduct.save();
-			}
-
-			for (let i = 0;i<that.listService.length;i++){
-				let item = that.listService[i];
-				let oOrderService = new OrderService();
-				oOrderService.time = date.getTime();
-				oOrderService.order = that.orderEntity;
-				oOrderService.status = 0;
-				oOrderService.note = '';
-				oOrderService.price = item.item.price - item.item.price*that.totalDiscount*0.01;
-				oOrderService.count = item.count;
-				oOrderService.description = item.description;
-				oOrderService.serviceCode = item.item.code;
-				oOrderService.serviceName = item.item.name;
-				oOrderService.note = '';
-
-				oOrderService.save();
-			}
-
 			that.renderBillTable();
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
 			that.oBillDialog.show('Hóa đơn', url, '52%', '700px');
