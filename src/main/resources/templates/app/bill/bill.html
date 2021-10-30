@@ -151,16 +151,6 @@
 
         </table>
 
-        <table id="ship">
-            <thead>
-            <tr>
-                <td style="width: 70%" id="shipName">Ship: </td>
-                <td style="width: 30%" id="totalShip" class="text-right"></td>
-            </tr>
-            </thead>
-
-        </table>
-
         <table id="pay">
             <tr>
                 <td colspan="3" style="width: 70%">
@@ -179,6 +169,10 @@
                     Voucher:
                 </td>
                 <td style="width: 30%" id="moneyDiscountVourcher" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%" id="shipName">Ship: </td>
+                <td style="width: 30%" id="totalShip" class="text-right"></td>
             </tr>
             <tr>
                 <td colspan="3" style="width: 70%">
@@ -229,9 +223,7 @@
         document.getElementById('customerPhone').innerHTML = customer.phone;
         document.getElementById('customerAddress').innerHTML = customer.address;
     }
-    if(order){
-        document.getElementById('orderCode').innerHTML = order.code;
-    }
+    document.getElementById('orderCode').innerHTML = window.parent.oOrderView.orderCode;
 
     document.getElementById('date').innerHTML = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
@@ -242,7 +234,7 @@
     document.getElementById('moneyDiscountCustomer').innerHTML = window.parent.oOrderView.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
     document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
     document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscountShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    document.getElementById('total').innerHTML = (window.parent.oOrderView.totalShip + window.parent.oOrderView.total).toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('total').innerHTML = window.parent.oOrderView.total.toLocaleString('vi', {style : 'currency', currency : 'VND'});
     document.getElementById('totalShip').innerHTML = window.parent.oOrderView.totalShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
 
     setTimeout(function(){window.print()},500)

@@ -40,6 +40,7 @@ var OrderView = function () {
 	this.htmlBillServiceTable = "";
 
 	this.typeShip = 1;
+	this.orderCode = "";
 
 
 	// Phương thức
@@ -124,6 +125,12 @@ var OrderView = function () {
 	this.reloadCustomer = function(){
 		that.oCustomer.getById();
 
+		let date = new Date();
+
+		that.orderCode = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
+
+		alert(that.orderCode);
+
 		let _rank = "";
 		switch (that.oCustomer.ranking) {
 			case 0:
@@ -193,15 +200,13 @@ var OrderView = function () {
 				that.htmlBillServiceTable += '</tr>';
 			}
 
-
 		}
-
 	}
 	this.saveOrderToDB = function(){
+
 		let date = new Date();
 
-		let code = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
-		that.oOrder.code = code;
+		that.oOrder.code = that.orderCode;
 		that.oOrder.amount = that.totalAfterDiscountShip;
 		that.oOrder.received = that.totalAfterDiscount;
 		that.oOrder.time = date.getTime();
@@ -255,8 +260,6 @@ var OrderView = function () {
 		}
 
 	}
-
-
 	// Sự kiện
 	$(document).ready(function () {
 
@@ -272,11 +275,8 @@ var OrderView = function () {
 		function reloadPage(){
 			var cf = confirm("Xác nhận thanh toán");
 			if (cf == true) {
-				alert("Lưu đơn hàng nè");
-				window.location.reload();
-			} else {
 				that.saveOrderToDB();
-				alert("Hủy nè");
+				window.location.reload();
 			}
 		}
 
@@ -384,11 +384,7 @@ var OrderView = function () {
 				that.discountVourcher = 0;
 				$('#vourcherText').html('<i><b>'+'-'+that.oVourcher.money.toLocaleString('vi', {style : 'currency', currency : 'VND'})+'</b></i>');
 			}
-
-
 			that.reloadTotal();
-
-
 
 		});
 
