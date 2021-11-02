@@ -129,8 +129,6 @@ var OrderView = function () {
 
 		that.orderCode = date.getDate() + (date.getMonth()+1) + "KH" +that.oCustomer.id + (that.oCustomer.orders+1);
 
-		alert(that.orderCode);
-
 		let _rank = "";
 		switch (that.oCustomer.ranking) {
 			case 0:
