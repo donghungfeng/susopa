@@ -212,7 +212,8 @@ var OrderView = function () {
 		that.oOrder.customerPhone = that.oCustomer.phone;
 		that.oOrder.countService = that.listService.length;
 		that.oOrder.countProduct = that.listProduct.length;
-		that.oOrder.status = "CREATED";
+		that.oOrder.status = 0;
+		that.oOrder.expirationTime = new Date($('#expirationDate').val()+" 00:00").getTime();
 
 		that.orderEntity = that.oOrder.save().RESULT;
 

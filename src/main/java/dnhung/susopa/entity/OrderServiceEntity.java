@@ -8,10 +8,12 @@ import java.util.Objects;
 public class OrderServiceEntity {
     private Long id;
     private OrderEntity order;
+    private StaffEntity staff;
     private String description;
     private String note;
     private short status;
     private double price;
+    private double discount;
     private short count;
     private String serviceName;
     private String serviceCode;
@@ -36,6 +38,16 @@ public class OrderServiceEntity {
 
     public void setOrder(OrderEntity order) {
         this.order = order;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false)
+    public StaffEntity getStaff() {
+        return staff;
+    }
+
+    public void setStaff(StaffEntity staff) {
+        this.staff = staff;
     }
 
     @Basic
@@ -79,6 +91,16 @@ public class OrderServiceEntity {
     }
 
     @Basic
+    @Column(name = "discount")
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    @Basic
     @Column(name = "count")
     public short getCount() {
         return count;
@@ -108,25 +130,6 @@ public class OrderServiceEntity {
         this.serviceCode = serviceCode;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderServiceEntity that = (OrderServiceEntity) o;
-        return status == that.status &&
-                Double.compare(that.price, price) == 0 &&
-                count == that.count &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(note, that.note) &&
-                Objects.equals(serviceName, that.serviceName) &&
-                Objects.equals(serviceCode, that.serviceCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, note, status, price, count, serviceName, serviceCode);
-    }
 
     @Basic
     @Column(name = "time")

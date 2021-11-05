@@ -5,6 +5,7 @@ var OrderServiceView = function () {
 	this.oTable = null;
 	this.oDialog = null;
 	this.oOrderService = new OrderService();
+	this.oOrder = new Order();
 
 	// Phương thức
 	this.initPage = function () {
@@ -20,9 +21,13 @@ var OrderServiceView = function () {
 		var aRows = [];
 		console.log(that.oOrderService.LIST);
 		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
-			var item = that.oOrderService.LIST[i];
+			var item = that.oOrderService.LIST[i].order;
 			var act = '<div class="">';
+			act += '<label class="label label-danger btnDel" style="cursor: cell" data-id="'+ item.id +'"><i class="fa fa-trash"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 			switch (item.status) {
+				case -1:
+					act += '<label class="label label-danger">Đã hủy</label>';
+					break;
 				case 0:
 					act += '<label class="label label-success btnStatus" style="cursor: cell" data-id="'+ item.id +'">Tiếp nhận</label>';
 					break;
@@ -33,22 +38,22 @@ var OrderServiceView = function () {
 					act += '<label class="label label-info btnStatus" style="cursor: cell" data-id="'+ item.id +'">Hoàn thành</label>';
 					break;
 				case 3:
-					act += '<label class="label label-primary btnStatus">Đã giao khách</label>';
+					act += '<label class="label label-primary">Đã giao khách</label>';
 					break;
 				default:
 			}
-			let _note = '<span class="btnNote form-control" style="width: 100%" data-id="'+item.id+'">'+item.note+'</span>';
-
+			// let _note = '<span class="btnNote form-control" style="width: 100%" data-id="'+item.id+'">'+item.note+'</span>';
 			act += '</div>';
 			aRows.push([
 				(i + 1),
-				item.serviceName + " (" + item.serviceCode + ") ",
-				item.order.code,
-				item.order.customerName + " ("+item.order.customerPhone+") ",
-				item.description,
+				item.code,
+				item.customerName + " ("+ item.customerPhone+") ",
+				item.countProduct,
+				item.countService,
+				that.convertMoney(item.amount),
 				that.convertTimestamp(item.time),
+				that.convertTimestamp(item.expirationTime),
 				act,
-				_note
             ]);
 		}
 		that.oTable.rows.add(aRows).draw();
@@ -59,6 +64,9 @@ var OrderServiceView = function () {
 		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 	}
 
+	this.convertMoney = function (money) {
+		return money.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+	}
 
 	// Sự kiện
 	$(document).ready(function () {
@@ -89,8 +97,21 @@ var OrderServiceView = function () {
 				return ;
 			}
 			if (confirm('Xác nhận chuyển trạng thái?')) {
-				that.oOrderService.id = id;
-				that.oOrderService.changeStatus();
+				that.oOrder.id = id;
+				that.oOrder.changeStatus();
+				that.bindGrid();
+			}
+			return false;
+		});
+
+		$('#Grid01').on('click', '.btnDel', function () {
+			var id = $(this).data('id');
+			if(!id){
+				return ;
+			}
+			if (confirm('Xác nhận hủy đơn hàng?')) {
+				that.oOrder.id = id;
+				that.oOrder.cancelOrder();
 				that.bindGrid();
 			}
 			return false;

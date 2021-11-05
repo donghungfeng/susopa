@@ -10,8 +10,9 @@ public class OrderEntity {
     private String code;
     private double amount;
     private double received;
-    private String status;
+    private Integer status;
     private double time;
+    private double expirationTime;
     private String customerPhone;
     private String customerName;
     private Long countProduct;
@@ -80,11 +81,11 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "status")
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -96,6 +97,16 @@ public class OrderEntity {
 
     public void setTime(double time) {
         this.time = time;
+    }
+
+    @Basic
+    @Column(name = "expiration_time")
+    public double getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(double expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     @Basic
@@ -118,23 +129,4 @@ public class OrderEntity {
         this.customerName = customerName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderEntity that = (OrderEntity) o;
-        return id == that.id &&
-                Double.compare(that.amount, amount) == 0 &&
-                Double.compare(that.received, received) == 0 &&
-                Double.compare(that.time, time) == 0 &&
-                Objects.equals(code, that.code) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(customerPhone, that.customerPhone) &&
-                Objects.equals(customerName, that.customerName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, code, amount, received, status, time, customerPhone, customerName);
-    }
 }

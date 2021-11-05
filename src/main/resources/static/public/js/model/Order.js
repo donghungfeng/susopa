@@ -18,9 +18,10 @@ var Order = function(){
 	this.amount=0;
 	this.received = 0;
 	this.time = 0;
+	this.expirationTime = 0;
 	this.customerPhone = '';
 	this.customerName = '';
-	this.status='';
+	this.status=0;
 	this.countProduct = 0;
 	this.countService = 0;
 
@@ -61,6 +62,7 @@ var Order = function(){
 		this.customerName=item.customerName;
 		this.customerPhone=item.customerPhone;
 		this.status=item.status;
+		this.expirationTime=item.expirationTime;
 		this.countProduct=item.countProduct;
 		this.countService=item.countService;
 	}
@@ -76,6 +78,46 @@ var Order = function(){
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
 			status:that.status,
+			expirationTime:that.expirationTime,
+			countProduct:that.countProduct,
+			countService:that.countService
+		}
+		console.log(data);
+		return DATA.set(URL.SAVE,data);
+	}
+	//cancle
+	this.cancelOrder = function(){
+		that.getById();
+		var data= {
+			id:that.id,
+			code:that.code,
+			amount:that.amount,
+			received:that.received,
+			time:that.time,
+			customerName:that.customerName,
+			customerPhone:that.customerPhone,
+			status:-1,
+			expirationTime:that.expirationTime,
+			countProduct:that.countProduct,
+			countService:that.countService
+		}
+		console.log(data);
+		return DATA.set(URL.SAVE,data);
+	}
+
+	//changeStatus
+	this.changeStatus = function(){
+		that.getById();
+		var data= {
+			id:that.id,
+			code:that.code,
+			amount:that.amount,
+			received:that.received,
+			time:that.time,
+			customerName:that.customerName,
+			customerPhone:that.customerPhone,
+			status:that.status+1,
+			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
 			countService:that.countService
 		}

@@ -29,14 +29,15 @@ var ReportView = function () {
 		that.bindGridService();
 	}
 
-	this.convertTimestamp = function(time){
-		let d = new Date(time);
-		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-	}
 	this.resetForm = function () {
 		$('#fromDate').val('');
 		$('#toDate').val('');
 		$('#filterFast').val('');
+	}
+
+	this.convertTimestamp = function(time){
+		let d = new Date(time);
+		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 	}
 
 	this.convertMoney = function (money) {
