@@ -3,6 +3,7 @@ var OrderServiceView = function () {
 	var that = this;
 	this.AppTitle = 'Danh sách dịch vụ cần thực hiện';
 	this.oTable = null;
+	this.oTableService = null;
 	this.oDialog = null;
 	this.oOrderService = new OrderService();
 	this.oOrder = new Order();
@@ -12,17 +13,19 @@ var OrderServiceView = function () {
 		$('#AppTitle').html(that.AppTitle);
 		document.title = that.AppTitle;
 		that.bindGrid();
+		// that.bindGridService();
+		// $('#Grid02_filter label').css("font-size","0px");
 	}
 
 	this.bindGrid = function(){
-		that.oOrderService.getAll();
-
+		that.oOrder.getAll();
 		that.oTable.clear().draw();
 		var aRows = [];
-		console.log(that.oOrderService.LIST);
-		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
-			var item = that.oOrderService.LIST[i].order;
+		console.log(that.oOrder.LIST);
+		for (var i = 0; i < that.oOrder.LIST.length; i++) {
+			var item = that.oOrder.LIST[i];
 			var act = '<div class="">';
+			var hidden = '<input type="hidden" class="rowID" value="' + item.id + '" />';
 			act += '<label class="label label-danger btnDel" style="cursor: cell" data-id="'+ item.id +'"><i class="fa fa-trash"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 			switch (item.status) {
 				case -1:
@@ -44,8 +47,10 @@ var OrderServiceView = function () {
 			}
 			// let _note = '<span class="btnNote form-control" style="width: 100%" data-id="'+item.id+'">'+item.note+'</span>';
 			act += '</div>';
+			let detail = '<label class="label label-default btnDetail" style="cursor: all-scroll" data-id="'+ item.id +'"><i class="fa fa-print"></i></label>';
+
 			aRows.push([
-				(i + 1),
+				(i + 1) + hidden,
 				item.code,
 				item.customerName + " ("+ item.customerPhone+") ",
 				item.countProduct,
@@ -54,9 +59,30 @@ var OrderServiceView = function () {
 				that.convertTimestamp(item.time),
 				that.convertTimestamp(item.expirationTime),
 				act,
+				detail
             ]);
 		}
 		that.oTable.rows.add(aRows).draw();
+	}
+
+	this.bindGridService = function(){
+		that.oOrderService.getByOrder();
+
+		that.oTableService.clear().draw();
+		var aRows = [];
+		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
+			var item = that.oOrderService.LIST[i];
+			let _note = '<span class="btnNote form-control" style="width: 100%" data-serviceid="'+item.id+'">'+item.note+'</span>';
+			let _sel = '<select class="form-control" style="width: 100%"><option>Chọn nhân viên</option></select>'
+			aRows.push([
+				(i + 1),
+				item.serviceName,
+				item.description,
+				_sel,
+				_note
+			]);
+		}
+		that.oTableService.rows.add(aRows).draw();
 	}
 
 	this.convertTimestamp = function(time){
@@ -72,21 +98,25 @@ var OrderServiceView = function () {
 	$(document).ready(function () {
 
 		that.oTable = ControlHelper.Datatable.Init('Grid01', 10, true);
+		that.oTableService = ControlHelper.Datatable.Init('Grid02', 10, true);
 		that.oDialog = new PopupDialog(reload);
 
 		that.initPage();
 
 		function reload() {
-			that.bindGrid();
+
 		}
 
 		$('#Grid01 tbody').on('click', 'tr', function () {
+			that.oOrderService.orderId = $(this).find('.rowID').val();
 			if ($(this).hasClass('selected')) {
 				$(this).removeClass('selected');
+
 			}
 			else {
 				that.oTable.$('tr.selected').removeClass('selected');
 				$(this).addClass('selected');
+				that.bindGridService();
 			}
 			return true;
 		});
@@ -117,12 +147,21 @@ var OrderServiceView = function () {
 			return false;
 		});
 
-		$('#Grid01').on('click', '.btnNote', function () {
-			var id = $(this).data('id');
+		$('#Grid02').on('click', '.btnNote', function () {
+			var id = $(this).data('serviceid');
 			that.oOrderService.id = id;
 			let note = prompt("Vị trí để giày:",$(this).html() );
 			that.oOrderService.changeNote(note);
-			that.bindGrid();
+			that.bindGridService();
+		});
+
+		$('#Grid01').on('click','.btnDetail', function () {
+			var id = $(this).data('id');
+
+			that.oOrder.id = id;
+			that.oOrder.getById();
+			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/rebill.html';
+			that.oDialog.show('Hóa đơn', url, '52%', '700px');
 		});
 
 

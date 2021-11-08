@@ -29,7 +29,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         return this.getBaseRepository().save(t);
     }
     public T getById(Long id){
-        return (T) this.getBaseRepository().findById(id);
+        return this.getBaseRepository().findById(id).get();
     }
 
     public void delete(Long id){

@@ -6,7 +6,8 @@ var OrderService = function(){
 		SAVE:'orderservice/create',
 		DEL:'orderservice/delete',
 		GETBYTIME: 'orderservice/time',
-		GETGROUPBYTIME: 'orderservice/grouptime'
+		GETGROUPBYTIME: 'orderservice/grouptime',
+		GETBYORDER:'orderservice/findbyorder'
 	}
 	
 	const LABEL={
@@ -24,6 +25,7 @@ var OrderService = function(){
 	this.time=0;
 	this.serviceName='';
 	this.serviceCode='';
+	this.orderId = 0;
 
 	this.validSave = function(){
 		var alert = '';
@@ -73,6 +75,14 @@ var OrderService = function(){
 		this.serviceName=item.serviceName;
 	}
 
+	// get data by order
+	this.getByOrder = function(){
+		if (that.orderId == 0 )
+			return;
+		var rs = DATA.get(URL.GETBYORDER+"/"+that.orderId);
+		that.LIST = rs.RESULT;
+	}
+
 	//save data
 	this.save = function(){
 		var data= {
@@ -85,7 +95,8 @@ var OrderService = function(){
 			count:that.count,
 			time:that.time,
 			serviceName:that.serviceName,
-			serviceCode:that.serviceCode
+			serviceCode:that.serviceCode,
+			staff:null
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);

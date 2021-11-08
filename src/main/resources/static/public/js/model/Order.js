@@ -88,6 +88,10 @@ var Order = function(){
 	//cancle
 	this.cancelOrder = function(){
 		that.getById();
+		if(that.status == 3){
+			alert("Đơn hàng đã hoàn thành!");
+			return;
+		}
 		var data= {
 			id:that.id,
 			code:that.code,

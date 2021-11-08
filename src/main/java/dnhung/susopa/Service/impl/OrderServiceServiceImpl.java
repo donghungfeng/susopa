@@ -30,4 +30,9 @@ public class OrderServiceServiceImpl extends BaseServiceImpl<OrderServiceEntity>
     public List<Object> findAllGroupFromTime(double from, double to) {
         return this.orderServiceRepository.findAllGroupFromTime(from,to);
     }
+
+    @Override
+    public List<OrderServiceEntity> findAllByOrder(Long id) {
+        return this.orderServiceRepository.findAllByOrder(id);
+    }
 }

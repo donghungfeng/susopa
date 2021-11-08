@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html{
+            font-size: 12px;
+            top:0px;
+            left:0px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 500;
+        }
+        #invoice-POS {
+            box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+            padding: 0mm;
+            margin: 0 auto;
+            width: 80mm;
+            background: #FFF;
+        }
+
+        .header{
+            width: 100%;
+            height: 105px;
+            display: flex;
+            align-content: space-around;
+        }
+        img{
+            width: 120px;
+            height: 100px;
+        }
+
+
+
+        .header-main{
+            width: 65%;
+            height: 100px;
+            flex-grow: 1;
+            text-align: center;
+            margin-top: -10px;
+        }
+
+        .content{
+            width: 100%;
+            min-height: 100px;
+            border-top: 0.5px solid black;
+        }
+
+        .bot{
+            width: 100%;
+            min-height: 5px;
+            text-align: center;
+            margin-top: 10px;
+
+
+        }
+
+        #customer {
+            border-bottom: 0.5px solid black;
+        }
+
+        #product {
+            border-bottom: 0.5px solid black;
+        }
+        #service {
+            border-bottom: 0.5px solid black;
+        }
+        #pay {
+            border-bottom: 0.5px solid black;
+        }
+        .border-dotted{
+            border-top: 0.5px dotted red !important;
+        }
+
+        table{
+            width: 80mm;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div id="invoice-POS">
+    <div class="header">
+
+        <img src="/public/templates/medic247/img/susopa.jpg" alt="" class="header-logo">
+        <div class="header-main">
+            <h2>SUSOPA</h2>
+            <span>Vệ sinh, chăm sóc giày</span>
+            </br>
+            <span>159 Đ.Vạn Xuân - Lai Xá - Kim </br>Trung - Hoài Đức - Hà Nội</span></br>
+            <span>Điện thoại: 383585383</span>
+        </div>
+    </div>
+    <h2 style="text-align: center;"><b>HÓA ĐƠN THANH TOÁN</b></h2>
+
+    <div class="content">
+        <table id="customer">
+            <tr>
+                <td >Ngày tiếp nhận:</td>
+                <td id="date" colspan="5"></td>
+
+            </tr>
+            <tr>
+                <td >Ngày hẹn trả:</td>
+                <td id="" colspan="5"></td>
+            </tr>
+            <tr>
+                <td>K.hàng:</td>
+                <td colspan="2" id="customerName"></td>
+                <td>Mã HĐ:</td>
+                <td colspan="2" id="orderCode"></td>
+            </tr>
+
+            <tr>
+                <td>Sđt:</td>
+                <td colspan="5" id="customerPhone"></td>
+            </tr>
+
+            <tr>
+                <td>Địa chỉ:</td>
+                <td colspan="5" id="customerAddress"></td>
+            </tr>
+        </table>
+
+        <table id="product">
+
+            <thead>
+                <tr>
+                    <td style="width: 40%">Sản phẩm</td>
+                    <td style="width: 30%">Số lượng</td>
+                    <td style="width: 30%">Thành tiền</td>
+                </tr>
+            </thead>
+            <tbody id="exportBillProductTable">
+
+            </tbody>
+
+        </table>
+        <table id="service">
+            <thead>
+                <tr>
+                    <td style="width: 70%">Dịch vụ</td>
+                    <td style="width: 30%">Thành tiền</td>
+                </tr>
+            </thead>
+            <tbody id="exportBillServiceTable">
+
+            </tbody>
+
+        </table>
+
+        <table id="pay">
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Tổng cộng:
+                </td>
+                <td style="width: 30%" id="total" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Ưu đãi Su Club:
+                </td>
+                <td style="width: 30%" id="moneyDiscountCustomer" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Voucher:
+                </td>
+                <td style="width: 30%" id="moneyDiscountVourcher" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%" id="shipName">Ship: </td>
+                <td style="width: 30%" id="totalShip" class="text-right"></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 70%">
+                    Thành tiền:
+                </td>
+                <td style="width: 30%" id="totalAfterDiscount" class="text-right"></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="bot">
+        <span><i>Cảm ơn quý khách đã sử dụng dịch vụ!</i></span>
+    </div>
+
+
+
+</div>
+
+<script>
+    // let customer = (window.parent.oOrderView.oCustomer);
+    let order = window.parent.oOrderServiceView.oOrder;
+    // let date = new Date();
+    // if(customer){
+    //     let _rank = "";
+    //     switch (customer.ranking) {
+    //         case 0:
+    //             _rank = '<span><i class="fa fa-user"></i>Thường</span>';
+    //             break;
+    //         case 1:
+    //             _rank = '<span><i class="fa fa-user"></i>Member</span>';
+    //             break;
+    //         case 2:
+    //             _rank = '<span><i class="fa fa-angle-up"></i>Bạc</span>';
+    //             break;
+    //         case 3:
+    //             _rank = '<span><i class="fa fa-angle-double-up"></i>Vàng</span>';
+    //             break;
+    //         case 4:
+    //             _rank = '<span><i class="fa fa-diamond"></i>Kim cương</span>';
+    //             break;
+    //         default:
+    //             _rank = "Vô hạng";
+    //             break;
+    //     }
+    //     document.getElementById('customerName').innerHTML = customer.name + " (" + _rank + ") ";
+    //     document.getElementById('customerPhone').innerHTML = customer.phone;
+    //     document.getElementById('customerAddress').innerHTML = customer.address;
+    // }
+    document.getElementById('orderCode').innerHTML = order.code;
+    //
+    // document.getElementById('date').innerHTML = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+    //
+    //
+    // document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderView.htmlBillProductTable;
+    // document.getElementById('exportBillServiceTable').innerHTML = window.parent.oOrderView.htmlBillServiceTable;
+    // // document.getElementById('shipName').innerHTML = window.parent.oOrderView.oShip.name;
+    // document.getElementById('moneyDiscountCustomer').innerHTML = window.parent.oOrderView.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    // document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    // document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscountShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    // document.getElementById('total').innerHTML = window.parent.oOrderView.total.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    // document.getElementById('totalShip').innerHTML = window.parent.oOrderView.totalShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+
+
+</script>
+
+
+</body>
+</html>

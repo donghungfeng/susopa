@@ -41,7 +41,7 @@ public class OrderServiceEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")
     public StaffEntity getStaff() {
         return staff;
     }
