@@ -1,7 +1,6 @@
 package dnhung.susopa.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "orderrr", schema = "main", catalog = "")
@@ -13,8 +12,12 @@ public class OrderEntity {
     private Integer status;
     private double time;
     private double expirationTime;
+    private double discountCustomer;
+    private double discountVoucher;
+    private double discountVoucherM;
     private String customerPhone;
     private String customerName;
+    private String customerAddress;
     private Long countProduct;
     private Long countService;
 
@@ -127,6 +130,46 @@ public class OrderEntity {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    @Basic
+    @Column(name = "customer_address")
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    @Basic
+    @Column(name = "discount_voucher")
+    public double getDiscountVoucher() {
+        return discountVoucher;
+    }
+
+    public void setDiscountVoucher(double discountVoucher) {
+        this.discountVoucher = discountVoucher;
+    }
+
+    @Basic
+    @Column(name = "discount_customer")
+    public double getDiscountCustomer() {
+        return discountCustomer;
+    }
+
+    public void setDiscountCustomer(double discountCustomer) {
+        this.discountCustomer = discountCustomer;
+    }
+
+    @Basic
+    @Column(name = "discount_voucher_m")
+    public double getDiscountVoucherM() {
+        return discountVoucherM;
+    }
+
+    public void setDiscountVoucherM(double discountVoucherM) {
+        this.discountVoucherM = discountVoucherM;
     }
 
 }

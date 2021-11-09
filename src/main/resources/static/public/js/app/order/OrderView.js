@@ -210,6 +210,7 @@ var OrderView = function () {
 		that.oOrder.time = date.getTime();
 		that.oOrder.customerName = that.oCustomer.name;
 		that.oOrder.customerPhone = that.oCustomer.phone;
+		that.oOrder.customerAddress = that.oCustomer.address;
 		that.oOrder.countService = that.listService.length;
 		that.oOrder.countProduct = that.listProduct.length;
 		that.oOrder.status = 0;

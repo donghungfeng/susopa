@@ -21,9 +21,13 @@ var Order = function(){
 	this.expirationTime = 0;
 	this.customerPhone = '';
 	this.customerName = '';
+	this.customerAddress='';
 	this.status=0;
 	this.countProduct = 0;
 	this.countService = 0;
+	this.discountVoucher=0;
+	this.discountCustomer=0;
+	this.discountVoucherM=0;
 
 	this.validSave = function(){
 		var alert = '';
@@ -61,10 +65,14 @@ var Order = function(){
 		this.time=item.time;
 		this.customerName=item.customerName;
 		this.customerPhone=item.customerPhone;
+		this.customerAddress=item.customerAddress;
 		this.status=item.status;
 		this.expirationTime=item.expirationTime;
 		this.countProduct=item.countProduct;
 		this.countService=item.countService;
+		this.discountCustomer=item.discountCustomer;
+		this.discountVoucher=item.discountVoucher;
+		this.discountVoucherM=item.discountVoucherM;
 	}
 
 	//save data
@@ -77,10 +85,14 @@ var Order = function(){
 			time:that.time,
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
+			customerAddress:that.customerAddress,
 			status:that.status,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
-			countService:that.countService
+			countService:that.countService,
+			discountVoucher:that.discountVoucher,
+			discountCustomer:that.discountCustomer,
+			discountVoucherM:that.discountVoucherM
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);
@@ -100,10 +112,14 @@ var Order = function(){
 			time:that.time,
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
+			customerAddress:that.customerAddress,
 			status:-1,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
-			countService:that.countService
+			countService:that.countService,
+			discountVoucher:that.discountVoucher,
+			discountCustomer:that.discountCustomer,
+			discountVoucherM:that.discountVoucherM
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);
@@ -120,10 +136,14 @@ var Order = function(){
 			time:that.time,
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
+			customerAddress:that.customerAddress,
 			status:that.status+1,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
-			countService:that.countService
+			countService:that.countService,
+			discountVoucher:that.discountVoucher,
+			discountCustomer:that.discountCustomer,
+			discountVoucherM:that.discountVoucherM
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);

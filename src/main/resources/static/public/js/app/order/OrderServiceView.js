@@ -7,6 +7,8 @@ var OrderServiceView = function () {
 	this.oDialog = null;
 	this.oOrderService = new OrderService();
 	this.oOrder = new Order();
+	this.htmlBillProductTable = '';
+	this.htmlBillServiceTable = '';
 
 	// Phương thức
 	this.initPage = function () {
@@ -83,6 +85,46 @@ var OrderServiceView = function () {
 			]);
 		}
 		that.oTableService.rows.add(aRows).draw();
+	}
+
+	this.renderBillTable = function(){
+		that.htmlBillProductTable = "";
+		that.htmlBillServiceTable = "";
+		// for (var i = 0; i < that.listProduct.length; i++) {
+		// 	var item = that.listProduct[i];
+		// 	that.htmlBillProductTable += '<tr>';
+		// 	that.htmlBillProductTable += '<td colspan="3" class="border-dotted">' +item.item.name + '</td>';
+		// 	that.htmlBillProductTable += '</tr><tr>';
+		// 	that.htmlBillProductTable += '<td>' +parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+		// 	that.htmlBillProductTable += '<td class="text-center">' +item.count+ '</td>';
+		// 	that.htmlBillProductTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+		// 	that.htmlBillProductTable += '</tr>';
+		// }
+		// let des = "";
+		// let shoe = 1;
+		// for (var i = 0; i < that.listService.length; i++) {
+		// 	var item = that.listService[i];
+		// 	if(des != item.description){
+		// 		that.htmlBillServiceTable += '<tr>';
+		// 		that.htmlBillServiceTable += '<td colspan="2" class="border-dotted"> Đôi số: '+ shoe + '</td>';
+		// 		that.htmlBillServiceTable += '</tr><tr>';
+		// 		that.htmlBillServiceTable += '<td colspan="2">' + item.description + '</td>';
+		// 		that.htmlBillServiceTable += '</tr><tr>';
+		// 		that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
+		// 		that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+		// 		that.htmlBillServiceTable += '</tr>';
+		//
+		// 		des = item.description
+		// 		shoe++;
+		// 	}
+		// 	else{
+		// 		that.htmlBillServiceTable += '<tr>';
+		// 		that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
+		// 		that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+		// 		that.htmlBillServiceTable += '</tr>';
+		// 	}
+		//
+		// }
 	}
 
 	this.convertTimestamp = function(time){
