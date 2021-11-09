@@ -15,9 +15,11 @@ public class OrderEntity {
     private double discountCustomer;
     private double discountVoucher;
     private double discountVoucherM;
+    private double ship;
     private String customerPhone;
     private String customerName;
     private String customerAddress;
+    private Integer customerRanking;
     private Long countProduct;
     private Long countService;
 
@@ -143,6 +145,16 @@ public class OrderEntity {
     }
 
     @Basic
+    @Column(name = "customer_ranking")
+    public Integer getCustomerRanking() {
+        return customerRanking;
+    }
+
+    public void setCustomerRanking(Integer customerRanking) {
+        this.customerRanking = customerRanking;
+    }
+
+    @Basic
     @Column(name = "discount_voucher")
     public double getDiscountVoucher() {
         return discountVoucher;
@@ -170,6 +182,16 @@ public class OrderEntity {
 
     public void setDiscountVoucherM(double discountVoucherM) {
         this.discountVoucherM = discountVoucherM;
+    }
+
+    @Basic
+    @Column(name = "ship")
+    public double getShip() {
+        return ship;
+    }
+
+    public void setShip(double ship) {
+        this.ship = ship;
     }
 
 }

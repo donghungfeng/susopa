@@ -22,12 +22,14 @@ var Order = function(){
 	this.customerPhone = '';
 	this.customerName = '';
 	this.customerAddress='';
+	this.customerRanking=0;
 	this.status=0;
 	this.countProduct = 0;
 	this.countService = 0;
 	this.discountVoucher=0;
 	this.discountCustomer=0;
 	this.discountVoucherM=0;
+	this.ship=0;
 
 	this.validSave = function(){
 		var alert = '';
@@ -66,6 +68,7 @@ var Order = function(){
 		this.customerName=item.customerName;
 		this.customerPhone=item.customerPhone;
 		this.customerAddress=item.customerAddress;
+		this.customerRanking=item.customerRanking;
 		this.status=item.status;
 		this.expirationTime=item.expirationTime;
 		this.countProduct=item.countProduct;
@@ -73,6 +76,7 @@ var Order = function(){
 		this.discountCustomer=item.discountCustomer;
 		this.discountVoucher=item.discountVoucher;
 		this.discountVoucherM=item.discountVoucherM;
+		this.ship=item.ship;
 	}
 
 	//save data
@@ -86,13 +90,15 @@ var Order = function(){
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
 			customerAddress:that.customerAddress,
+			customerRanking:that.customerRanking,
 			status:that.status,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
 			countService:that.countService,
 			discountVoucher:that.discountVoucher,
 			discountCustomer:that.discountCustomer,
-			discountVoucherM:that.discountVoucherM
+			discountVoucherM:that.discountVoucherM,
+			ship:that.ship
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);
@@ -113,13 +119,15 @@ var Order = function(){
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
 			customerAddress:that.customerAddress,
+			customerRanking:that.customerRanking,
 			status:-1,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
 			countService:that.countService,
 			discountVoucher:that.discountVoucher,
 			discountCustomer:that.discountCustomer,
-			discountVoucherM:that.discountVoucherM
+			discountVoucherM:that.discountVoucherM,
+			ship:that.ship
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);
@@ -137,13 +145,15 @@ var Order = function(){
 			customerName:that.customerName,
 			customerPhone:that.customerPhone,
 			customerAddress:that.customerAddress,
+			customerRanking:that.customerRanking,
 			status:that.status+1,
 			expirationTime:that.expirationTime,
 			countProduct:that.countProduct,
 			countService:that.countService,
 			discountVoucher:that.discountVoucher,
 			discountCustomer:that.discountCustomer,
-			discountVoucherM:that.discountVoucherM
+			discountVoucherM:that.discountVoucherM,
+			ship:that.ship
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);

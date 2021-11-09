@@ -6,7 +6,9 @@ var OrderServiceView = function () {
 	this.oTableService = null;
 	this.oDialog = null;
 	this.oOrderService = new OrderService();
+	this.oOrderProduct = new OrderProduct();
 	this.oOrder = new Order();
+	this.oStaff = new Staff();
 	this.htmlBillProductTable = '';
 	this.htmlBillServiceTable = '';
 
@@ -70,12 +72,12 @@ var OrderServiceView = function () {
 	this.bindGridService = function(){
 		that.oOrderService.getByOrder();
 
+		let _sel = that.oStaff.bindSelectHtml();
 		that.oTableService.clear().draw();
 		var aRows = [];
 		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
 			var item = that.oOrderService.LIST[i];
 			let _note = '<span class="btnNote form-control" style="width: 100%" data-serviceid="'+item.id+'">'+item.note+'</span>';
-			let _sel = '<select class="form-control" style="width: 100%"><option>Chọn nhân viên</option></select>'
 			aRows.push([
 				(i + 1),
 				item.serviceName,
@@ -90,41 +92,41 @@ var OrderServiceView = function () {
 	this.renderBillTable = function(){
 		that.htmlBillProductTable = "";
 		that.htmlBillServiceTable = "";
-		// for (var i = 0; i < that.listProduct.length; i++) {
-		// 	var item = that.listProduct[i];
-		// 	that.htmlBillProductTable += '<tr>';
-		// 	that.htmlBillProductTable += '<td colspan="3" class="border-dotted">' +item.item.name + '</td>';
-		// 	that.htmlBillProductTable += '</tr><tr>';
-		// 	that.htmlBillProductTable += '<td>' +parseFloat(item.price).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
-		// 	that.htmlBillProductTable += '<td class="text-center">' +item.count+ '</td>';
-		// 	that.htmlBillProductTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
-		// 	that.htmlBillProductTable += '</tr>';
-		// }
-		// let des = "";
-		// let shoe = 1;
-		// for (var i = 0; i < that.listService.length; i++) {
-		// 	var item = that.listService[i];
-		// 	if(des != item.description){
-		// 		that.htmlBillServiceTable += '<tr>';
-		// 		that.htmlBillServiceTable += '<td colspan="2" class="border-dotted"> Đôi số: '+ shoe + '</td>';
-		// 		that.htmlBillServiceTable += '</tr><tr>';
-		// 		that.htmlBillServiceTable += '<td colspan="2">' + item.description + '</td>';
-		// 		that.htmlBillServiceTable += '</tr><tr>';
-		// 		that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
-		// 		that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
-		// 		that.htmlBillServiceTable += '</tr>';
-		//
-		// 		des = item.description
-		// 		shoe++;
-		// 	}
-		// 	else{
-		// 		that.htmlBillServiceTable += '<tr>';
-		// 		that.htmlBillServiceTable += '<td>- ' +item.item.name + '</td>';
-		// 		that.htmlBillServiceTable += '<td class="text-right">' +(item.price * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
-		// 		that.htmlBillServiceTable += '</tr>';
-		// 	}
-		//
-		// }
+		for (var i = 0; i < that.oOrderProduct.LIST.length; i++) {
+			var item = that.oOrderProduct.LIST[i];
+			that.htmlBillProductTable += '<tr>';
+			that.htmlBillProductTable += '<td colspan="3" class="border-dotted">' +item.productName + '</td>';
+			that.htmlBillProductTable += '</tr><tr>';
+			that.htmlBillProductTable += '<td>' +parseFloat(item.realPrice).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			that.htmlBillProductTable += '<td class="text-center">' +item.count+ '</td>';
+			that.htmlBillProductTable += '<td class="text-right">' +(item.realPrice * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+			that.htmlBillProductTable += '</tr>';
+		}
+		let des = "";
+		let shoe = 1;
+		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
+			var item = that.oOrderService.LIST[i];
+			if(des != item.description){
+				that.htmlBillServiceTable += '<tr>';
+				that.htmlBillServiceTable += '<td colspan="2" class="border-dotted"> Đôi số: '+ shoe + '</td>';
+				that.htmlBillServiceTable += '</tr><tr>';
+				that.htmlBillServiceTable += '<td colspan="2">' + item.description + '</td>';
+				that.htmlBillServiceTable += '</tr><tr>';
+				that.htmlBillServiceTable += '<td>- ' +item.serviceName + '</td>';
+				that.htmlBillServiceTable += '<td class="text-right">' +(item.realPrice * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+				that.htmlBillServiceTable += '</tr>';
+
+				des = item.description;
+				shoe++;
+			}
+			else{
+				that.htmlBillServiceTable += '<tr>';
+				that.htmlBillServiceTable += '<td>- ' +item.serviceName + '</td>';
+				that.htmlBillServiceTable += '<td class="text-right">' +(item.realPrice * item.count).toLocaleString('vi', {style : 'currency', currency : 'VND'})+ '</td>';
+				that.htmlBillServiceTable += '</tr>';
+			}
+
+		}
 	}
 
 	this.convertTimestamp = function(time){
@@ -202,6 +204,15 @@ var OrderServiceView = function () {
 
 			that.oOrder.id = id;
 			that.oOrder.getById();
+
+			that.oOrderProduct.orderId = id;
+			that.oOrderProduct.getByOrder();
+
+			that.oOrderService.orderId = id;
+			that.oOrderService.getByOrder();
+
+			that.renderBillTable();
+
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/rebill.html';
 			that.oDialog.show('Hóa đơn', url, '52%', '700px');
 		});

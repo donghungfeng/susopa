@@ -11,6 +11,7 @@ public class OrderProductEntity {
     private String note;
     private short status;
     private double price;
+    private double realPrice;
     private short count;
     private String productName;
     private String productCode;
@@ -65,6 +66,16 @@ public class OrderProductEntity {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Basic
+    @Column(name = "real_price")
+    public double getRealPrice() {
+        return realPrice;
+    }
+
+    public void setRealPrice(double realPrice) {
+        this.realPrice = realPrice;
     }
 
     @Basic

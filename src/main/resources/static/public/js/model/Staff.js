@@ -64,6 +64,18 @@ var Staff = function(){
 	this.del = function(){
 		return DATA.get(URL.DEL+"/"+that.id);
 	}
+
+	this.bindSelectHtml = function(){
+		that.getAll();
+		var html = '<select class="form-control">';
+		html += '<option  value="0"> - Chọn nhân viên - </option>';
+		for (let i = 0; i < that.LIST.length; i++) {
+			var item = that.LIST[i];
+			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
+		}
+		html +='</select>';
+		return html;
+	}
 	
 	this.bindSelect = function(sControlId){
 		that.getAll();

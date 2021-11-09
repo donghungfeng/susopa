@@ -109,7 +109,7 @@
             </tr>
             <tr>
                 <td >Ngày hẹn trả:</td>
-                <td id="" colspan="5"></td>
+                <td id="expiration" colspan="5"></td>
             </tr>
             <tr>
                 <td>K.hàng:</td>
@@ -201,46 +201,47 @@
 <script>
     // let customer = (window.parent.oOrderView.oCustomer);
     let order = window.parent.oOrderServiceView.oOrder;
-    // let date = new Date();
-    // if(customer){
-    //     let _rank = "";
-    //     switch (customer.ranking) {
-    //         case 0:
-    //             _rank = '<span><i class="fa fa-user"></i>Thường</span>';
-    //             break;
-    //         case 1:
-    //             _rank = '<span><i class="fa fa-user"></i>Member</span>';
-    //             break;
-    //         case 2:
-    //             _rank = '<span><i class="fa fa-angle-up"></i>Bạc</span>';
-    //             break;
-    //         case 3:
-    //             _rank = '<span><i class="fa fa-angle-double-up"></i>Vàng</span>';
-    //             break;
-    //         case 4:
-    //             _rank = '<span><i class="fa fa-diamond"></i>Kim cương</span>';
-    //             break;
-    //         default:
-    //             _rank = "Vô hạng";
-    //             break;
-    //     }
-    //     document.getElementById('customerName').innerHTML = customer.name + " (" + _rank + ") ";
-    //     document.getElementById('customerPhone').innerHTML = customer.phone;
-    //     document.getElementById('customerAddress').innerHTML = customer.address;
-    // }
+    let time = new Date(order.time);
+    let expirationTime = new Date(order.expirationTime);
+    let _rank = "";
+    switch (order.customerRanking) {
+        case 0:
+            _rank = '<span><i class="fa fa-user"></i>Thường</span>';
+            break;
+        case 1:
+            _rank = '<span><i class="fa fa-user"></i>Member</span>';
+            break;
+        case 2:
+            _rank = '<span><i class="fa fa-angle-up"></i>Bạc</span>';
+            break;
+        case 3:
+            _rank = '<span><i class="fa fa-angle-double-up"></i>Vàng</span>';
+            break;
+        case 4:
+            _rank = '<span><i class="fa fa-diamond"></i>Kim cương</span>';
+            break;
+        default:
+            _rank = "Vô hạng";
+            break;
+    }
+
+    document.getElementById('customerName').innerHTML = order.customerName + " (" + _rank + ") ";
+    document.getElementById('customerPhone').innerHTML = order.customerPhone;
+    document.getElementById('customerAddress').innerHTML = order.customerAddress;
+
     document.getElementById('orderCode').innerHTML = order.code;
     //
-    // document.getElementById('date').innerHTML = date.toLocaleDateString() + " " + date.toLocaleTimeString();
-    //
-    //
-    // document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderView.htmlBillProductTable;
-    // document.getElementById('exportBillServiceTable').innerHTML = window.parent.oOrderView.htmlBillServiceTable;
+    document.getElementById('date').innerHTML = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+    document.getElementById('expiration').innerHTML = expirationTime.toLocaleDateString();
+
+    document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderServiceView.htmlBillProductTable;
+    document.getElementById('exportBillServiceTable').innerHTML = window.parent.oOrderServiceView.htmlBillServiceTable;
     // // document.getElementById('shipName').innerHTML = window.parent.oOrderView.oShip.name;
-    // document.getElementById('moneyDiscountCustomer').innerHTML = window.parent.oOrderView.moneyDiscountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    // document.getElementById('moneyDiscountVourcher').innerHTML = window.parent.oOrderView.moneyDiscountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    // document.getElementById('totalAfterDiscount').innerHTML = window.parent.oOrderView.totalAfterDiscountShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    // document.getElementById('total').innerHTML = window.parent.oOrderView.total.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-    // document.getElementById('totalShip').innerHTML = window.parent.oOrderView.totalShip.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('moneyDiscountCustomer').innerHTML = order.discountCustomer.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('moneyDiscountVourcher').innerHTML = order.discountVoucher.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('totalAfterDiscount').innerHTML = order.amount.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('total').innerHTML = order.received.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+    document.getElementById('totalShip').innerHTML = order.ship.toLocaleString('vi', {style : 'currency', currency : 'VND'});
 
 
 </script>

@@ -21,6 +21,7 @@ var OrderService = function(){
 	this.note='';
 	this.status=0;
 	this.price=0;
+	this.realPrice=0;
 	this.count=0;
 	this.time=0;
 	this.serviceName='';
@@ -69,6 +70,7 @@ var OrderService = function(){
 		this.status=item.status;
 		this.order=item.order;
 		this.price=item.price;
+		this.realPrice=item.realPrice;
 		this.count=item.count;
 		this.time=item.time;
 		this.serviceCode=item.serviceCode;
@@ -92,6 +94,7 @@ var OrderService = function(){
 			status:that.status,
 			order:that.order,
 			price:that.price,
+			realPrice:that.realPrice,
 			count:that.count,
 			time:that.time,
 			serviceName:that.serviceName,

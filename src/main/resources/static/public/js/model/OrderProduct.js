@@ -6,7 +6,8 @@ var OrderProduct = function(){
 		SAVE:'orderproduct/create',
 		DEL:'orderproduct/delete',
 		GETBYTIME: 'orderproduct/time',
-		GETGROUPBYTIME: 'orderproduct/grouptime'
+		GETGROUPBYTIME: 'orderproduct/grouptime',
+		GETBYORDER:'orderproduct/findbyorder'
 	}
 	
 	const LABEL={
@@ -19,10 +20,12 @@ var OrderProduct = function(){
 	this.note='';
 	this.status=0;
 	this.price=0;
+	this.realPrice=0;
 	this.count=0;
 	this.time=0;
 	this.productName='';
 	this.productCode='';
+	this.orderId = 0;
 
 	this.validSave = function(){
 		var alert = '';
@@ -37,6 +40,14 @@ var OrderProduct = function(){
 		var rs = DATA.get(URL.GETALL);
 		that.LIST = rs.RESULT;
 		console.log(rs);
+	}
+
+	// get data by order
+	this.getByOrder = function(){
+		if (that.orderId == 0 )
+			return;
+		var rs = DATA.get(URL.GETBYORDER+"/"+that.orderId);
+		that.LIST = rs.RESULT;
 	}
 
 	this.getAllByTime = function(from,to){
@@ -66,6 +77,7 @@ var OrderProduct = function(){
 		this.status=item.status;
 		this.order=item.order;
 		this.price=item.price;
+		this.realPrice=item.realPrice;
 		this.count=item.count;
 		this.time=item.time;
 		this.productCode=item.productCode;
@@ -80,6 +92,7 @@ var OrderProduct = function(){
 			status:that.status,
 			order:that.order,
 			price:that.price,
+			realPrice:that.realPrice,
 			count:that.count,
 			time:that.time,
 			productName:that.productName,

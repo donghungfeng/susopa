@@ -5,10 +5,7 @@ import dnhung.susopa.Service.OrderProductService;
 import dnhung.susopa.entity.OrderProductEntity;
 import dnhung.susopa.model.BaseResponse;
 import dnhung.susopa.model.Time;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/public/orderproduct")
@@ -31,5 +28,9 @@ public class OrderProductApi extends BaseApi<OrderProductEntity> {
     @PostMapping("/grouptime")
     public BaseResponse findAllGroupByTime(@RequestBody Time t){
         return new BaseResponse("00","Lấy thành công", this.orderProductService.findAllGroupFromTime(t.getFrom(),t.getTo()));
+    }
+    @GetMapping("/findbyorder/{id}")
+    public BaseResponse findAllGroupByTime(@PathVariable Long id){
+        return new BaseResponse("00","Lấy thành công", this.orderProductService.findAllByOrder(id));
     }
 }
