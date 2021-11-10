@@ -6,6 +6,7 @@ var OrderService = function(){
 		SAVE:'orderservice/create',
 		DEL:'orderservice/delete',
 		GETBYTIME: 'orderservice/time',
+		GETBYTIMESTAFF: 'orderservice/timewithstaff',
 		GETGROUPBYTIME: 'orderservice/grouptime',
 		GETBYORDER:'orderservice/findbyorder'
 	}
@@ -49,6 +50,14 @@ var OrderService = function(){
 			to:to
 		}
 		var rs = DATA.set(URL.GETBYTIME,data);
+		that.LIST = rs.RESULT;
+	}
+	this.getAllByTimeWithStaff = function(from,to,id){
+		var data= {
+			from:from,
+			to:to
+		}
+		var rs = DATA.set(URL.GETBYTIME+"/"+id,data);
 		that.LIST = rs.RESULT;
 	}
 	this.getAllGroupByTime = function(from,to){

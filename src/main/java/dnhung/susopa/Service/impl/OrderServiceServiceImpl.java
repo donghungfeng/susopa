@@ -27,6 +27,11 @@ public class OrderServiceServiceImpl extends BaseServiceImpl<OrderServiceEntity>
     }
 
     @Override
+    public List<OrderServiceEntity> findAllFromTimeWithStaff(double from, double to, Long id) {
+        return this.orderServiceRepository.findAllFromTimeWithStaff(from,to,id);
+    }
+
+    @Override
     public List<Object> findAllGroupFromTime(double from, double to) {
         return this.orderServiceRepository.findAllGroupFromTime(from,to);
     }

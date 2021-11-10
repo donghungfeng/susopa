@@ -41,6 +41,7 @@ var OrderView = function () {
 
 	this.typeShip = 1;
 	this.orderCode = "";
+	this.expirationDate = null;
 
 
 	// Phương thức
@@ -218,7 +219,7 @@ var OrderView = function () {
 		that.oOrder.countService = that.listService.length;
 		that.oOrder.countProduct = that.listProduct.length;
 		that.oOrder.status = 0;
-		that.oOrder.expirationTime = new Date($('#expirationDate').val()+" 00:00").getTime();
+		that.oOrder.expirationTime = new Date(that.expirationDate).getTime();
 
 		that.orderEntity = that.oOrder.save().RESULT;
 
@@ -497,6 +498,12 @@ var OrderView = function () {
 				alert("Chưa chọn khách hàng!");
 				return;
 			}
+			if($('#expirationDate').val() == "" || $('#expirationDate').val() == null){
+				alert("Chưa chọn ngày hẹn trả!")
+				return;
+			}
+			that.expirationDate = $('#expirationDate').val()+" 00:00";
+
 			that.renderBillTable();
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
 			that.oBillDialog.show('Hóa đơn', url, '52%', '700px');

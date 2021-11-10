@@ -217,7 +217,5 @@ var OrderServiceView = function () {
 			that.oDialog.show('Hóa đơn', url, '52%', '700px');
 		});
 
-
-
 	});
 }

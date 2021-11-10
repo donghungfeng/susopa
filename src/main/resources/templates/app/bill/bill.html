@@ -103,14 +103,18 @@
     <div class="content">
         <table id="customer">
             <tr>
-                <td >Ngày:</td>
-                <td id="date"></td>
-                <td >Mã HĐ:</td>
-                <td colspan="2" id="orderCode"></td>
+                <td >Ngày tiếp nhận:</td>
+                <td id="date" colspan="5"></td>
+            </tr>
+            <tr>
+                <td >Ngày hẹn trả:</td>
+                <td id="expiration" colspan="5"></td>
             </tr>
             <tr>
                 <td>K.hàng:</td>
-                <td colspan="5" id="customerName"></td>
+                <td colspan="2" id="customerName"></td>
+                <td>Mã HĐ:</td>
+                <td colspan="2" id="orderCode"></td>
             </tr>
 
             <tr>
@@ -197,6 +201,7 @@
     let customer = (window.parent.oOrderView.oCustomer);
     let order = window.parent.oOrderView.orderEntity;
     let date = new Date();
+    let expirationDate = new Date(window.parent.oOrderView.expirationDate);
     if(customer){
         let _rank = "";
         switch (customer.ranking) {
@@ -226,6 +231,7 @@
     document.getElementById('orderCode').innerHTML = window.parent.oOrderView.orderCode;
 
     document.getElementById('date').innerHTML = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+    document.getElementById('expiration').innerHTML = expirationDate.toLocaleDateString();
 
 
     document.getElementById('exportBillProductTable').innerHTML = window.parent.oOrderView.htmlBillProductTable;

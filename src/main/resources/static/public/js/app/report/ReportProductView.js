@@ -153,7 +153,5 @@ var ReportProductView = function () {
 			that.bindGridService()
 
 		});
-
-
 	});
 }
