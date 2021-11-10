@@ -34,6 +34,7 @@ var Color = function(){
 	
 	// get data by id
 	this.getById = function(){
+		if(that.id == 0) return;
 		var rs = DATA.get(URL.GETBYID+"/"+that.id);
 		var item = rs.RESULT;
 		this.id=item.id;

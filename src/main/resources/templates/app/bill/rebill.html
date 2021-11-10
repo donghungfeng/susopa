@@ -85,7 +85,7 @@
         }
     </style>
 </head>
-<body>
+<body id="body">
 <div id="invoice-POS">
     <div class="header">
 
@@ -223,6 +223,14 @@
         default:
             _rank = "Vô hạng";
             break;
+    }
+
+    document.getElementById("body").addEventListener("keyup", printRebill);
+
+    function printRebill(event) {
+        if(event.keyCode === 13){
+            window.print();
+        }
     }
 
     document.getElementById('customerName').innerHTML = order.customerName + " (" + _rank + ") ";

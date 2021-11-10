@@ -52,7 +52,8 @@ var OrderServiceView = function () {
 			// let _note = '<span class="btnNote form-control" style="width: 100%" data-id="'+item.id+'">'+item.note+'</span>';
 			act += '</div>';
 			let detail = '<label class="label label-default btnDetail" style="cursor: all-scroll" data-id="'+ item.id +'"><i class="fa fa-print"></i></label>';
-
+			let _time = '<span style="font-size: 0px">' +item.time+ '</span>';
+			let _expirationTime = '<span style="font-size: 0px">' +item.expirationTime+ '</span>';
 			aRows.push([
 				(i + 1) + hidden,
 				item.code,
@@ -60,8 +61,8 @@ var OrderServiceView = function () {
 				item.countProduct,
 				item.countService,
 				that.convertMoney(item.amount),
-				that.convertTimestamp(item.time),
-				that.convertTimestamp(item.expirationTime),
+				_time + that.convertTimestamp(item.time),
+				_expirationTime + that.convertTimestampHT(item.expirationTime),
 				act,
 				detail
             ]);
@@ -71,17 +72,18 @@ var OrderServiceView = function () {
 
 	this.bindGridService = function(){
 		that.oOrderService.getByOrder();
-
-		let _sel = that.oStaff.bindSelectHtml();
 		that.oTableService.clear().draw();
+		let staffSelectHtml = that.oStaff.bindSelectHtml();
 		var aRows = [];
 		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
 			var item = that.oOrderService.LIST[i];
 			let _note = '<span class="btnNote form-control" style="width: 100%" data-serviceid="'+item.id+'">'+item.note+'</span>';
+			let _sel = item.staff ? item.staff.name : '<select class="btnStaff form-control" data-serviceid="'+item.id+'">' + staffSelectHtml + '</select>';
 			aRows.push([
 				(i + 1),
 				item.serviceName,
 				item.description,
+				item.price,
 				_sel,
 				_note
 			]);
@@ -132,6 +134,10 @@ var OrderServiceView = function () {
 	this.convertTimestamp = function(time){
 		let d = new Date(time);
 		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+	}
+	this.convertTimestampHT = function(time){
+		let d = new Date(time);
+		return d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
 	}
 
 	this.convertMoney = function (money) {
@@ -196,6 +202,12 @@ var OrderServiceView = function () {
 			that.oOrderService.id = id;
 			let note = prompt("Vị trí để giày:",$(this).html() );
 			that.oOrderService.changeNote(note);
+			that.bindGridService();
+		});
+		$('#Grid02').on('change', '.btnStaff', function () {
+			var id = $(this).data('serviceid');
+			that.oOrderService.id = id;
+			that.oOrderService.changeStaff($(this).val());
 			that.bindGridService();
 		});
 

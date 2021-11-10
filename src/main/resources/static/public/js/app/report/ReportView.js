@@ -9,12 +9,17 @@ var ReportView = function () {
 	this.oOrder = new Order();
 	this.oOrderProduct = new OrderProduct();
 	this.oOrderService = new OrderService();
+	this.oStaff = new Staff();
 	this.totalAmount = 0;
 	this.totalOrderProduct = 0;
 	this.totalOrderService = 0;
 	this.totalAmountProduct = 0;
 	this.totalAmountService = 0;
+	this.totalDiscountStaff = 0;
 	this.totalOrder = 0;
+	this.from = 0;
+	this.to = 99999999999999999;
+	this.staffid = 0;
 
 	// Phương thức
 	this.initPage = function () {
@@ -23,6 +28,7 @@ var ReportView = function () {
 		that.oOrder.getAll();
 		that.oOrderProduct.getAll();
 		that.oOrderService.getAll();
+		that.oStaff.bindSelect2('#staff');
 		that.resetForm();
 		that.bindGridOrder();
 		that.bindGridProduct();
@@ -98,25 +104,30 @@ var ReportView = function () {
 
 	this.bindGridService = function(){
 		this.totalAmountService = 0;
+		this.totalDiscountStaff = 0;
 		that.oTableService.clear().draw();
 		var aRows = [];
 		console.log(that.oOrderService.LIST);
 		for (var i = 0; i < that.oOrderService.LIST.length; i++) {
 			var item = that.oOrderService.LIST[i];
 			that.totalAmountService += item.count*item.price;
+			that.totalDiscountStaff += item.discount;
+			let staff = item.staff ? item.staff.name : '';
 			aRows.push([
 				(i + 1),
 				item.order.code,
 				item.serviceCode,
 				item.serviceName,
 				that.convertMoney(item.price),
-				item.count,
+				that.convertMoney(item.discount),
+				staff,
 				that.convertTimestamp(item.time),
 				item.description
 			]);
 		}
 		that.oTableService.rows.add(aRows).draw();
 		$('#totalAmountService').html(that.convertMoney(this.totalAmountService));
+		$('#totalDiscountStaff').html(that.convertMoney(this.totalDiscountStaff));
 	}
 
 
@@ -142,12 +153,12 @@ var ReportView = function () {
 				alert("Chọn từ ngày & đến ngày đi sếp!!!!");
 				return;
 			}
-			let from = new Date($('#fromDate').val()+ " 00:00").getTime();
-			let to = new Date($('#toDate').val()+ " 23:59").getTime();
+			that.from = new Date($('#fromDate').val()+ " 00:00").getTime();
+			that.to = new Date($('#toDate').val()+ " 23:59").getTime();
 
-			that.oOrder.getAllByTime(from,to);
-			that.oOrderProduct.getAllByTime(from,to);
-			that.oOrderService.getAllByTime(from,to);
+			that.oOrder.getAllByTime(that.from,that.to);
+			that.oOrderProduct.getAllByTime(that.from,that.to);
+			that.oOrderService.getAllByTimeWithStaff(that.from,that.to,that.staffid);
 			that.bindGridOrder();
 			that.bindGridProduct();
 			that.bindGridService();
@@ -162,8 +173,8 @@ var ReportView = function () {
 			$('#fromDate').val('');
 			$('#toDate').val('');
 
-			let from = 0;
-			let to = 0;
+			that.from = 0;
+			that.to = 0;
 			let d = new Date();
 
 			let filter = $('#filterFast').val();
@@ -177,33 +188,40 @@ var ReportView = function () {
 				return;
 			}
 			else if(filter === 'day'){
-				from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+d.getDate() + " "+"00:00").getTime();
-				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+d.getDate() + " "+"23:59").getTime();
+				that.from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+d.getDate() + " "+"00:00").getTime();
+				that.to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+d.getDate() + " "+"23:59").getTime();
 			}
 			else if(filter === 'week'){
 				if(d.getDay() === 0){
-					from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - 6) + " "+"00:00").getTime();
+					that.from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - 6) + " "+"00:00").getTime();
 				}
 				else {
-					from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - d.getDay() +1 ) + " "+"00:00").getTime();
+					that.from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+(d.getDate() - d.getDay() +1 ) + " "+"00:00").getTime();
 				}
 
-				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
+				that.to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
 			}
 			else if(filter === 'month'){
-				from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ "01" + " "+"00:00").getTime();
-				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
+				that.from = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ "01" + " "+"00:00").getTime();
+				that.to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
 			}
 			else if(filter === 'year'){
-				from = new Date(d.getFullYear()+"-" + "01" +"-"+ "01" + " "+"00:00").getTime();
-				to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
+				that.from = new Date(d.getFullYear()+"-" + "01" +"-"+ "01" + " "+"00:00").getTime();
+				that.to = new Date(d.getFullYear()+"-" + (d.getMonth()+1)+"-"+ d.getDate() + " "+"23:59").getTime();
 			}
-			that.oOrder.getAllByTime(from,to);
-			that.oOrderProduct.getAllByTime(from,to);
-			that.oOrderService.getAllByTime(from,to);
+			that.oOrder.getAllByTime(that.from,that.to);
+			that.oOrderProduct.getAllByTime(that.from,that.to);
+			that.oOrderService.getAllByTimeWithStaff(that.from,that.to,that.staffid);
 			that.bindGridOrder();
 			that.bindGridProduct();
 			that.bindGridService()
+
+		});
+
+		$('#staff').on('change', function () {
+			that.staffid = $('#staff').val();
+			that.oOrderService.getAllByTimeWithStaff(that.from,that.to,that.staffid);
+			that.bindGridService();
 
 		});
 

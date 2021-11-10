@@ -256,6 +256,7 @@ var OrderView = function () {
 			oOrderService.status = 0;
 			oOrderService.note = '';
 			oOrderService.price = item.price - item.price*that.totalDiscount*0.01;
+			oOrderService.discount = (item.price - item.price*that.totalDiscount*0.01)*0.01*item.item.discount;
 			oOrderService.realPrice = item.price;
 			oOrderService.count = item.count;
 			oOrderService.description = item.description;
@@ -425,33 +426,30 @@ var OrderView = function () {
 
 		$('#material').on('change', function () {
 			that.oMaterial.id = $('#material').val();
+			if(that.oMaterial.id == 0) return;
 			that.oMaterial.getById();
-			$('#description').val($('#description').val()+"Chất liệu: "+that.oMaterial.name+";  ");
-
-			$('#material').val('0');
+			$('#description').val($('#description').val()+"Chất liệu: "+that.oMaterial.name+";  ")
 
 		});
 		$('#size').on('change', function () {
 			that.oSize.id = $('#size').val();
+			if(that.oSize.id == 0) return;
 			that.oSize.getById();
 			$('#description').val($('#description').val()+"Size: "+that.oSize.name+";  ");
-
-			$('#size').val('0');
 
 		});
 		$('#manufac').on('change', function () {
 			that.oManufac.id = $('#manufac').val();
+			if(that.oManufac.id == 0) return;
 			that.oManufac.getById();
 			$('#description').val($('#description').val()+"Hãng: "+that.oManufac.name+";   ");
 
-			$('#manufac').val('0');
 		});
 		$('#color').on('change', function () {
 			that.oColor.id = $('#color').val();
+			if(that.oColor.id == 0) return;
 			that.oColor.getById();
 			$('#description').val($('#description').val()+"Màu: "+that.oColor.name+";   ");
-
-			$('#color').val('0');
 		});
 
 
@@ -507,6 +505,14 @@ var OrderView = function () {
 			that.renderBillTable();
 			var url = CONFIG_APP.URL.CONTEXT + '/app/bill/bill.html';
 			that.oBillDialog.show('Hóa đơn', url, '52%', '700px');
+		});
+
+		$('#resetDescription').on('click' , function () {
+			$('#description').val('');
+			$('#color').val('0').trigger("change");
+			$('#manufac').val('0').trigger("change");
+			$('#material').val('0').trigger("change");
+			$('#size').val('0').trigger("change");
 		});
 	});
 }

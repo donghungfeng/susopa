@@ -69,7 +69,7 @@ var Staff = function(){
 
 	this.bindSelectHtml = function(){
 		that.getAll();
-		var html = '<select class="form-control">';
+		var html = '';
 		html += '<option  value="0"> - Chọn nhân viên - </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];

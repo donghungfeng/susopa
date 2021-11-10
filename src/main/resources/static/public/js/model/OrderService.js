@@ -28,6 +28,8 @@ var OrderService = function(){
 	this.serviceName='';
 	this.serviceCode='';
 	this.orderId = 0;
+	this.discount = 0;
+	this.staff = null;
 
 	this.validSave = function(){
 		var alert = '';
@@ -53,11 +55,15 @@ var OrderService = function(){
 		that.LIST = rs.RESULT;
 	}
 	this.getAllByTimeWithStaff = function(from,to,id){
+		if(id == 0){
+			that.getAllByTime(from,to);
+			return;
+		}
 		var data= {
 			from:from,
 			to:to
 		}
-		var rs = DATA.set(URL.GETBYTIME+"/"+id,data);
+		var rs = DATA.set(URL.GETBYTIMESTAFF+"/"+id,data);
 		that.LIST = rs.RESULT;
 	}
 	this.getAllGroupByTime = function(from,to){
@@ -80,10 +86,12 @@ var OrderService = function(){
 		this.order=item.order;
 		this.price=item.price;
 		this.realPrice=item.realPrice;
+		this.discount=item.discount;
 		this.count=item.count;
 		this.time=item.time;
 		this.serviceCode=item.serviceCode;
 		this.serviceName=item.serviceName;
+		this.staff = item.staff;
 	}
 
 	// get data by order
@@ -104,11 +112,12 @@ var OrderService = function(){
 			order:that.order,
 			price:that.price,
 			realPrice:that.realPrice,
+			discount:that.discount,
 			count:that.count,
 			time:that.time,
 			serviceName:that.serviceName,
 			serviceCode:that.serviceCode,
-			staff:null
+			staff:that.staff
 		}
 		console.log(data);
 		return DATA.set(URL.SAVE,data);
@@ -128,10 +137,13 @@ var OrderService = function(){
 			status:that.status+1,
 			order:that.order,
 			price:that.price,
+			realPrice:that.realPrice,
+			discount:that.discount,
 			count:that.count,
 			time:that.time,
 			serviceName:that.serviceName,
-			serviceCode:that.serviceCode
+			serviceCode:that.serviceCode,
+			staff:that.staff
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);
@@ -146,13 +158,22 @@ var OrderService = function(){
 			status:that.status,
 			order:that.order,
 			price:that.price,
+			realPrice:that.realPrice,
+			discount:that.discount,
 			count:that.count,
 			time:that.time,
 			serviceName:that.serviceName,
-			serviceCode:that.serviceCode
+			serviceCode:that.serviceCode,
+			staff:that.staff
 		}
 		console.log(data);
 		return  DATA.set(URL.SAVE,data);
+	}
+
+	this.changeStaff = function(id){
+		that.getById();
+		that.staff = {id:id};
+		that.save();
 	}
 	
 	this.bindSelect = function(sControlId){

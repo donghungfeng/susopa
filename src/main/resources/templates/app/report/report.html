@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title>Báo cáo | Tổng hợp hóa đơn</title>
     <script type="text/javascript" th:src="@{/public/js/model/Order.js}"></script>
+    <script type="text/javascript" th:src="@{/public/js/model/Staff.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/OrderProduct.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/model/OrderService.js}"></script>
     <script type="text/javascript" th:src="@{/public/js/app/report/ReportView.js}"></script>
@@ -135,6 +136,15 @@
                                             <div class="col-sm-4 col-xs-4">
                                                 <div style="font-size: 20px;font-weight: bold">Tổng doanh thu dịch vụ: <span class="text-danger" id="totalAmountService"></span></div>
                                             </div>
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div style="font-size: 20px;font-weight: bold">Tổng chiết khấu nhân viên: <span class="text-danger" id="totalDiscountStaff"></span></div>
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+
+                                            </div>
+                                            <div class="col-sm-2 col-xs-2">
+                                                <select name="" id="staff" class="form-control"></select>
+                                            </div>
 
                                         </div>
                                         <div class="table-content" style="padding: 10px; padding-top: 30px">
@@ -142,12 +152,13 @@
                                                 <thead>
                                                 <tr>
                                                     <th style="width:5%;text-align: center;">STT</th>
-                                                    <th style="width:15%;text-align: center;">Mã đơn hàng</th>
-                                                    <th style="width:15%;text-align: center;">Mã dịch vụ</th>
-                                                    <th style="width:15%;text-align: center;">Tên dịch vụ</th>
-                                                    <th style="width:10%;text-align: center;">Giá tiền</th>
-                                                    <th style="width:10%;text-align: center;">Số lượng</th>
-                                                    <th style="width:10%;text-align: center;">Thời gian</th>
+                                                    <th >Mã đơn hàng</th>
+                                                    <th >Mã dịch vụ</th>
+                                                    <th >Tên dịch vụ</th>
+                                                    <th>Giá tiền</th>
+                                                    <th >Chiết khấu</th>
+                                                    <th >Nhân viên thực hiện</th>
+                                                    <th >Thời gian</th>
                                                     <th>Mô tả</th>
                                                 </tr>
                                                 </thead>
