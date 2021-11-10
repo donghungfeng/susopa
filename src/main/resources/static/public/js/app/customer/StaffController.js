@@ -63,7 +63,7 @@ var StaffController = function(){
 		for (var i = 0; i < that.oStaff.LIST.length; i++) {
 			var item = that.oStaff.LIST[i];
 			var hidden = '<input type="hidden" class="rowID" value="' + item.id + '" />';
-			var _status = item.status === 1 ? '<label class="label label-success">Hoạt động</label>' : '<label class="label label-danger">Khóa</label>'
+			var _status = item.status === 1 ? '<label class="label label-success">Đang làm việc </label>' : '<label class="label label-danger">Đã nghỉ việc</label>'
 			aRows.push([
 				(i + 1) + hidden,
 				item.code,

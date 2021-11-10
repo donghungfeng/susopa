@@ -62,7 +62,9 @@ var Staff = function(){
 	
 	//delete data
 	this.del = function(){
-		return DATA.get(URL.DEL+"/"+that.id);
+		alert("Không thể xóa nhân viên, vui lòng liên hệ DHF để xóa");
+		return;
+		// return DATA.get(URL.DEL+"/"+that.id);
 	}
 
 	this.bindSelectHtml = function(){
@@ -71,7 +73,8 @@ var Staff = function(){
 		html += '<option  value="0"> - Chọn nhân viên - </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
-			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
+			if(item.status == 1)
+				html +='<option  value="'+ item.id +'">' + item.name +'</option>';
 		}
 		html +='</select>';
 		return html;
@@ -82,7 +85,8 @@ var Staff = function(){
 		var html = '<option  value="0"> - Chọn nhân viên - </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
-			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
+			if(item.status == 1)
+				html +='<option  value="'+ item.id +'">' + item.name +'</option>';
 		}
 		$(sControlId).html(html);
 		$(sControlId).val($(sControlId + ' option:first-child').val()).trigger('change');
@@ -92,7 +96,8 @@ var Staff = function(){
 		var html = '<option  value="0"> -Chọn nhân viên- </option>';
 		for (let i = 0; i < that.LIST.length; i++) {
 			var item = that.LIST[i];
-			html +='<option  value="'+ item.id +'">' + item.name +'</option>';
+			if(item.status == 1)
+				html +='<option  value="'+ item.id +'">' + item.name +'</option>';
 		}
 		$(sControlId).html(html);
 		$(sControlId).select2();
