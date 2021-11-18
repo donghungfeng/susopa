@@ -206,9 +206,13 @@ var OrderServiceView = function () {
 		});
 		$('#Grid02').on('change', '.btnStaff', function () {
 			var id = $(this).data('serviceid');
-			that.oOrderService.id = id;
-			that.oOrderService.changeStaff($(this).val());
-			that.bindGridService();
+			that.oStaff.id = $(this).val();
+			that.oStaff.getById();
+			if (confirm('Xác nhận giao dịch vụ cho '+that.oStaff.name)) {
+				that.oOrderService.id = id;
+				that.oOrderService.changeStaff($(this).val());
+				that.bindGridService();
+			}
 		});
 
 		$('#Grid01').on('click','.btnDetail', function () {

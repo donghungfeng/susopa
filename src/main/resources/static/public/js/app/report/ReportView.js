@@ -25,9 +25,9 @@ var ReportView = function () {
 	this.initPage = function () {
 		$('#AppTitle').html(that.AppTitle);
 		document.title = that.AppTitle;
-		that.oOrder.getAll();
-		that.oOrderProduct.getAll();
-		that.oOrderService.getAll();
+		that.oOrder.getAllByTime(0,99999999999999999);
+		that.oOrderProduct.getAllByTime(0,99999999999999999);
+		that.oOrderService.getAllByTime(0,99999999999999999);
 		that.oStaff.bindSelect2('#staff');
 		that.resetForm();
 		that.bindGridOrder();
@@ -179,9 +179,9 @@ var ReportView = function () {
 
 			let filter = $('#filterFast').val();
 			if(filter === ''){
-				that.oOrder.getAll();
-				that.oOrderProduct.getAll();
-				that.oOrderService.getAll();
+				that.oOrder.getAllByTime(0,99999999999999999);
+				that.oOrderProduct.getAllByTime(0,99999999999999999);
+				that.oOrderService.getAllByTime(0,99999999999999999);
 				that.bindGridOrder();
 				that.bindGridProduct();
 				that.bindGridService()
@@ -220,6 +220,10 @@ var ReportView = function () {
 
 		$('#staff').on('change', function () {
 			that.staffid = $('#staff').val();
+			if(that.staffid == 0){
+				that.oOrderService.getAllByTime(that.from,that.to);
+				return;
+			}
 			that.oOrderService.getAllByTimeWithStaff(that.from,that.to,that.staffid);
 			that.bindGridService();
 

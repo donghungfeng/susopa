@@ -1,7 +1,6 @@
 package dnhung.susopa.repository;
 
 import dnhung.susopa.entity.OrderProductEntity;
-import dnhung.susopa.entity.OrderServiceEntity;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -10,9 +9,9 @@ public interface OrderProductRepository extends BaseRepository<OrderProductEntit
     @Query(value = "select * from order_product WHERE order_id =?1", nativeQuery = true)
     List<OrderProductEntity> findAllByOrder(Long id);
 
-    @Query("FROM OrderProductEntity WHERE time >=?1 AND time <=?2 order by time desc")
+    @Query(value = "select * FROM order_product,orderrr WHERE order_product.order_id = orderrr.id AND orderrr.status <> -1 AND order_product.time >=?1 AND order_product.time <=?2 order by time desc", nativeQuery = true)
     List<OrderProductEntity> findAllFromTime(double from, double to);
 
-    @Query(value = "select product_code,product_name,SUM(count) as count, SUM(price*count) as total FROM order_product WHERE time >=?1 AND time <=?2 group by product_code order by count desc ", nativeQuery = true)
+    @Query(value = "select product_code,product_name,SUM(order_product.count) as count, SUM(order_product.price*order_product.count) as total FROM order_product,orderrr WHERE order_product.order_id = orderrr.id AND orderrr.status <> -1 AND order_product.time >=?1 AND order_product.time <=?2 group by product_code order by count desc ", nativeQuery = true)
     List<Object> findAllGroupFromTime(double from, double to);
 }
