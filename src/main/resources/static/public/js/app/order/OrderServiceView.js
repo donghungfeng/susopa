@@ -9,6 +9,7 @@ var OrderServiceView = function () {
 	this.oOrderProduct = new OrderProduct();
 	this.oOrder = new Order();
 	this.oStaff = new Staff();
+	this.oCustomer = new Customer();
 	this.htmlBillProductTable = '';
 	this.htmlBillServiceTable = '';
 
@@ -83,7 +84,7 @@ var OrderServiceView = function () {
 				(i + 1),
 				item.serviceName,
 				item.description,
-				item.price,
+				item.realPrice,
 				_sel,
 				_note
 			]);
@@ -191,7 +192,12 @@ var OrderServiceView = function () {
 			}
 			if (confirm('Xác nhận hủy đơn hàng?')) {
 				that.oOrder.id = id;
+				that.oOrder.getById();
 				that.oOrder.cancelOrder();
+				that.oCustomer.phone = that.oOrder.customerPhone;
+				that.oCustomer.getByPhone();
+				that.oCustomer.amount -= that.oOrder.received;
+				that.oCustomer.save();
 				that.bindGrid();
 			}
 			return false;

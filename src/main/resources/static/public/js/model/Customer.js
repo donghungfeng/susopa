@@ -3,6 +3,7 @@ var Customer = function(){
 	const URL = {
 		GETALL:'customer/search',
 		GETBYID:'customer/getbyid',
+		GETBYPHONE:'customer/getbyphone',
 		SAVE:'customer/create',
 		DEL:'customer/delete',
 	}
@@ -41,6 +42,21 @@ var Customer = function(){
 	// get data by id
 	this.getById = function(){
 		var rs = DATA.get(URL.GETBYID+"/"+that.id);
+		var item = rs.RESULT;
+		this.id=item.id;
+		this.name=item.name;
+		this.phone=item.phone;
+		this.address=item.address;
+		this.email=item.email;
+		this.orders=item.orders;
+		this.amount=item.amount;
+		this.ranking=item.ranking;
+		this.discount=item.discount;
+		this.note=item.note;
+	}
+
+	this.getByPhone = function(){
+		var rs = DATA.get(URL.GETBYPHONE+"/"+that.phone);
 		var item = rs.RESULT;
 		this.id=item.id;
 		this.name=item.name;
